@@ -5,6 +5,7 @@ import AddImage from "../static/img/add.png";
 import PrinterImage from "../static/img/printer.png";
 import ExcelImage from "../static/img/Microsoft_Office_-_Excel.png";
 import ModalAdd from "./ModalAdd";
+import styles from "./ControlPanel.module.css";
 
 const ControlPanel = (props) => {
   const [DateFrom, setDateFrom] = useState(getToday().toString());

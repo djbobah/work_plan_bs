@@ -1,23 +1,78 @@
-import React from "react";
+import React, { useState } from "react";
 import logo from "../static/img/doc2.png";
+
+// import Navbar from "react-bootstrap/Navbar";
+// import NavDropdown from "react-bootstrap/NavDropdown";
+// import Dropdown from "react-bootstrap/Dropdown";
+// import DropdownButton from "react-bootstrap/DropdownButton";
+import styles from "./NavBar.module.css";
 // import NavCheckButton from "./NavCheckButton";
 const NavBar = () => {
+  const [menuIsOpen, setMenuIsOpen] = useState(false);
+
+  const toggleMenuIsOpen = () => {
+    setMenuIsOpen(!menuIsOpen);
+  };
   return (
-    <nav className="bg-sky-900 sticky top-0">
-      <div className="mx-auto max-w-8xl px-2 sm:px-6 lg:px-8">
-        <div className="relative flex h-14 items-center justify-between font-mono ">
-          <div className=" h-10 flex items-center text-gray-300 ml-2 cursor-pointer">
-            <img src={logo} className="h-10 " alt="logo" />
-            <span className="ml-3  text-xl hover:text-white  text-center">
-              ПЛАН
-              <br /> РАБОТ
+    <nav
+      // className="navbar  navbar-light bg-light"
+      className={`navbar navbar-expand-lg navbar-brand ${styles.nav}`}
+      fixed="top"
+    >
+      <div className="container-fluid">
+        <a className="navbar-brand" href="#">
+          <div className={styles.logo}>
+            <img src={logo} width="50" height="50" alt="logo" />
+            <span>
+              ПЛАН <br /> РАБОТ
             </span>
           </div>
-          <div className="flex items-center text-xl text-gray-200 uppercase underline">
-            Линейно-эксплуатационная служба
+        </a>
+        <div className={styles["nav-body"]}>
+          Линейно-эксплуатационная служба
+        </div>
+        <div className={styles.actions}>
+          <div className="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul className="navbar-nav mr-auto mb-2 mb-lg-0">
+              <li className="nav-item dropdown">
+                {/* ${menuIsOpen ? "show" : ""} */}
+                <a
+                  className={`nav-link dropdown-toggle  ${styles.actions}`}
+                  href="#"
+                  id="navbarDropdown"
+                  role="button"
+                  dataToggle="dropdown"
+                  ariaExpanded="false"
+                  onClick={toggleMenuIsOpen}
+                >
+                  Dropdown
+                </a>
+                <ul
+                  className={`dropdown-menu  ${menuIsOpen ? "show" : ""}`} //show
+                  ariaLabelledby="navbarDropdown"
+                >
+                  <li>
+                    <a className="dropdown-item" href="#">
+                      Action
+                    </a>
+                  </li>
+                  <li>
+                    <a className="dropdown-item" href="#">
+                      Another action
+                    </a>
+                  </li>
+                  <li>
+                    <hr className="dropdown-divider" />
+                  </li>
+                  <li>
+                    <a className="dropdown-item" href="#">
+                      Something else here
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
           </div>
-
-          <div className="ml-5">user</div>
         </div>
       </div>
     </nav>

@@ -115,7 +115,7 @@ const ControlPanel = (props) => {
       ))}
       {/* </div> */}
       {/* </div> */}
-      <div className="flex ">
+      <div className="flex flex-row">
         <div
           className="border rounded flex"
           onClick={handleClickAdd}

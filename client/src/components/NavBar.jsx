@@ -16,7 +16,7 @@ const NavBar = () => {
   return (
     <nav
       // className="navbar  navbar-light bg-light"
-      className={`navbar navbar-expand-lg navbar-brand ${styles.nav}`}
+      className={`navbar navbar-expand-lg  ${styles.nav}`}
       fixed="top"
     >
       <div className="container-fluid">
@@ -48,7 +48,9 @@ const NavBar = () => {
                   Dropdown
                 </a>
                 <ul
-                  className={`dropdown-menu  ${menuIsOpen ? "show" : ""}`} //show
+                  className={`dropdown-menu  ${
+                    menuIsOpen ? "show" : ""
+                  } dropdown-menu-right dropdown-menu-lg-left`} //show
                   ariaLabelledby="navbarDropdown"
                 >
                   <li>

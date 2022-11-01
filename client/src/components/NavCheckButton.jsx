@@ -7,8 +7,9 @@ const NavCheckButton = (props) => {
     <>
       {props.check ? (
         <div
-          className=" text-blue-700 bg-lime-100 text-xs w-42 border-2 border-green-500 cursor-pointer rounded h-8 p-1 mr-3 flex items-center transition ease-in-out hover:text-blue-700  hover:-translate-y+1 hover:scale-105  duration-300"
+          className="  border rounded flex"
           onClick={() => props.onCheck(props.id)}
+          role="button"
         >
           <div className="text-green-500">
             {/* <svg
@@ -33,10 +34,11 @@ const NavCheckButton = (props) => {
         </div>
       ) : (
         <div
-          className=" text-white text-xs w-42 border-2 cursor-pointer rounded h-8 p-1 mr-3 flex items-center transition ease-in-out hover:-translate-y+1 hover:scale-105  duration-300"
+          className=" border rounded  flex text-center"
           onClick={() => props.onCheck(props.id)}
+          role="button"
         >
-          <div className="text-center m-1 p-1 ">{props.title}</div>
+          <div className=" ">{props.title}</div>
         </div>
       )}
     </>

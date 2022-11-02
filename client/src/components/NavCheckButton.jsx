@@ -28,7 +28,7 @@ const NavCheckButton = (props) => {
         </div>
       ) : (
         <div
-          className={`form-check form-switch border rounded  text-center d-flex align-items-center  ${styles.setMinHeight}`}
+          className={`form-check form-switch border rounded  text-center d-flex align-items-center   ${styles.setMinHeight}`}
           role="button"
         >
           <input

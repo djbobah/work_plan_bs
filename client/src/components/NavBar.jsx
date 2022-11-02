@@ -41,8 +41,8 @@ const NavBar = () => {
                   href="#"
                   id="navbarDropdown"
                   role="button"
-                  dataToggle="dropdown"
-                  ariaExpanded="false"
+                  data-toggle="dropdown"
+                  aria-expanded="false"
                   onClick={toggleMenuIsOpen}
                 >
                   Dropdown
@@ -51,7 +51,7 @@ const NavBar = () => {
                   className={`dropdown-menu  ${
                     menuIsOpen ? "show" : ""
                   } dropdown-menu-right dropdown-menu-lg-left`} //show
-                  ariaLabelledby="navbarDropdown"
+                  aria-labelledby="navbarDropdown"
                 >
                   <li>
                     <a className="dropdown-item" href="#">

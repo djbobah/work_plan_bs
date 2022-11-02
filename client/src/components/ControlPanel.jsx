@@ -6,10 +6,13 @@ import PrinterImage from "../static/img/printer.png";
 import ExcelImage from "../static/img/Microsoft_Office_-_Excel.png";
 import ModalAdd from "./ModalAdd";
 import styles from "./ControlPanel.module.css";
+import Toast from "./Toast.jsx";
+// import Toast from "./components/Toast.jsx";
 
 const ControlPanel = (props) => {
   const [DateFrom, setDateFrom] = useState(getToday().toString());
-  const [DateEnd, setDateEnd] = useState(getTommorow().toString());
+  const [DateEnd, setDateEnd] = useState(getTommorow(DateFrom));
+  const [toastShow, setToastShow] = useState(false);
   const [State, setState] = useState("");
   const [showModalAdd, setShowModalAdd] = useState(true);
   const [checkButtons, setCheckButtons] = useState([
@@ -30,10 +33,14 @@ const ControlPanel = (props) => {
 
   const handleDateFromChange = (e) => {
     setDateFrom(e.target.value);
+
+    // console.log("change datefrom ", DateFrom);
+    setDateEnd(getTommorow(e.target.value));
   };
 
   const handleDateEndChange = (e) => {
     setDateEnd(e.target.value);
+    setToastShow(true);
   };
   const handleStateChange = (e) => {
     setState(e.target.value);
@@ -53,13 +60,17 @@ const ControlPanel = (props) => {
     setCheckButtons(newCheckButtons);
   };
 
+  const handleToastClose = () => {
+    setToastShow(false);
+  };
+
   const handleClickAdd = () => {
     setShowModalAdd(!showModalAdd);
   };
 
   return (
     <div
-      className={`navbar navbar-expand-lg  justify-content-between ${styles.nav}`}
+      className={`navbar navbar-expand-lg  justify-content-between    ${styles.nav}`}
     >
       <div className="d-flex">
         <div>
@@ -70,7 +81,7 @@ const ControlPanel = (props) => {
             type="date"
             name="DateFrom"
             id="DateFrom"
-            className="  border rounded "
+            className={`m-1  border rounded ${styles.setMinHeight}`}
             value={DateFrom}
             onChange={handleDateFromChange}
             role="button"
@@ -84,12 +95,17 @@ const ControlPanel = (props) => {
             type="date"
             name="DateEnd"
             id="DateEnd"
-            className="m-1 border rounded"
+            className={`m-1  border rounded ${styles.setMinHeight}`}
             value={DateEnd}
             onChange={handleDateEndChange}
             role="button"
           />
         </div>
+        <Toast
+          show={toastShow}
+          message="Дата не может быть меньше даты начала периода!"
+          onToastClose={handleToastClose}
+        />
         <div>
           <label htmlFor="State" className="p-2">
             Состояние:
@@ -97,7 +113,7 @@ const ControlPanel = (props) => {
           <select
             name="State"
             id="State"
-            className="m-1  border rounded"
+            className={`m-1  border rounded ${styles.setMinHeight}`}
             value={State}
             onChange={handleStateChange}
             role="button"
@@ -136,6 +152,7 @@ const ControlPanel = (props) => {
           <img width={24} src={ExcelImage} alt="Выгрузить работы в Excel..." />
         </div>
       </div>
+
       {/* <ModalAdd showModalAdd={showModalAdd} /> */}
     </div>
   );

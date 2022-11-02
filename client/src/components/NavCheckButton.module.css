@@ -1,0 +1,7 @@
+.form-check-input {
+  transform: rotate(-90deg);
+}
+
+.setMinHeight {
+  min-height: 45px !important;
+}

@@ -58,76 +58,81 @@ const ControlPanel = (props) => {
   };
 
   return (
-    <div className={`navbar navbar-expand-lg flex  ${styles.nav}`}>
-      {/* <p className="">{ props.title}</p> */}
-      {/* <div className="flex"> */}
-      {/* <div className="flex"> */}
-      <div className="flex">
-        <label htmlFor="DateFrom" className={"p-2"}>
-          Период с:{" "}
-        </label>
-        <input
-          type="date"
-          name="DateFrom"
-          id="DateFrom"
-          className="  border rounded "
-          value={DateFrom}
-          onChange={handleDateFromChange}
-        />
-
-        <label htmlFor="DateEnd" className={"p-2"}>
-          по:
-        </label>
-        <input
-          type="date"
-          name="DateEnd"
-          id="DateEnd"
-          className="m-1 h-8 text-sky-900 border rounded"
-          value={DateEnd}
-          onChange={handleDateEndChange}
-        />
-
-        <label htmlFor="State" className="p-2">
-          Состояние:
-        </label>
-        <select
-          name="State"
-          id="State"
-          className="m-1 h-8 text-sky-900 border rounded"
-          value={State}
-          onChange={handleStateChange}
-        >
-          <option>Все</option>
-          <option>Выполнено</option>
-          <option>Не выполнено</option>
-        </select>
+    <div
+      className={`navbar navbar-expand-lg  justify-content-between ${styles.nav}`}
+    >
+      <div className="d-flex">
+        <div>
+          <label htmlFor="DateFrom" className={"p-2"}>
+            Период с:{" "}
+          </label>
+          <input
+            type="date"
+            name="DateFrom"
+            id="DateFrom"
+            className="  border rounded "
+            value={DateFrom}
+            onChange={handleDateFromChange}
+            role="button"
+          />
+        </div>
+        <div>
+          <label htmlFor="DateEnd" className={"p-2"}>
+            по:
+          </label>
+          <input
+            type="date"
+            name="DateEnd"
+            id="DateEnd"
+            className="m-1 border rounded"
+            value={DateEnd}
+            onChange={handleDateEndChange}
+            role="button"
+          />
+        </div>
+        <div>
+          <label htmlFor="State" className="p-2">
+            Состояние:
+          </label>
+          <select
+            name="State"
+            id="State"
+            className="m-1  border rounded"
+            value={State}
+            onChange={handleStateChange}
+            role="button"
+          >
+            <option>Все</option>
+            <option>Выполнено</option>
+            <option>Не выполнено</option>
+          </select>
+        </div>
       </div>
-
-      {checkButtons.map((checkButton) => (
-        <NavCheckButton
-          title={checkButton.title}
-          name={checkButton.name}
-          id={checkButton.id}
-          key={checkButton.id}
-          check={checkButton.checked}
-          onCheck={handleCheckClick}
-        />
-      ))}
-      {/* </div> */}
-      {/* </div> */}
-      <div className="flex flex-row">
+      <div className="d-flex">
+        {checkButtons.map((checkButton) => (
+          <NavCheckButton
+            title={checkButton.title}
+            name={checkButton.name}
+            id={checkButton.id}
+            key={checkButton.id}
+            check={checkButton.checked}
+            onCheck={handleCheckClick}
+          />
+        ))}
+      </div>
+      <div className="d-flex p-2 justify-content-between">
         <div
-          className="border rounded flex"
+          className="border rounded p-1 me-2"
           onClick={handleClickAdd}
           role="button"
         >
           <img width={24} src={AddImage} alt="Запланировать работу..." />
         </div>
 
-        <div className="border rounded flex" role="button">
+        <div className="border rounded p-1 me-2" role="button">
           <img width={24} src={PrinterImage} alt="Распечатать работы..." />
         </div>
-        <div className="border rounded flex" role="button">
+        <div className="border rounded p-1 me-2" role="button">
           <img width={24} src={ExcelImage} alt="Выгрузить работы в Excel..." />
         </div>
       </div>

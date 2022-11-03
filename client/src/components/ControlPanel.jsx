@@ -14,7 +14,7 @@ const ControlPanel = (props) => {
   const [DateEnd, setDateEnd] = useState(getTommorow(DateFrom));
   const [toastShow, setToastShow] = useState(false);
   const [State, setState] = useState("");
-  const [showModalAdd, setShowModalAdd] = useState(true);
+  const [showModalAdd, setShowModalAdd] = useState(false);
   const [checkButtons, setCheckButtons] = useState([
     { title: "Все подразделения", name: "AllUnits", id: 1, checked: false },
     {
@@ -40,7 +40,9 @@ const ControlPanel = (props) => {
 
   const handleDateEndChange = (e) => {
     setDateEnd(e.target.value);
-    setToastShow(true);
+    if (DateFrom > e.target.value) {
+      setToastShow(true);
+    }
   };
   const handleStateChange = (e) => {
     setState(e.target.value);
@@ -62,10 +64,14 @@ const ControlPanel = (props) => {
 
   const handleToastClose = () => {
     setToastShow(false);
+    setDateEnd(DateFrom);
   };
 
-  const handleClickAdd = () => {
-    setShowModalAdd(!showModalAdd);
+  const handleClickAddShow = () => {
+    setShowModalAdd(true);
+  };
+  const handleClickAddClose = () => {
+    setShowModalAdd(false);
   };
 
   return (
@@ -104,6 +110,7 @@ const ControlPanel = (props) => {
         <Toast
           show={toastShow}
           message="Дата не может быть меньше даты начала периода!"
+          title="Внимание!!!"
           onToastClose={handleToastClose}
         />
         <div>
@@ -139,7 +146,7 @@ const ControlPanel = (props) => {
       <div className="d-flex p-2 justify-content-between">
         <div
           className="border rounded p-1 me-2"
-          onClick={handleClickAdd}
+          onClick={handleClickAddShow}
           role="button"
         >
           <img width={24} src={AddImage} alt="Запланировать работу..." />
@@ -153,7 +160,12 @@ const ControlPanel = (props) => {
         </div>
       </div>
 
-      {/* <ModalAdd showModalAdd={showModalAdd} /> */}
+      <ModalAdd
+        show={showModalAdd}
+        onShow={handleClickAddShow}
+        onClose={handleClickAddClose}
+        title="Добавляем работу..."
+      />
     </div>
   );
 };

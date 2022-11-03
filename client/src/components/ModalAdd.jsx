@@ -8,7 +8,13 @@ const ModalAdd = ({ show, onShow, onClose, title }) => {
   // const handleShow = () => setShow(true);
   return (
     <>
-      <Modal show={show} onHide={onClose} backdrop="static" keyboard={false}>
+      <Modal
+        show={show}
+        onHide={onClose}
+        backdrop="static"
+        keyboard={false}
+        size="lg"
+      >
         <Modal.Header className="bg-info" closeButton>
           <Modal.Title className="fs-5">{title}</Modal.Title>
         </Modal.Header>

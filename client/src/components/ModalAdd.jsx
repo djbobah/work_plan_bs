@@ -70,7 +70,7 @@ const ModalAdd = ({ show, onShow, onClose, title }) => {
                   className="mb-3"
                 >
                   <input
-                    class="form-control"
+                    className="form-control"
                     list="datalistOptions"
                     id="exampleDataList"
                     placeholder="Планируемые работы"

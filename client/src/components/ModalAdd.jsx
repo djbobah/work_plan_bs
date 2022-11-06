@@ -1,5 +1,14 @@
 import React, { useState } from "react";
-import { Modal, Button, InputGroup, Form, Row, Col } from "react-bootstrap";
+import {
+  Modal,
+  Button,
+  InputGroup,
+  Form,
+  Row,
+  Col,
+  FloatingLabel,
+} from "react-bootstrap";
+import { getToday, getTommorow } from "../utils/DateFunctions";
 
 const ModalAdd = ({ show, onShow, onClose, title }) => {
   // const [show, setShow] = useState(false);
@@ -16,7 +25,7 @@ const ModalAdd = ({ show, onShow, onClose, title }) => {
         size="lg"
       >
         <Modal.Header className="bg-info" closeButton>
-          <Modal.Title className="fs-5">{title}</Modal.Title>
+          <Modal.Title className="fs-5">Добавляем работу...</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
@@ -25,23 +34,55 @@ const ModalAdd = ({ show, onShow, onClose, title }) => {
               className="mb-3"
               controlId="exampleFormControlInput1"
             >
-              <Form.Label column sm="8">
+              <Form.Label column sm="8" className="text-muted">
                 Введите дату планируемой работы
               </Form.Label>
               <Col sm="4">
-                <Form.Control type="date" placeholder="name@example.com" />
+                <Form.Control type="date" value={getTommorow()} />
               </Col>
             </Form.Group>
 
             <Row className="mb-3">
               <Form.Group as={Col} controlId="formGridEmail">
-                <Form.Label>Email</Form.Label>
-                <Form.Control type="email" placeholder="Enter email" />
+                {/* <Form.Label>Планируемые работы</Form.Label> */}
+                <FloatingLabel
+                  controlId="floatingInput"
+                  label="Планируемые работы"
+                  className="mb-3"
+                >
+                  <Form.Control type="text" placeholder="Планируемые работы" />
+                </FloatingLabel>
               </Form.Group>
 
               <Form.Group as={Col} controlId="formGridPassword">
-                <Form.Label>Password</Form.Label>
-                <Form.Control type="password" placeholder="Password" />
+                <Form.Check
+                  type="checkbox"
+                  label="Работы повышенной опасности"
+                />
+              </Form.Group>
+            </Row>
+
+            <Row className="mb-3">
+              <Form.Group>
+                <FloatingLabel
+                  controlId="floatingInput"
+                  label="Планируемые работы"
+                  className="mb-3"
+                >
+                  <input
+                    class="form-control"
+                    list="datalistOptions"
+                    id="exampleDataList"
+                    placeholder="Планируемые работы"
+                  />
+                </FloatingLabel>
+                <datalist id="datalistOptions">
+                  <option value="San Francisco" />
+                  <option value="New York" />
+                  <option value="Seattle" />
+                  <option value="Los Angeles" />
+                  <option value="Chicago" />
+                </datalist>
               </Form.Group>
             </Row>
 

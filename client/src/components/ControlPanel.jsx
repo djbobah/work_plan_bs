@@ -164,7 +164,6 @@ const ControlPanel = (props) => {
         show={showModalAdd}
         onShow={handleClickAddShow}
         onClose={handleClickAddClose}
-        title="Добавляем работу..."
       />
     </div>
   );

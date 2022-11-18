@@ -7,10 +7,12 @@ const Table = (props) => {
   //console.log(props.id);
   //console.log(props.title);
   const [plans, setPlans] = useState();
+  const [works, setWorks] = useState();
+  const [objects, setObjects] = useState();
   useEffect(() => {
     api.plan.fetchAll().then((data) => setPlans(data));
-
-    // console.log("useEffect", plans);
+    api.vid_rabot.fetchAll().then((work) => setWorks(work));
+    api.object.fetchAll().then((object) => setObjects(object));
   }, []);
 
   const columns = [
@@ -41,11 +43,16 @@ const Table = (props) => {
   //console.log(columns)
   return (
     <div className="text-white flex  mx-auto  px-1 justify-between items-center ">
-      <div className="border-stone-900 border mt-1 p-2 rounded text-black bg-gray-200">
+      <div className="border-stone-900 border mt-1 p-1 rounded text-black bg-gray-200">
         {plans ? (
           <table className="  border-collapse border-2 border-slate-800 border-rounded bg-gray-200">
             <TableHeader columns={columns} />
-            <TableRows columns={columns} rows={plans} />
+            <TableRows
+              columns={columns}
+              rows={plans}
+              works={works}
+              objects={objects}
+            />
           </table>
         ) : (
           "loading..."

@@ -109,7 +109,7 @@ const ControlPanel = (props) => {
         </div>
         <Toast
           show={toastShow}
-          message="Дата не может быть меньше даты начала периода!"
+          message="Дата окончания периода не может быть меньше даты начала периода!"
           title="Внимание!!!"
           onToastClose={handleToastClose}
         />

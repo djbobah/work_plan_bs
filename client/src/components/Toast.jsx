@@ -13,7 +13,7 @@ const ToasT = ({ show, message, title, onToastClose }) => {
         autohide
         className="border-danger"
       >
-        <Toast.Header className="bg-danger">
+        <Toast.Header className="bg-danger text-dark">
           <img src="holder.js/20x20?text=%20" className="rounded me-2" alt="" />
           <strong className="me-auto ">{title}</strong>
           {/* <small className="text-muted">just now</small> */}

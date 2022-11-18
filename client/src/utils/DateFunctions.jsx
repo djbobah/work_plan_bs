@@ -43,3 +43,9 @@ export function getTommorow(currentDay) {
   //  console.log(month)
   // return "month"
 }
+
+export function convertDate(dateString) {
+  const date = dateString.split("-");
+  // console.log(date[2], ".", date[1], ".", date[0]);
+  return `${date[2]}.${date[1]}.${date[0]}`;
+}

@@ -34,7 +34,7 @@ const TableRows = ({ columns, rows, works, objects }) => {
       {rows.map((row) => (
         <tr key={row.id + row.id_sl}>
           {columns.map((column) => (
-            <td className="border" key={column.id}>
+            <td className="border text-center" key={column.id}>
               {
                 // row[column.path]
                 renderContent(column.path, row)

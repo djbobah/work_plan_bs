@@ -2,7 +2,7 @@ import React from "react";
 
 import { convertDate } from "../utils/DateFunctions";
 
-const TableRows = ({ columns, rows, works, objects }) => {
+const TableRows = ({ columns, rows, works, objects, auto, gn }) => {
   let number = 0;
   const renderContent = (column, row) => {
     // let number = 0;
@@ -14,8 +14,7 @@ const TableRows = ({ columns, rows, works, objects }) => {
       return convertDate(row[column]);
     }
     if (column === "id_vid_rabot") {
-      const work = works.filter((work) => work.id === row[column]);
-      return work[0].name;
+      return works.filter((work) => work.id === row[column])[0].name;
     }
     if (column === "sposob") {
       if (row[column] === "ss") {
@@ -23,10 +22,17 @@ const TableRows = ({ columns, rows, works, objects }) => {
       } else return "подрядная организация";
     }
     if (column === "id_object") {
-      const object = objects.filter((object) => object.id === row[column]);
-      return object[0].name;
+      return objects.filter((object) => object.id === row[column])[0].name;
     }
-
+    if (column === "avto") {
+      return auto.filter((auto) => auto.id === row[column])[0].name;
+    }
+    if (column === "id_gn") {
+      if (gn) {
+        const avtoNumber = gn.filter((gn1) => gn1.type === row[column]);
+        return avtoNumber[0].marka + " " + avtoNumber[0].nomer;
+      }
+    }
     return row[column];
   };
   return (

@@ -9,10 +9,14 @@ const Table = (props) => {
   const [plans, setPlans] = useState();
   const [works, setWorks] = useState();
   const [objects, setObjects] = useState();
+  const [auto, setAuto] = useState();
+  const [gn, setGn] = useState();
   useEffect(() => {
     api.plan.fetchAll().then((data) => setPlans(data));
     api.vid_rabot.fetchAll().then((work) => setWorks(work));
     api.object.fetchAll().then((object) => setObjects(object));
+    api.avto.fetchAll().then((auto) => setAuto(auto));
+    api.gn.fetchAll().then((gn) => setGn(gn));
   }, []);
 
   const columns = [
@@ -52,6 +56,8 @@ const Table = (props) => {
               rows={plans}
               works={works}
               objects={objects}
+              auto={auto}
+              gn={gn}
             />
           </table>
         ) : (

@@ -2,7 +2,7 @@ import React from "react";
 
 import { convertDate } from "../utils/DateFunctions";
 
-const TableRows = ({ columns, rows, works, objects, auto, gn }) => {
+const TableRowsPlan = ({ columns, rows, works, objects, auto, gn }) => {
   let number = 0;
   const renderContent = (column, row) => {
     // let number = 0;
@@ -60,4 +60,4 @@ const TableRows = ({ columns, rows, works, objects, auto, gn }) => {
     </tbody>
   );
 };
-export default TableRows;
+export default TableRowsPlan;

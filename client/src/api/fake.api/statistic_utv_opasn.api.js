@@ -1,11 +1,11 @@
 export const statistic_utv_opasn = [
   {
     id: "1",
-    id_rab: "",
-    user: "",
-    remote_addr: "",
-    date_utv: "",
-    time_utv: "",
+    id_rab: "2",
+    user: "v.igumencev",
+    remote_addr: "10.27.27.110",
+    date_utv: "2022-11-23",
+    time_utv: "13:00:00",
     comment: "",
   },
 ];

@@ -29,8 +29,15 @@ const TableRows = ({ columns, rows, works, objects, auto, gn }) => {
     }
     if (column === "id_gn") {
       if (gn) {
-        const avtoNumber = gn.filter((gn1) => gn1.type === row[column]);
+        const avtoNumber = gn.filter((gn) => gn.type === row[column]);
         return avtoNumber[0].marka + " " + avtoNumber[0].nomer;
+      }
+    }
+    if (column === "opasn") {
+      if (row[column] === "0") {
+        return "согласование не требуется";
+      } else if (row["utv_opasn"] === "0") {
+        return "на согласовании";
       }
     }
     return row[column];

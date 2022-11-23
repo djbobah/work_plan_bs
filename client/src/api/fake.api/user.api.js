@@ -5,6 +5,7 @@ export const user = [
     tab: "401",
     id_sl: "16-а00121",
     dolzhnost: "Заместитель начальника управления",
+    email: "v.igumencev",
     fio: "Байрак Александр Владимирович",
   },
   {
@@ -12,6 +13,7 @@ export const user = [
     tab: "210",
     id_sl: "16-а00135",
     dolzhnost: "Начальник участка",
+    email: "v.igumencev",
     fio: "Полухин Сергей Юрьевич",
   },
   {
@@ -19,6 +21,7 @@ export const user = [
     tab: "701",
     id_sl: "16-а00129",
     dolzhnost: "Начальник службы",
+    email: "v.igumencev",
     fio: "Сафронов Василий Владимирович",
   },
   {
@@ -26,6 +29,7 @@ export const user = [
     tab: "159",
     id_sl: "16-а00134",
     dolzhnost: "Начальник службы",
+    email: "v.igumencev",
     fio: "Сисюкин Павел Николаевич",
   },
   {
@@ -33,6 +37,7 @@ export const user = [
     tab: "23",
     id_sl: "16-а00132",
     dolzhnost: "Начальник службы",
+    email: "v.igumencev",
     fio: "Бондарев Анатолий Михайлович",
   },
   {
@@ -40,6 +45,7 @@ export const user = [
     tab: "248",
     id_sl: "16-а00133",
     dolzhnost: "Начальник службы",
+    email: "v.igumencev",
     fio: "Хализев Леонид Александрович",
   },
   {
@@ -47,6 +53,7 @@ export const user = [
     tab: "84",
     id_sl: "16-а00131",
     dolzhnost: "Начальник службы",
+    email: "v.igumencev",
     fio: "Похомов Сергей Александрович",
   },
   {
@@ -54,6 +61,7 @@ export const user = [
     tab: "32",
     id_sl: "16-а00130",
     dolzhnost: "Начальник службы",
+    email: "v.igumencev",
     fio: "Емельяненко Захар Геннадиевич",
   },
   {
@@ -61,7 +69,16 @@ export const user = [
     tab: "228",
     id_sl: "16-а00128",
     dolzhnost: "Инженер 1 категории",
+    email: "v.igumencev",
     fio: "Кривошлыков Михаил Сергеевич",
+  },
+  {
+    id: "11",
+    tab: "75",
+    id_sl: "16-а00188",
+    dolzhnost: "Начальник ДС",
+    email: "v.igumencev",
+    fio: "Игуменцев Валерий Владимирович",
   },
 ];
 const fetchAll = () =>

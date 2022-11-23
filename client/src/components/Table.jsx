@@ -36,7 +36,7 @@ const Table = (props) => {
     { title: "Комментарий", path: "comment", id: 9, width: 0 },
     {
       title: "Согласование работ повышенной опасности",
-      path: "utv_opasn",
+      path: "opasn",
       id: 10,
       width: 100,
     },

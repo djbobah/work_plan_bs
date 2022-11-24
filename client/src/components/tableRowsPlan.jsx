@@ -1,6 +1,7 @@
 import React from "react";
 
 import { convertDate } from "../utils/DateFunctions";
+import { shortFio } from "../utils/fioUtils";
 
 const TableRowsPlan = ({
   columns,
@@ -33,11 +34,23 @@ const TableRowsPlan = ({
       return objects.filter((object) => object.id === row[column])[0].name;
     }
     if (column === "brigada") {
-      // console.log();
-      return (
-        brigada &&
-        brigada.filter((brigada) => brigada.id === row[column])[0].fio
-      );
+      console.log(row[column]);
+      const idArr = row[column].split(",");
+      let fioList = "";
+      brigada &&
+        idArr.map((id) => {
+          // console.log(row["st_brigadi"]);
+          if (id === row["st_brigadi"]) {
+            fioList +=
+              shortFio(brigada.filter((brigada) => brigada.id === id)[0].fio) +
+              "(ст.), ";
+          } else {
+            fioList +=
+              shortFio(brigada.filter((brigada) => brigada.id === id)[0].fio) +
+              ", ";
+          }
+        });
+      return fioList.trim().slice(0, -1);
     }
 
     if (column === "avto") {
@@ -63,7 +76,7 @@ const TableRowsPlan = ({
         return "выполнено";
       }
     }
-    return row[column];
+    // return row[column];
   };
   return (
     <tbody>

@@ -43,6 +43,11 @@ const WorkPlan = () => {
     { title: "Отметка о выполнении", path: "vipolneno", id: 11, width: 0 },
     { title: "", path: "delete", id: 12, width: 0 },
   ];
+
+  const handleRowDelete = (id) => {
+    setPlans(plans.filter((row) => row.id !== id));
+  };
+
   return (
     <>
       <ControlPanel title="Панель действий" />
@@ -54,6 +59,7 @@ const WorkPlan = () => {
         auto={auto}
         gn={gn}
         brigada={brigada}
+        onDelete={handleRowDelete}
       />
     </>
   );

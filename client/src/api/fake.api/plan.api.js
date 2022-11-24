@@ -25,7 +25,7 @@ export const plan = [
     id_vid_rabot: "7",
     id_prdr_org: "",
     sposob: "ss",
-    brigada: "3",
+    brigada: "3,5",
     st_brigadi: "3",
     avto: "2",
     vipolneno: "1",

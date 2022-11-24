@@ -2,7 +2,15 @@ import React from "react";
 
 import { convertDate } from "../utils/DateFunctions";
 
-const TableRowsPlan = ({ columns, rows, works, objects, auto, gn }) => {
+const TableRowsPlan = ({
+  columns,
+  rows,
+  works,
+  objects,
+  auto,
+  gn,
+  brigada,
+}) => {
   let number = 0;
   const renderContent = (column, row) => {
     // let number = 0;
@@ -24,6 +32,14 @@ const TableRowsPlan = ({ columns, rows, works, objects, auto, gn }) => {
     if (column === "id_object") {
       return objects.filter((object) => object.id === row[column])[0].name;
     }
+    if (column === "brigada") {
+      // console.log();
+      return (
+        brigada &&
+        brigada.filter((brigada) => brigada.id === row[column])[0].fio
+      );
+    }
+
     if (column === "avto") {
       return auto.filter((auto) => auto.id === row[column])[0].name;
     }
@@ -40,6 +56,13 @@ const TableRowsPlan = ({ columns, rows, works, objects, auto, gn }) => {
         return "на согласовании";
       }
     }
+    if (column === "vipolneno") {
+      if (row[column] === "0") {
+        return "не выполнено";
+      } else {
+        return "выполнено";
+      }
+    }
     return row[column];
   };
   return (
@@ -49,10 +72,7 @@ const TableRowsPlan = ({ columns, rows, works, objects, auto, gn }) => {
           <tr key={row.id + row.id_sl}>
             {columns.map((column) => (
               <td className="border text-center" key={column.id}>
-                {
-                  // row[column.path]
-                  renderContent(column.path, row)
-                }
+                {renderContent(column.path, row)}
               </td>
             ))}
           </tr>

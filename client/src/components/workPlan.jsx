@@ -9,12 +9,14 @@ const WorkPlan = () => {
   const [objects, setObjects] = useState();
   const [auto, setAuto] = useState();
   const [gn, setGn] = useState();
+  const [brigada, setBrigada] = useState();
   useEffect(() => {
     api.plan.fetchAll().then((data) => setPlans(data));
     api.vid_rabot.fetchAll().then((work) => setWorks(work));
     api.object.fetchAll().then((object) => setObjects(object));
     api.avto.fetchAll().then((auto) => setAuto(auto));
     api.gn.fetchAll().then((gn) => setGn(gn));
+    api.user.fetchAll().then((brigada) => setBrigada(brigada));
   }, []);
 
   const columns = [
@@ -51,6 +53,7 @@ const WorkPlan = () => {
         objects={objects}
         auto={auto}
         gn={gn}
+        brigada={brigada}
       />
     </>
   );

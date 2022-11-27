@@ -51,16 +51,20 @@ const WorkPlan = () => {
   return (
     <>
       <ControlPanel title="Панель действий" />
-      <Table
-        columns={columns}
-        rows={plans}
-        works={works}
-        objects={objects}
-        auto={auto}
-        gn={gn}
-        brigada={brigada}
-        onDelete={handleRowDelete}
-      />
+      {plans && plans.length > 0 ? (
+        <Table
+          columns={columns}
+          rows={plans}
+          works={works}
+          objects={objects}
+          auto={auto}
+          gn={gn}
+          brigada={brigada}
+          onDelete={handleRowDelete}
+        />
+      ) : (
+        <h1>В выбранном периоде нет данных</h1>
+      )}
     </>
   );
 };

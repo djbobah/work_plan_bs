@@ -4,7 +4,7 @@ const TableHeader = ({ columns }) => {
   //    console.log(columns);
   //console.log(props.title);
   return (
-    <thead className="bg-sky-700">
+    <thead className="bg-sky-700 text-white align-middle">
       <tr>
         {/* width={column.width>0?`${column.width}px`:'100px'}  */}
         {columns.map((column) => (

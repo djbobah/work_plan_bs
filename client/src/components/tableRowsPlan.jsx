@@ -38,7 +38,7 @@ const TableRowsPlan = ({
       return objects.filter((object) => object.id === row[column])[0].name;
     }
     if (column === "brigada") {
-      console.log(row[column]);
+      // console.log(row[column]);
       const idArr = row[column].split(",");
       let fioList = "";
       brigada &&

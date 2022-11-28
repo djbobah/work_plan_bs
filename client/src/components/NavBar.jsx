@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import logo from "../static/img/doc2.png";
 
 // import Navbar from "react-bootstrap/Navbar";
@@ -20,56 +21,68 @@ const NavBar = () => {
       fixed="top"
     >
       <div className="container-fluid">
-        <a className="navbar-brand" href="#">
+        <Link className="navbar-brand" to="/">
           <div className={styles.logo}>
             <img src={logo} width="50" height="50" alt="logo" />
             <span>
               ПЛАН <br /> РАБОТ
             </span>
           </div>
-        </a>
+        </Link>
         <div className={styles["nav-body"]}>
           Линейно-эксплуатационная служба
         </div>
         <div className={styles.actions}>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav mr-auto mb-2 mb-lg-0">
-              <li className="nav-item dropdown">
+            <ul className="navbar-nav mr-auto mb-2 mb-lg-0 ">
+              <li className="nav-item dropdown  ">
                 {/* ${menuIsOpen ? "show" : ""} */}
-                <a
+                <Link
                   className={`nav-link dropdown-toggle  ${styles.actions}`}
-                  href="#"
+                  to="#"
                   id="navbarDropdown"
                   role="button"
                   data-toggle="dropdown"
                   aria-expanded="false"
                   onClick={toggleMenuIsOpen}
                 >
-                  Dropdown
-                </a>
+                  Options
+                </Link>
                 <ul
                   className={`dropdown-menu  ${
                     menuIsOpen ? "show" : ""
-                  } dropdown-menu-right dropdown-menu-lg-left`} //show
+                  } dropdown-menu-right`} //show
                   aria-labelledby="navbarDropdown"
                 >
                   <li>
-                    <a className="dropdown-item" href="#">
-                      Action
-                    </a>
+                    <Link
+                      className="dropdown-item "
+                      to="/"
+                      onClick={toggleMenuIsOpen}
+                    >
+                      План работ
+                    </Link>
                   </li>
                   <li>
-                    <a className="dropdown-item" href="#">
-                      Another action
-                    </a>
+                    <Link
+                      className="dropdown-item"
+                      to="/auto"
+                      onClick={toggleMenuIsOpen}
+                    >
+                      Auto
+                    </Link>
                   </li>
                   <li>
                     <hr className="dropdown-divider" />
                   </li>
                   <li>
-                    <a className="dropdown-item" href="#">
-                      Something else here
-                    </a>
+                    <Link
+                      className="dropdown-item"
+                      to="/dashboard"
+                      onClick={toggleMenuIsOpen}
+                    >
+                      Admin panel
+                    </Link>
                   </li>
                 </ul>
               </li>

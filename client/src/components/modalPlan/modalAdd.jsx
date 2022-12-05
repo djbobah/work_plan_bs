@@ -8,7 +8,7 @@ import {
   Col,
   FloatingLabel,
 } from "react-bootstrap";
-import { getToday, getTommorow } from "../utils/DateFunctions";
+import { getToday, getTommorow } from "../../utils/DateFunctions";
 
 const ModalAdd = ({ show, onShow, onClose, title }) => {
   // const [show, setShow] = useState(false);
@@ -69,6 +69,13 @@ const ModalAdd = ({ show, onShow, onClose, title }) => {
                   label="Планируемые работы"
                   className="mb-3"
                 >
+                  <datalist id="datalistOptions">
+                    <option value="San Francisco" />
+                    <option value="New York" />
+                    <option value="Seattle" />
+                    <option value="Los Angeles" />
+                    <option value="Chicago" />
+                  </datalist>{" "}
                   <input
                     className="form-control"
                     list="datalistOptions"
@@ -76,13 +83,6 @@ const ModalAdd = ({ show, onShow, onClose, title }) => {
                     placeholder="Планируемые работы"
                   />
                 </FloatingLabel>
-                <datalist id="datalistOptions">
-                  <option value="San Francisco" />
-                  <option value="New York" />
-                  <option value="Seattle" />
-                  <option value="Los Angeles" />
-                  <option value="Chicago" />
-                </datalist>
               </Form.Group>
             </Row>
 

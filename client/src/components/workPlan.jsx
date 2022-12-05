@@ -50,7 +50,7 @@ const WorkPlan = () => {
 
   return (
     <>
-      <ControlPanel title="Панель действий" />
+      <ControlPanel title="Панель действий" works={works} />
       {plans && plans.length > 0 ? (
         <Table
           columns={columns}

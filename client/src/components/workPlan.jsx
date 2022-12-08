@@ -48,6 +48,7 @@ const WorkPlan = () => {
     setPlans(plans.filter((row) => row.id !== id));
   };
 
+  //console.log("WorkPlan", works);
   return (
     <>
       <ControlPanel title="Панель действий" works={works} />

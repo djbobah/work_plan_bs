@@ -74,6 +74,8 @@ const ControlPanel = ({ works }) => {
     setShowModalAdd(false);
   };
 
+  // console.log("cp works", works);
+
   return (
     <div
       className={`navbar navbar-expand-lg  justify-content-between    ${styles.nav}`}

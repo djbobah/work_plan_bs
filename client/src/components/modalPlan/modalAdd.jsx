@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import CreatableSelect from "react-select/creatable";
 import {
   Modal,
   Button,
@@ -10,11 +11,36 @@ import {
 } from "react-bootstrap";
 import { getToday, getTommorow } from "../../utils/DateFunctions";
 
-const ModalAdd = ({ show, onShow, onClose, title }) => {
+const ModalAdd = ({ show, onShow, onClose, title, works }) => {
   // const [show, setShow] = useState(false);
 
   // const handleClose = () => setShow(false);
   // const handleShow = () => setShow(true);
+  // console.log("works", works);
+  //console.log("works[0].name", works[0].name);
+  // worksOptions=
+
+  // const optionsArray =
+  // //   !Array.isArray(works) && typeof works === "object"
+  // //     ? Object.keys(works).map((optionName) => ({
+  //         label: works[optionName].name,
+  //         value: works[optionName].id,
+  //       }))
+  //     : works.map((work) => ({
+  //         label: work.name,
+  //         value: work.id,
+  //       }));
+
+  // const handleChange = (value) => {
+  //   onChange({ name: name, value });
+  // };
+
+  // const handleChange = (target) => {
+  //   setData((prevState) => ({
+  //       ...prevState,
+  //       [target.name]: target.value
+  //   }));
+
   return (
     <>
       <Modal
@@ -45,13 +71,20 @@ const ModalAdd = ({ show, onShow, onClose, title }) => {
             <Row className="mb-3">
               <Form.Group as={Col} controlId="formGridEmail">
                 {/* <Form.Label>Планируемые работы</Form.Label> */}
-                <FloatingLabel
+                {/* <FloatingLabel
                   controlId="floatingInput"
                   label="Планируемые работы"
                   className="mb-3"
                 >
                   <Form.Control type="text" placeholder="Планируемые работы" />
-                </FloatingLabel>
+                </FloatingLabel> */}
+                <CreatableSelect
+                  isClearable
+                  placeholder="Выберите работы"
+                  name="works"
+                  // options={optionsArray}
+                  // onChange={handleChange}
+                />
               </Form.Group>
 
               <Form.Group as={Col} controlId="formGridPassword">
@@ -70,12 +103,17 @@ const ModalAdd = ({ show, onShow, onClose, title }) => {
                   className="mb-3"
                 >
                   <datalist id="datalistOptions">
-                    <option value="San Francisco" />
-                    <option value="New York" />
-                    <option value="Seattle" />
-                    <option value="Los Angeles" />
-                    <option value="Chicago" />
-                  </datalist>{" "}
+                    {works &&
+                      works.map((work) => {
+                        console.log(work.name);
+                        <option key={work.id} value={work.name} />;
+                      })}
+                    {/* <option value="San Francisco" />
+                      <option value="New York" />
+                      <option value="Seattle" />
+                      <option value="Los Angeles" />
+                      <option value="Chicago" /> */}
+                  </datalist>
                   <input
                     className="form-control"
                     list="datalistOptions"

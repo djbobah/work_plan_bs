@@ -34,8 +34,8 @@ const ModalAdd = ({ show, onShow, onClose, title, works }) => {
   //       ...prevState,
   //       [target.name]: target.value
   //   }));
-  const handleChange = ({ target }) => {
-    console.log(target);
+  const handleChange = (e) => {
+    console.log(e);
   };
 
   return (

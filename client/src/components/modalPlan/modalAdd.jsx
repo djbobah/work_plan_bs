@@ -16,20 +16,14 @@ const ModalAdd = ({ show, onShow, onClose, title, works }) => {
 
   // const handleClose = () => setShow(false);
   // const handleShow = () => setShow(true);
-  // console.log("works", works);
+  //console.log("works", works);
   //console.log("works[0].name", works[0].name);
   // worksOptions=
 
-  // const optionsArray =
-  // //   !Array.isArray(works) && typeof works === "object"
-  // //     ? Object.keys(works).map((optionName) => ({
-  //         label: works[optionName].name,
-  //         value: works[optionName].id,
-  //       }))
-  //     : works.map((work) => ({
-  //         label: work.name,
-  //         value: work.id,
-  //       }));
+  const optionsArray = works.map((work) => ({
+    label: work.name,
+    value: work.id,
+  }));
 
   // const handleChange = (value) => {
   //   onChange({ name: name, value });
@@ -40,6 +34,9 @@ const ModalAdd = ({ show, onShow, onClose, title, works }) => {
   //       ...prevState,
   //       [target.name]: target.value
   //   }));
+  const handleChange = ({ target }) => {
+    console.log(target);
+  };
 
   return (
     <>
@@ -69,24 +66,18 @@ const ModalAdd = ({ show, onShow, onClose, title, works }) => {
             </Form.Group>
 
             <Row className="mb-3">
+              <Form.Label>Планируемые работы</Form.Label>
               <Form.Group as={Col} controlId="formGridEmail">
-                {/* <Form.Label>Планируемые работы</Form.Label> */}
-                {/* <FloatingLabel
-                  controlId="floatingInput"
-                  label="Планируемые работы"
-                  className="mb-3"
-                >
-                  <Form.Control type="text" placeholder="Планируемые работы" />
-                </FloatingLabel> */}
                 <CreatableSelect
                   isClearable
-                  placeholder="Выберите работы"
+                  placeholder="Выберите или начните ввод..."
                   name="works"
-                  // options={optionsArray}
-                  // onChange={handleChange}
+                  defaultOption=" Choose..."
+                  options={optionsArray}
+                  onChange={handleChange}
+                  // value={works}
                 />
               </Form.Group>
-
               <Form.Group as={Col} controlId="formGridPassword">
                 <Form.Check
                   type="checkbox"
@@ -105,7 +96,7 @@ const ModalAdd = ({ show, onShow, onClose, title, works }) => {
                   <datalist id="datalistOptions">
                     {works &&
                       works.map((work) => {
-                        console.log(work.name);
+                        // console.log(work.name);
                         <option key={work.id} value={work.name} />;
                       })}
                     {/* <option value="San Francisco" />

@@ -51,7 +51,8 @@ const WorkPlan = () => {
   //console.log("WorkPlan", works);
   return (
     <>
-      <ControlPanel title="Панель действий" works={works} />
+      {works && <ControlPanel title="Панель действий" works={works} />}
+
       {plans && plans.length > 0 ? (
         <Table
           columns={columns}

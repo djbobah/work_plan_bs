@@ -12,6 +12,10 @@ import {
 import { getToday, getTommorow } from "../../utils/DateFunctions";
 
 const ModalAdd = ({ show, onShow, onClose, title, works }) => {
+  const [data, setData] = useState({
+    dateOfWork: "",
+    typeOfWork: "",
+  });
   // const [show, setShow] = useState(false);
 
   // const handleClose = () => setShow(false);
@@ -61,7 +65,11 @@ const ModalAdd = ({ show, onShow, onClose, title, works }) => {
                 Введите дату планируемой работы
               </Form.Label>
               <Col sm="4">
-                <Form.Control type="date" value={getTommorow()} />
+                <Form.Control
+                  type="date"
+                  name="dateOfWork"
+                  value={getTommorow()}
+                />
               </Col>
             </Form.Group>
 
@@ -72,7 +80,7 @@ const ModalAdd = ({ show, onShow, onClose, title, works }) => {
                   formatCreateLabel={(inputText) => `Добавить: "${inputText}"`}
                   isClearable
                   placeholder="Выберите или начните ввод..."
-                  name="works"
+                  name="typeOfWork"
                   // defaultOption=" Choose..."
                   options={optionsArray}
                   onChange={handleChange}

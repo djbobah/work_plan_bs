@@ -69,10 +69,11 @@ const ModalAdd = ({ show, onShow, onClose, title, works }) => {
               <Form.Label>Планируемые работы</Form.Label>
               <Form.Group as={Col} controlId="formGridEmail">
                 <CreatableSelect
+                  formatCreateLabel={(inputText) => `Добавить: "${inputText}"`}
                   isClearable
                   placeholder="Выберите или начните ввод..."
                   name="works"
-                  defaultOption=" Choose..."
+                  // defaultOption=" Choose..."
                   options={optionsArray}
                   onChange={handleChange}
                   // value={works}

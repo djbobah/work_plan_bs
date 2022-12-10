@@ -9,11 +9,12 @@ import {
   Col,
   FloatingLabel,
 } from "react-bootstrap";
-import { getToday, getTommorow } from "../../utils/DateFunctions";
+import { convertDate, getTommorow } from "../../utils/DateFunctions";
+import CreatableSelectModal from "./CreatableSelectModat";
 
 const ModalAdd = ({ show, onShow, onClose, title, works }) => {
   const [data, setData] = useState({
-    dateOfWork: "",
+    dateOfWork: getTommorow(),
     typeOfWork: "",
   });
   // const [show, setShow] = useState(false);
@@ -38,9 +39,22 @@ const ModalAdd = ({ show, onShow, onClose, title, works }) => {
   //       ...prevState,
   //       [target.name]: target.value
   //   }));
-  const handleChange = (e) => {
-    console.log(e);
+  const handleChangeDate = ({ target }) => {
+    setData((prevState) => ({
+      ...prevState,
+      [target.name]: target.value,
+    }));
+    console.log(target.value);
   };
+  const handleChange = (target) => {
+    setData((prevState) => ({
+      ...prevState,
+      [target.name]: target.value,
+    }));
+    console.log(target);
+  };
+
+  const isValid = false;
 
   return (
     <>
@@ -56,6 +70,7 @@ const ModalAdd = ({ show, onShow, onClose, title, works }) => {
         </Modal.Header>
         <Modal.Body>
           <Form>
+            {" "}
             <Form.Group
               as={Row}
               className="mb-3"
@@ -68,24 +83,27 @@ const ModalAdd = ({ show, onShow, onClose, title, works }) => {
                 <Form.Control
                   type="date"
                   name="dateOfWork"
-                  value={getTommorow()}
+                  value={data.dateOfWork}
+                  onChange={handleChangeDate}
+                  isInvalid
                 />
+                <Form.Control.Feedback type="invalid">
+                  Дата не может быть меньше {convertDate(getTommorow())}
+                </Form.Control.Feedback>{" "}
               </Col>
             </Form.Group>
-
             <Row className="mb-3">
               <Form.Label>Планируемые работы</Form.Label>
               <Form.Group as={Col} controlId="formGridEmail">
-                <CreatableSelect
-                  formatCreateLabel={(inputText) => `Добавить: "${inputText}"`}
-                  isClearable
-                  placeholder="Выберите или начните ввод..."
+                <CreatableSelectModal
                   name="typeOfWork"
-                  // defaultOption=" Choose..."
                   options={optionsArray}
                   onChange={handleChange}
-                  // value={works}
+                  // isInvalid
                 />
+                {/* <Form.Control.Feedback type="invalid">
+                  Please choose a username.
+                </Form.Control.Feedback>{" "} */}
               </Form.Group>
               <Form.Group as={Col} controlId="formGridPassword">
                 <Form.Check
@@ -94,7 +112,6 @@ const ModalAdd = ({ show, onShow, onClose, title, works }) => {
                 />
               </Form.Group>
             </Row>
-
             <Row className="mb-3">
               <Form.Group>
                 <FloatingLabel
@@ -123,17 +140,14 @@ const ModalAdd = ({ show, onShow, onClose, title, works }) => {
                 </FloatingLabel>
               </Form.Group>
             </Row>
-
             <Form.Group className="mb-3" controlId="formGridAddress1">
               <Form.Label>Address</Form.Label>
               <Form.Control placeholder="1234 Main St" />
             </Form.Group>
-
             <Form.Group className="mb-3" controlId="formGridAddress2">
               <Form.Label>Address 2</Form.Label>
               <Form.Control placeholder="Apartment, studio, or floor" />
             </Form.Group>
-
             <Row className="mb-3">
               <Form.Group as={Col} controlId="formGridCity">
                 <Form.Label>City</Form.Label>
@@ -153,7 +167,6 @@ const ModalAdd = ({ show, onShow, onClose, title, works }) => {
                 <Form.Control />
               </Form.Group>
             </Row>
-
             <Form.Group className="mb-3" id="formGridCheckbox">
               <Form.Check type="checkbox" label="Check me out" />
             </Form.Group>
@@ -163,7 +176,9 @@ const ModalAdd = ({ show, onShow, onClose, title, works }) => {
           {/* <Button variant="secondary" onClick={onClose}>
             Закрыть
           </Button> */}
-          <Button variant="primary">Сохранить</Button>
+          <Button variant="primary" disabled={!isValid}>
+            Сохранить
+          </Button>
         </Modal.Footer>
       </Modal>
     </>

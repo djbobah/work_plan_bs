@@ -9,7 +9,7 @@ import styles from "./ControlPanel.module.css";
 import Toast from "./Toast.jsx";
 // import Toast from "./components/Toast.jsx";
 
-const ControlPanel = ({ works }) => {
+const ControlPanel = ({ works, objects }) => {
   const [DateFrom, setDateFrom] = useState(getToday().toString());
   const [DateEnd, setDateEnd] = useState(getTommorow(DateFrom));
   const [toastShow, setToastShow] = useState(false);
@@ -167,6 +167,7 @@ const ControlPanel = ({ works }) => {
         onShow={handleClickAddShow}
         onClose={handleClickAddClose}
         works={works}
+        objects={objects}
       />
     </div>
   );

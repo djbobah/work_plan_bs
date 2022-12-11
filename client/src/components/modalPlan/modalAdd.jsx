@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import CreatableSelect from "react-select/creatable";
+import React, { useState, useEffect } from "react";
+import { validator } from "../../utils/validator";
+// import CreatableSelect from "react-select/creatable";
 import {
   Modal,
   Button,
@@ -12,33 +13,25 @@ import {
 import { convertDate, getTommorow } from "../../utils/DateFunctions";
 import CreatableSelectModal from "./CreatableSelectModat";
 
-const ModalAdd = ({ show, onShow, onClose, title, works }) => {
+const ModalAdd = ({ show, onShow, onClose, title, works, objects }) => {
   const [data, setData] = useState({
     dateOfWork: getTommorow(),
     typeOfWork: "",
+    isDanger: false,
+    objectForWork: "",
   });
-  // const [show, setShow] = useState(false);
+  const [errors, setErrors] = useState({});
 
-  // const handleClose = () => setShow(false);
-  // const handleShow = () => setShow(true);
-  //console.log("works", works);
-  //console.log("works[0].name", works[0].name);
-  // worksOptions=
-
-  const optionsArray = works.map((work) => ({
+  const optionsTypeOfWorksArray = works.map((work) => ({
     label: work.name,
     value: work.id,
   }));
 
-  // const handleChange = (value) => {
-  //   onChange({ name: name, value });
-  // };
+  const optionsObjectForWork = objects.map((object) => ({
+    label: object.name,
+    value: object.id,
+  }));
 
-  // const handleChange = (target) => {
-  //   setData((prevState) => ({
-  //       ...prevState,
-  //       [target.name]: target.value
-  //   }));
   const handleChangeDate = ({ target }) => {
     setData((prevState) => ({
       ...prevState,
@@ -46,6 +39,15 @@ const ModalAdd = ({ show, onShow, onClose, title, works }) => {
     }));
     console.log(target.value);
   };
+
+  const handleCheck = ({ target }) => {
+    setData((prevState) => ({
+      ...prevState,
+      [target.name]: target.checked,
+    }));
+    console.log(target.checked);
+  };
+
   const handleChange = (target) => {
     setData((prevState) => ({
       ...prevState,
@@ -54,7 +56,41 @@ const ModalAdd = ({ show, onShow, onClose, title, works }) => {
     console.log(target);
   };
 
-  const isValid = false;
+  const validatorConfig = {
+    dateOfWork: {
+      isCorrectDate: {
+        message: "Дата не может быть меньше ",
+      },
+    },
+    typeOfWork: {
+      isRequired: { message: "Работа обязательна для заполнения" },
+    },
+    objectForWork: {
+      isRequired: {
+        message: "Место проведения работ обязательно для заполнения",
+      },
+    },
+  };
+  useEffect(() => {
+    validate();
+  }, [data]);
+
+  const validate = () => {
+    const errors = validator(data, validatorConfig);
+    console.log("errors", errors);
+    setErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+  const isValid = Object.keys(errors).length === 0;
+
+  // const isValid = false;
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // const isValid = validate();
+    // if (!isValid) return;
+
+    console.log(data);
+  };
 
   return (
     <>
@@ -69,8 +105,7 @@ const ModalAdd = ({ show, onShow, onClose, title, works }) => {
           <Modal.Title className="fs-5">Добавляем работу...</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
-            {" "}
+          <Form onSubmit={handleSubmit}>
             <Form.Group
               as={Row}
               className="mb-3"
@@ -85,59 +120,58 @@ const ModalAdd = ({ show, onShow, onClose, title, works }) => {
                   name="dateOfWork"
                   value={data.dateOfWork}
                   onChange={handleChangeDate}
-                  isInvalid
+                  isInvalid={errors.dateOfWork}
                 />
                 <Form.Control.Feedback type="invalid">
-                  Дата не может быть меньше {convertDate(getTommorow())}
-                </Form.Control.Feedback>{" "}
+                  {errors &&
+                    `${errors.dateOfWork} ${convertDate(getTommorow())}`}
+                </Form.Control.Feedback>
               </Col>
             </Form.Group>
             <Row className="mb-3">
-              <Form.Label>Планируемые работы</Form.Label>
-              <Form.Group as={Col} controlId="formGridEmail">
+              <Form.Label className="text-muted">Планируемые работы</Form.Label>
+              <Form.Group as={Col}>
                 <CreatableSelectModal
                   name="typeOfWork"
-                  options={optionsArray}
+                  options={optionsTypeOfWorksArray}
                   onChange={handleChange}
-                  // isInvalid
+                  error={errors.typeOfWork}
                 />
-                {/* <Form.Control.Feedback type="invalid">
-                  Please choose a username.
-                </Form.Control.Feedback>{" "} */}
               </Form.Group>
-              <Form.Group as={Col} controlId="formGridPassword">
+
+              <Form.Group as={Col}>
                 <Form.Check
                   type="checkbox"
                   label="Работы повышенной опасности"
+                  name="isDanger"
+                  onChange={handleCheck}
                 />
               </Form.Group>
             </Row>
             <Row className="mb-3">
-              <Form.Group>
-                <FloatingLabel
-                  controlId="floatingInput"
-                  label="Планируемые работы"
-                  className="mb-3"
-                >
-                  <datalist id="datalistOptions">
-                    {works &&
-                      works.map((work) => {
-                        // console.log(work.name);
-                        <option key={work.id} value={work.name} />;
-                      })}
-                    {/* <option value="San Francisco" />
-                      <option value="New York" />
-                      <option value="Seattle" />
-                      <option value="Los Angeles" />
-                      <option value="Chicago" /> */}
-                  </datalist>
-                  <input
-                    className="form-control"
-                    list="datalistOptions"
-                    id="exampleDataList"
-                    placeholder="Планируемые работы"
-                  />
-                </FloatingLabel>
+              <Form.Label className="text-muted">
+                Место проведения работ
+              </Form.Label>
+              <Form.Group as={Col}>
+                <CreatableSelectModal
+                  name="objectForWork"
+                  options={optionsObjectForWork}
+                  onChange={handleChange}
+                  error={errors.objectForWork}
+                />
+              </Form.Group>
+            </Row>{" "}
+            <Row className="mb-3">
+              <Form.Label className="text-muted">
+                Задействованный транспорт
+              </Form.Label>
+              <Form.Group as={Col}>
+                <CreatableSelectModal
+                  name="objectForWork"
+                  options={optionsObjectForWork}
+                  onChange={handleChange}
+                  error={errors.objectForWork}
+                />
               </Form.Group>
             </Row>
             <Form.Group className="mb-3" controlId="formGridAddress1">
@@ -170,15 +204,19 @@ const ModalAdd = ({ show, onShow, onClose, title, works }) => {
             <Form.Group className="mb-3" id="formGridCheckbox">
               <Form.Check type="checkbox" label="Check me out" />
             </Form.Group>
+            <button
+              className="btn btn-primary"
+              disabled={!isValid}
+              type="submit"
+            >
+              Сохранить
+            </button>
           </Form>
         </Modal.Body>
         <Modal.Footer>
           {/* <Button variant="secondary" onClick={onClose}>
             Закрыть
           </Button> */}
-          <Button variant="primary" disabled={!isValid}>
-            Сохранить
-          </Button>
         </Modal.Footer>
       </Modal>
     </>

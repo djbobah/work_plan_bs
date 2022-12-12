@@ -52,7 +52,12 @@ const WorkPlan = () => {
   return (
     <>
       {works && (
-        <ControlPanel title="Панель действий" works={works} objects={objects} />
+        <ControlPanel
+          title="Панель действий"
+          works={works}
+          objects={objects}
+          auto={auto}
+        />
       )}
 
       {plans && plans.length > 0 ? (

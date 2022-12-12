@@ -1,6 +1,6 @@
 import React from "react";
 
-import { convertDate } from "../utils/DateFunctions";
+import { convertDate } from "../utils/DateTimeFunctions";
 import { shortFio } from "../utils/fioUtils";
 import deletePng from "../static/img/delete.png";
 import editPng from "../static/img/edit.png";

@@ -49,3 +49,20 @@ export function convertDate(dateString) {
   // console.log(date[2], ".", date[1], ".", date[0]);
   return `${date[2]}.${date[1]}.${date[0]}`;
 }
+
+export const getCurrentTime = () => {
+  const currentDay = new Date();
+  let currentHour = currentDay.getHours();
+  let currentMinute = currentDay.getMinutes();
+  if (currentHour < 10) {
+    currentHour = "0" + currentHour;
+  }
+  if (currentMinute < 10) {
+    currentMinute = "0" + currentMinute;
+  }
+  return currentHour + "" + currentMinute;
+};
+export const getCurrentDay = () => {
+  const currentDay = new Date();
+  return currentDay.getDay();
+};

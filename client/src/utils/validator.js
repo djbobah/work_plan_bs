@@ -1,4 +1,9 @@
-import { getTommorow, getToday } from "./DateFunctions";
+import {
+  getTommorow,
+  getToday,
+  getCurrentTime,
+  getCurrentDay,
+} from "./DateTimeFunctions";
 
 export const validator = (data, config) => {
   const errors = {};
@@ -16,13 +21,39 @@ export const validator = (data, config) => {
         // statusValidate = !emailRegExp.test(data);
         break;
       case "isRequired": {
-        console.log("data", data);
+        // console.log("data", data);
 
         if (typeof data === "boolean") {
           statusValidate = !data;
         } else if (typeof data === "string") {
           statusValidate = data.trim() === "";
         } else statusValidate = data === null;
+        break;
+      }
+      // case "isCorrectDateAuto": {
+      //   console.log("data", data);
+      //   if (data !== "") {
+      //     statusValidate = !data;
+      //   }
+      //   break;
+      // }
+      case "isCorrectTimeAuto": {
+        console.log("data", data);
+        console.log(getCurrentTime());
+        console.log(getCurrentDay());
+        if (getCurrentDay() === 5 && getCurrentTime() > "1400") {
+          statusValidate = !data;
+          break;
+        }
+        if (getCurrentTime() > "1500") {
+          statusValidate = !data;
+        }
+
+        // if (typeof data === "boolean") {
+        //   statusValidate = !data;
+        // } else if (typeof data === "string") {
+        //   statusValidate = data.trim() === "";
+        // } else statusValidate = data === null;
         break;
       }
 

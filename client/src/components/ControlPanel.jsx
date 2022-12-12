@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import NavCheckButton from "./NavCheckButton";
-import { getToday, getTommorow } from "../utils/DateFunctions";
+import { getToday, getTommorow } from "../utils/DateTimeFunctions";
 import AddImage from "../static/img/add.png";
 import PrinterImage from "../static/img/printer.png";
 import ExcelImage from "../static/img/Microsoft_Office_-_Excel.png";
@@ -9,7 +9,7 @@ import styles from "./ControlPanel.module.css";
 import Toast from "./Toast.jsx";
 // import Toast from "./components/Toast.jsx";
 
-const ControlPanel = ({ works, objects }) => {
+const ControlPanel = ({ works, objects, auto }) => {
   const [DateFrom, setDateFrom] = useState(getToday().toString());
   const [DateEnd, setDateEnd] = useState(getTommorow(DateFrom));
   const [toastShow, setToastShow] = useState(false);
@@ -168,6 +168,7 @@ const ControlPanel = ({ works, objects }) => {
         onClose={handleClickAddClose}
         works={works}
         objects={objects}
+        auto={auto}
       />
     </div>
   );

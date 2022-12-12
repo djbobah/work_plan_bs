@@ -10,15 +10,18 @@ import {
   Col,
   FloatingLabel,
 } from "react-bootstrap";
-import { convertDate, getTommorow } from "../../utils/DateFunctions";
-import CreatableSelectModal from "./CreatableSelectModat";
+import { convertDate, getTommorow } from "../../utils/DateTimeFunctions";
+import CreatableSelectModal from "./creatableSelectModal";
+import SelectModal from "./selectModal";
 
-const ModalAdd = ({ show, onShow, onClose, title, works, objects }) => {
+const ModalAdd = ({ show, onShow, onClose, title, works, objects, auto }) => {
   const [data, setData] = useState({
     dateOfWork: getTommorow(),
     typeOfWork: "",
     isDanger: false,
     objectForWork: "",
+    auto: "",
+    methodOfWork: { name: "ss", checked: true },
   });
   const [errors, setErrors] = useState({});
 
@@ -31,7 +34,10 @@ const ModalAdd = ({ show, onShow, onClose, title, works, objects }) => {
     label: object.name,
     value: object.id,
   }));
-
+  const optionsAuto = auto.map((auto) => ({
+    label: auto.name,
+    value: auto.id,
+  }));
   const handleChangeDate = ({ target }) => {
     setData((prevState) => ({
       ...prevState,
@@ -47,6 +53,12 @@ const ModalAdd = ({ show, onShow, onClose, title, works, objects }) => {
     }));
     console.log(target.checked);
   };
+  const handleRadio = ({ target }) => {
+    setData((prevState) => ({
+      ...prevState,
+      [target.name]: { name: target.name,checked:target.checked}
+    console.log(target.value);
+ )};
 
   const handleChange = (target) => {
     setData((prevState) => ({
@@ -68,6 +80,15 @@ const ModalAdd = ({ show, onShow, onClose, title, works, objects }) => {
     objectForWork: {
       isRequired: {
         message: "Место проведения работ обязательно для заполнения",
+      },
+    },
+    auto: {
+      // isCorrectDateAuto: {
+      //   message: "Вы не можете заказать автомобиль на указанную дату ",
+      // },
+      isCorrectTimeAuto: {
+        message:
+          "Сегодня вы уже не можете заказать автомобиль. Ограничение по времени пн-чт до 15:00, пт до 14:00",
       },
     },
   };
@@ -166,21 +187,53 @@ const ModalAdd = ({ show, onShow, onClose, title, works, objects }) => {
                 Задействованный транспорт
               </Form.Label>
               <Form.Group as={Col}>
-                <CreatableSelectModal
-                  name="objectForWork"
-                  options={optionsObjectForWork}
+                <SelectModal
+                  name="auto"
+                  options={optionsAuto}
                   onChange={handleChange}
-                  error={errors.objectForWork}
+                  error={errors.auto}
+                />
+              </Form.Group>
+            </Row>
+            <hr />
+            <Row>
+              {" "}
+              <Form.Label className="text-muted">
+                Способ проведения работ
+              </Form.Label>
+              <Form.Group as={Col}>
+                <Form.Check
+                  // inline
+                  label="Собственными силами"
+                  name="methodOfWork"
+                  type="radio"
+                  id="ss"
+                  onChange={handleRadio}
+                  value="ss"
+                  checked
+                />
+                <Form.Check
+                  // inline
+                  label="Подрядная организация"
+                  name="methodOfWork"
+                  type="radio"
+                  id="po"
+                  value="po"
+                  onChange={handleRadio}
+                />
+              </Form.Group>
+              <Form.Group as={Col}>
+                <CreatableSelectModal
+                  name="typeOfWork"
+                  options={optionsTypeOfWorksArray}
+                  onChange={handleChange}
+                  error={errors.typeOfWork}
                 />
               </Form.Group>
             </Row>
             <Form.Group className="mb-3" controlId="formGridAddress1">
               <Form.Label>Address</Form.Label>
               <Form.Control placeholder="1234 Main St" />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formGridAddress2">
-              <Form.Label>Address 2</Form.Label>
-              <Form.Control placeholder="Apartment, studio, or floor" />
             </Form.Group>
             <Row className="mb-3">
               <Form.Group as={Col} controlId="formGridCity">

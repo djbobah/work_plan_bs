@@ -21,7 +21,7 @@ export const validator = (data, config) => {
         // statusValidate = !emailRegExp.test(data);
         break;
       case "isRequired": {
-        // console.log("data", data);
+        console.log("data", data);
 
         if (typeof data === "boolean") {
           statusValidate = !data;
@@ -38,17 +38,22 @@ export const validator = (data, config) => {
       //   break;
       // }
       case "isCorrectTimeAuto": {
-        console.log("data", data);
-        console.log(getCurrentTime());
-        console.log(getCurrentDay());
-        if (getCurrentDay() === 5 && getCurrentTime() > "1400") {
-          statusValidate = !data;
-          break;
-        }
-        if (getCurrentTime() > "1500") {
-          statusValidate = !data;
-        }
+        console.log("data", typeof data, ".");
+        // console.log(getCurrentTime());
+        // console.log(getCurrentDay());
 
+        if (typeof data !== null) {
+          console.log("data", data, ".///");
+          if (getCurrentDay() === 5 && getCurrentTime() > "1400") {
+            statusValidate = data;
+            break;
+          }
+          if (getCurrentTime() > "1500") {
+            statusValidate = data;
+            // console.log("statusValidate", statusValidate);
+            break;
+          }
+        }
         // if (typeof data === "boolean") {
         //   statusValidate = !data;
         // } else if (typeof data === "string") {

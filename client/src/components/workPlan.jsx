@@ -10,6 +10,8 @@ const WorkPlan = () => {
   const [auto, setAuto] = useState();
   const [gn, setGn] = useState();
   const [brigada, setBrigada] = useState();
+  const [contractingOrganization, setContractingOrganization] = useState();
+
   useEffect(() => {
     api.plan.fetchAll().then((data) => setPlans(data));
     api.vid_rabot.fetchAll().then((work) => setWorks(work));
@@ -17,6 +19,9 @@ const WorkPlan = () => {
     api.avto.fetchAll().then((auto) => setAuto(auto));
     api.gn.fetchAll().then((gn) => setGn(gn));
     api.user.fetchAll().then((brigada) => setBrigada(brigada));
+    api.podr_org
+      .fetchAll()
+      .then((contracting) => setContractingOrganization(contracting));
   }, []);
 
   const columns = [
@@ -51,12 +56,13 @@ const WorkPlan = () => {
   //console.log("WorkPlan", works);
   return (
     <>
-      {works && (
+      {works && contractingOrganization && (
         <ControlPanel
           title="Панель действий"
           works={works}
           objects={objects}
           auto={auto}
+          contractingOrganization={contractingOrganization}
         />
       )}
 
@@ -70,6 +76,7 @@ const WorkPlan = () => {
           gn={gn}
           brigada={brigada}
           onDelete={handleRowDelete}
+          contractingOrganization={contractingOrganization}
         />
       ) : (
         <h1>В выбранном периоде нет данных</h1>

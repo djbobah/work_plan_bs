@@ -14,14 +14,24 @@ import { convertDate, getTommorow } from "../../utils/DateTimeFunctions";
 import CreatableSelectModal from "./creatableSelectModal";
 import SelectModal from "./selectModal";
 
-const ModalAdd = ({ show, onShow, onClose, title, works, objects, auto }) => {
+const ModalAdd = ({
+  show,
+  onShow,
+  onClose,
+  title,
+  works,
+  objects,
+  auto,
+  contractingOrganization,
+}) => {
   const [data, setData] = useState({
     dateOfWork: getTommorow(),
     typeOfWork: "",
     isDanger: false,
     objectForWork: "",
-    auto: "",
+    auto: null,
     methodOfWork: { name: "ss", checked: true },
+    contractingOrganization: "",
   });
   const [errors, setErrors] = useState({});
 
@@ -38,6 +48,12 @@ const ModalAdd = ({ show, onShow, onClose, title, works, objects, auto }) => {
     label: auto.name,
     value: auto.id,
   }));
+  const optionsContractingOrganization = contractingOrganization.map(
+    (contract) => ({
+      label: contract.name,
+      value: contract.id,
+    })
+  );
   const handleChangeDate = ({ target }) => {
     setData((prevState) => ({
       ...prevState,
@@ -56,16 +72,17 @@ const ModalAdd = ({ show, onShow, onClose, title, works, objects, auto }) => {
   const handleRadio = ({ target }) => {
     setData((prevState) => ({
       ...prevState,
-      [target.name]: { name: target.name,checked:target.checked}}
+      [target.name]: { name: target.value, checked: target.checked },
+    }));
     // console.log(target.value);
- };
+  };
 
   const handleChange = (target) => {
     setData((prevState) => ({
       ...prevState,
       [target.name]: target.value,
     }));
-    console.log(target);
+    // console.log(target);
   };
 
   const validatorConfig = {
@@ -89,6 +106,12 @@ const ModalAdd = ({ show, onShow, onClose, title, works, objects, auto }) => {
       isCorrectTimeAuto: {
         message:
           "Сегодня вы уже не можете заказать автомобиль. Ограничение по времени пн-чт до 15:00, пт до 14:00",
+      },
+    },
+
+    contractingOrganization: {
+      isRequired: {
+        message: "Наименование организации обязательно для заполнения",
       },
     },
   };
@@ -198,10 +221,10 @@ const ModalAdd = ({ show, onShow, onClose, title, works, objects, auto }) => {
             <hr />
             <Row>
               {" "}
-              <Form.Label className="text-muted">
-                Способ проведения работ
-              </Form.Label>
               <Form.Group as={Col}>
+                <Form.Label className="text-muted">
+                  Способ проведения работ
+                </Form.Label>
                 <Form.Check
                   // inline
                   label="Собственными силами"
@@ -210,7 +233,8 @@ const ModalAdd = ({ show, onShow, onClose, title, works, objects, auto }) => {
                   id="ss"
                   onChange={handleRadio}
                   value="ss"
-                  checked
+                  checked={data.methodOfWork.name === "ss"}
+                  //  checked
                 />
                 <Form.Check
                   // inline
@@ -220,16 +244,22 @@ const ModalAdd = ({ show, onShow, onClose, title, works, objects, auto }) => {
                   id="po"
                   value="po"
                   onChange={handleRadio}
+                  checked={data.methodOfWork.name === "po"}
                 />
               </Form.Group>
-              <Form.Group as={Col}>
-                <CreatableSelectModal
-                  name="typeOfWork"
-                  options={optionsTypeOfWorksArray}
-                  onChange={handleChange}
-                  error={errors.typeOfWork}
-                />
-              </Form.Group>
+              {data.methodOfWork.name === "po" && (
+                <Form.Group as={Col}>
+                  <Form.Label className="text-muted">
+                    Наименование подрядной организации
+                  </Form.Label>
+                  <CreatableSelectModal
+                    name="contractingOrganization"
+                    options={optionsContractingOrganization}
+                    onChange={handleChange}
+                    error={errors.contractingOrganization}
+                  />
+                </Form.Group>
+              )}
             </Row>
             <Form.Group className="mb-3" controlId="formGridAddress1">
               <Form.Label>Address</Form.Label>

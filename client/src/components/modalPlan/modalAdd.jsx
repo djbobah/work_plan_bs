@@ -56,9 +56,9 @@ const ModalAdd = ({ show, onShow, onClose, title, works, objects, auto }) => {
   const handleRadio = ({ target }) => {
     setData((prevState) => ({
       ...prevState,
-      [target.name]: { name: target.name,checked:target.checked}
-    console.log(target.value);
- )};
+      [target.name]: { name: target.name,checked:target.checked}}
+    // console.log(target.value);
+ };
 
   const handleChange = (target) => {
     setData((prevState) => ({

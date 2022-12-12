@@ -256,7 +256,11 @@ const ModalAdd = ({
                     name="contractingOrganization"
                     options={optionsContractingOrganization}
                     onChange={handleChange}
-                    error={errors.contractingOrganization}
+                    error={
+                      data.methodOfWork.name === "po"
+                        ? errors.contractingOrganization
+                        : ""
+                    }
                   />
                 </Form.Group>
               )}

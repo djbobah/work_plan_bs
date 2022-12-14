@@ -8,7 +8,7 @@ import {
 export const validator = (data, config) => {
   const errors = {};
 
-  function validate(validateMethod, data, config) {
+  function validate(validateMethod, data, config, methodOfWork) {
     let statusValidate;
     switch (validateMethod) {
       case "isCorrectDate":
@@ -21,7 +21,7 @@ export const validator = (data, config) => {
         // statusValidate = !emailRegExp.test(data);
         break;
       case "isRequired": {
-        console.log("data", data);
+        console.log("methodOfWork", methodOfWork);
 
         if (typeof data === "boolean") {
           statusValidate = !data;
@@ -38,12 +38,12 @@ export const validator = (data, config) => {
       //   break;
       // }
       case "isCorrectTimeAuto": {
-        console.log("data", typeof data, ".");
+        // console.log("data", typeof data, ".");
         // console.log(getCurrentTime());
         // console.log(getCurrentDay());
 
         if (typeof data !== null) {
-          console.log("data", data, ".///");
+          // console.log("data", data, ".///");
           if (getCurrentDay() === 5 && getCurrentTime() > "1400") {
             statusValidate = data;
             break;
@@ -61,7 +61,15 @@ export const validator = (data, config) => {
         // } else statusValidate = data === null;
         break;
       }
-
+      case "isRequiredPo": {
+        console.log("methodOfWork", methodOfWork);
+        if (methodOfWork === "po") {
+          if (typeof data === "string") {
+            statusValidate = data.trim() === "";
+          } else statusValidate = data === null;
+          break;
+        }
+      }
       default:
         break;
     }
@@ -72,7 +80,8 @@ export const validator = (data, config) => {
       const error = validate(
         validateMethod,
         data[fieldName],
-        config[fieldName][validateMethod]
+        config[fieldName][validateMethod],
+        data["methodOfWork"]["name"]
       );
       if (error && !errors[fieldName]) {
         errors[fieldName] = error;

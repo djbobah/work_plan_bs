@@ -13,6 +13,7 @@ import {
 import { convertDate, getTommorow } from "../../utils/DateTimeFunctions";
 import CreatableSelectModal from "./creatableSelectModal";
 import SelectModal from "./selectModal";
+import MultiSelectModal from "./multiSelectModal";
 
 const ModalAdd = ({
   show,
@@ -23,6 +24,7 @@ const ModalAdd = ({
   objects,
   auto,
   contractingOrganization,
+  brigada,
 }) => {
   const [data, setData] = useState({
     dateOfWork: getTommorow(),
@@ -32,6 +34,7 @@ const ModalAdd = ({
     auto: null,
     methodOfWork: { name: "ss", checked: true },
     contractingOrganization: "",
+    brigada: [],
   });
   const [errors, setErrors] = useState({});
 
@@ -70,10 +73,22 @@ const ModalAdd = ({
     console.log(target.checked);
   };
   const handleRadio = ({ target }) => {
-    setData((prevState) => ({
-      ...prevState,
-      [target.name]: { name: target.value, checked: target.checked },
-    }));
+    // console.log("target.name ", data[target.name]["name"]);
+    if (data[target.name]["name"] === "po") {
+      setData((prevState) => ({
+        ...prevState,
+        [target.name]: { name: target.value, checked: target.checked },
+        ["contractingOrganization"]: "",
+      }));
+      //   console.log("po");
+    } else {
+      console.log("ss");
+      setData((prevState) => ({
+        ...prevState,
+        [target.name]: { name: target.value, checked: target.checked },
+      }));
+    }
+    //console.log("target.value", target.value);
     // console.log(target.value);
   };
 
@@ -110,7 +125,7 @@ const ModalAdd = ({
     },
 
     contractingOrganization: {
-      isRequired: {
+      isRequiredPo: {
         message: "Наименование организации обязательно для заполнения",
       },
     },
@@ -259,52 +274,62 @@ const ModalAdd = ({
                     error={
                       data.methodOfWork.name === "po"
                         ? errors.contractingOrganization
-                        : ""
+                        : undefined
                     }
+                    value={data.contractingOrganization}
                   />
                 </Form.Group>
               )}
             </Row>
-            <Form.Group className="mb-3" controlId="formGridAddress1">
-              <Form.Label>Address</Form.Label>
-              <Form.Control placeholder="1234 Main St" />
-            </Form.Group>
+            <br />
             <Row className="mb-3">
-              <Form.Group as={Col} controlId="formGridCity">
-                <Form.Label>City</Form.Label>
-                <Form.Control />
-              </Form.Group>
-
-              <Form.Group as={Col} controlId="formGridState">
-                <Form.Label>State</Form.Label>
-                <Form.Select defaultValue="Choose...">
-                  <option>Choose...</option>
-                  <option>...</option>
-                </Form.Select>
-              </Form.Group>
-
-              <Form.Group as={Col} controlId="formGridZip">
-                <Form.Label>Zip</Form.Label>
-                <Form.Control />
+              <Form.Group as={Col}>
+                <Form.Label className="text-muted">Состав бригады</Form.Label>
+                {/* <SelectModal
+                  name="auto"
+                  options={optionsAuto}
+                  onChange={handleChange}
+                  error={errors.auto}
+                /> */}
+                {console.log("brigada", brigada)}
+                <MultiSelectModal
+                  onChange={handleChange}
+                  name="brigada"
+                  options={brigada}
+                />
+              </Form.Group>{" "}
+              <Form.Group as={Col}>
+                <Form.Label className="text-muted">Старший</Form.Label>
+                <SelectModal
+                  name="auto"
+                  options={optionsAuto}
+                  onChange={handleChange}
+                  error={errors.auto}
+                />
               </Form.Group>
             </Row>
-            <Form.Group className="mb-3" id="formGridCheckbox">
-              <Form.Check type="checkbox" label="Check me out" />
-            </Form.Group>
-            <button
-              className="btn btn-primary"
-              disabled={!isValid}
-              type="submit"
-            >
-              Сохранить
-            </button>
+            <hr />
+            <Row>
+              <Form.Group as={Col}>
+                <button
+                  className="btn btn-primary"
+                  disabled={!isValid}
+                  type="submit"
+                >
+                  Сохранить
+                </button>{" "}
+                <button
+                  className="btn btn-secondary"
+                  // disabled={!isValid}
+                  type="button"
+                  // onClick={onClose}
+                >
+                  Отмена
+                </button>
+              </Form.Group>
+            </Row>
           </Form>
         </Modal.Body>
-        <Modal.Footer>
-          {/* <Button variant="secondary" onClick={onClose}>
-            Закрыть
-          </Button> */}
-        </Modal.Footer>
       </Modal>
     </>
   );

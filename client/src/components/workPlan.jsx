@@ -80,7 +80,7 @@ const WorkPlan = () => {
           contractingOrganization={contractingOrganization}
         />
       ) : (
-        <h1>В выбранном периоде нет данных</h1>
+        <h1>Загрузка...</h1>
       )}
     </>
   );

@@ -301,11 +301,18 @@ const ModalAdd = ({
               <Form.Group as={Col}>
                 <Form.Label className="text-muted">Старший</Form.Label>
                 <SelectModal
-                  name="auto"
+                  name="brigadier"
                   options={optionsAuto}
                   onChange={handleChange}
                   error={errors.auto}
                 />
+              </Form.Group>
+            </Row>
+            <Row>
+              {" "}
+              <Form.Group className="mb-3">
+                <Form.Label className="text-muted">Комментарий</Form.Label>
+                <Form.Control as="textarea" rows={2} />
               </Form.Group>
             </Row>
             <hr />

@@ -8,8 +8,9 @@ import {
 export const validator = (data, config) => {
   const errors = {};
 
-  function validate(validateMethod, data, config, methodOfWork) {
+  function validate(validateMethod, data, config, methodOfWork, dateOfWork) {
     let statusValidate;
+
     switch (validateMethod) {
       case "isCorrectDate":
         // console.log("data", data);
@@ -41,17 +42,21 @@ export const validator = (data, config) => {
         // console.log("data", typeof data, ".");
         // console.log(getCurrentTime());
         // console.log(getCurrentDay());
+        console.log("dateOfWork", dateOfWork);
+        console.log("getToday() ", getToday());
 
         if (typeof data !== null) {
           // console.log("data", data, ".///");
-          if (getCurrentDay() === 5 && getCurrentTime() > "1400") {
-            statusValidate = data;
-            break;
-          }
-          if (getCurrentTime() > "1500") {
-            statusValidate = data;
-            // console.log("statusValidate", statusValidate);
-            break;
+          if (dateOfWork === getToday()) {
+            if (getCurrentDay() === 5 && getCurrentTime() > "1400") {
+              statusValidate = data;
+              break;
+            }
+            if (getCurrentTime() > "1500") {
+              statusValidate = data;
+              // console.log("statusValidate", statusValidate);
+              break;
+            }
           }
         }
         // if (typeof data === "boolean") {
@@ -81,7 +86,8 @@ export const validator = (data, config) => {
         validateMethod,
         data[fieldName],
         config[fieldName][validateMethod],
-        data["methodOfWork"]["name"]
+        data["methodOfWork"]["name"],
+        data["dateOfWork"]
       );
       if (error && !errors[fieldName]) {
         errors[fieldName] = error;

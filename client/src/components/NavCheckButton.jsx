@@ -5,7 +5,7 @@ const NavCheckButton = (props) => {
   //console.log(props.id);
   //console.log(props.title);
   return (
-    <div className={`pe-1  ${styles.setMinHeight}`}>
+    <div className={`pe-1 fs-6  ${styles.setMinHeight}`}>
       {props.check ? (
         <div
           className={`form-check form-switch border  rounded  bg-success text-center d-flex align-items-center   ${styles.setMinHeight}`}

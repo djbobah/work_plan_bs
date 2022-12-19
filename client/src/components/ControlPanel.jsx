@@ -84,7 +84,7 @@ const ControlPanel = ({
 
   return (
     <div
-      className={`navbar navbar-expand-lg  justify-content-between    ${styles.nav}`}
+      className={`navbar navbar-expand-lg  justify-content-between fs-6   ${styles.nav}`}
     >
       <div className="d-flex">
         <div>

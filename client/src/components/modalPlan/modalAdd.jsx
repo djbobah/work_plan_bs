@@ -35,9 +35,11 @@ const ModalAdd = ({
     methodOfWork: { name: "ss", checked: true },
     contractingOrganization: "",
     brigada: [],
+    brigadier: "",
   });
   const [errors, setErrors] = useState({});
 
+  let optionsBrigadier = [];
   const optionsTypeOfWorksArray = works.map((work) => ({
     label: work.name,
     value: work.id,
@@ -92,6 +94,20 @@ const ModalAdd = ({
     // console.log(target.value);
   };
 
+  const handleChangeBrigada = (target) => {
+    setData((prevState) => ({
+      ...prevState,
+      [target.name]: target.value,
+    }));
+
+    // optionsBrigadier = data.brigada.map((brigadier) => ({
+    //   label: brigadier.name,
+    //   value: brigadier.id,
+    // }));
+    // const optionsBrigadier = data.brigada;
+    // console.log("data.brigada", data.brigada);
+    // console.log("optionsBrigadier", optionsBrigadier);
+  };
   const handleChange = (target) => {
     setData((prevState) => ({
       ...prevState,
@@ -133,6 +149,12 @@ const ModalAdd = ({
   useEffect(() => {
     validate();
   }, [data]);
+
+  // useEffect(() => {
+  //   optionsBrigadier = data.brigada;
+  //   console.log("data.brigada", data.brigada);
+  //   console.log("optionsBrigadier", optionsBrigadier);
+  // }, [data.brigada]);
 
   const validate = () => {
     const errors = validator(data, validatorConfig);
@@ -227,6 +249,7 @@ const ModalAdd = ({
               <Form.Group as={Col}>
                 <SelectModal
                   name="auto"
+                  label="Выберите желаемый автомобиль(если необходимо)..."
                   options={optionsAuto}
                   onChange={handleChange}
                   error={errors.auto}
@@ -291,18 +314,20 @@ const ModalAdd = ({
                   onChange={handleChange}
                   error={errors.auto}
                 /> */}
-                {console.log("brigada", brigada)}
+                {/* {console.log("brigada", brigada)} */}
                 <MultiSelectModal
-                  onChange={handleChange}
+                  onChange={handleChangeBrigada}
                   name="brigada"
                   options={brigada}
                 />
               </Form.Group>{" "}
               <Form.Group as={Col}>
                 <Form.Label className="text-muted">Старший</Form.Label>
+                {console.log("optionsBrigadier", optionsBrigadier)}
                 <SelectModal
                   name="brigadier"
-                  options={optionsAuto}
+                  label="Необходимо указать старшего бригады..."
+                  options={optionsBrigadier}
                   onChange={handleChange}
                   error={errors.auto}
                 />

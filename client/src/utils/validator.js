@@ -21,7 +21,7 @@ export const validator = (data, config) => {
         // statusValidate = !emailRegExp.test(data);
         break;
       case "isRequired": {
-        console.log("methodOfWork", methodOfWork);
+        // console.log("methodOfWork", methodOfWork);
 
         if (typeof data === "boolean") {
           statusValidate = !data;
@@ -62,7 +62,7 @@ export const validator = (data, config) => {
         break;
       }
       case "isRequiredPo": {
-        console.log("methodOfWork", methodOfWork);
+        // console.log("methodOfWork", methodOfWork);
         if (methodOfWork === "po") {
           if (typeof data === "string") {
             statusValidate = data.trim() === "";

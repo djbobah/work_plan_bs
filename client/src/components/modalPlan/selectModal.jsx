@@ -1,11 +1,12 @@
 import React from "react";
 import Select from "react-select";
 
-const SelectModal = ({ name, options, onChange, error }) => {
+const SelectModal = ({ name, options, onChange, label, error }) => {
   const handleChange = (value) => {
     onChange({ name: name, value });
   };
   // const error = "ddddd";
+
   return (
     <>
       <Select
@@ -15,8 +16,7 @@ const SelectModal = ({ name, options, onChange, error }) => {
         //isInvalid
         // formatCreateLabel={(inputText) => `Добавить: "${inputText}"`}
         isClearable
-        placeholder="Выберите желаемый автомобиль(если необходимо)..."
-        name={name}
+        placeholder={label}
         // defaultOption=" Choose..."
         options={options}
         onChange={handleChange}

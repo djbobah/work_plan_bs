@@ -38,7 +38,7 @@ const NavBar = () => {
               <li className="nav-item dropdown  ">
                 {/* ${menuIsOpen ? "show" : ""} */}
                 <Link
-                  className={`nav-link dropdown-toggle  ${styles.actions}`}
+                  className={`nav-link dropdown-toggle fs-6 ${styles.actions}`}
                   to="#"
                   id="navbarDropdown"
                   role="button"

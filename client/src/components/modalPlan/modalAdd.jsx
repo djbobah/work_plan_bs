@@ -104,9 +104,9 @@ const ModalAdd = ({
     //   label: brigadier.name,
     //   value: brigadier.id,
     // }));
-    // const optionsBrigadier = data.brigada;
-    // console.log("data.brigada", data.brigada);
-    // console.log("optionsBrigadier", optionsBrigadier);
+    optionsBrigadier = data.brigada;
+    console.log("data.brigada", data.brigada);
+    console.log("optionsBrigadier", optionsBrigadier);
   };
   const handleChange = (target) => {
     setData((prevState) => ({

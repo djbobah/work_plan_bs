@@ -36,10 +36,12 @@ const ModalAdd = ({
     contractingOrganization: "",
     brigada: [],
     brigadier: "",
+    comment: "",
   });
   const [errors, setErrors] = useState({});
+  const [optionsBrigadier, setOptionsBrigadier] = useState([]);
 
-  let optionsBrigadier = [];
+  // let optionsBrigadier = [];
   const optionsTypeOfWorksArray = works.map((work) => ({
     label: work.name,
     value: work.id,
@@ -64,15 +66,19 @@ const ModalAdd = ({
       ...prevState,
       [target.name]: target.value,
     }));
-    console.log(target.value);
   };
 
+  const handleChangeComment = ({ target }) => {
+    setData((prevState) => ({
+      ...prevState,
+      [target.name]: target.value,
+    }));
+  };
   const handleCheck = ({ target }) => {
     setData((prevState) => ({
       ...prevState,
       [target.name]: target.checked,
     }));
-    console.log(target.checked);
   };
   const handleRadio = ({ target }) => {
     // console.log("target.name ", data[target.name]["name"]);
@@ -94,20 +100,12 @@ const ModalAdd = ({
     // console.log(target.value);
   };
 
-  const handleChangeBrigada = (target) => {
-    setData((prevState) => ({
-      ...prevState,
-      [target.name]: target.value,
-    }));
+  useEffect(() => {
+    setOptionsBrigadier(data.brigada);
+    // console.log("data.brigada", data.brigada);
+    // console.log("optionsBrigadier", optionsBrigadier);
+  }, [data.brigada]);
 
-    // optionsBrigadier = data.brigada.map((brigadier) => ({
-    //   label: brigadier.name,
-    //   value: brigadier.id,
-    // }));
-    optionsBrigadier = data.brigada;
-    console.log("data.brigada", data.brigada);
-    console.log("optionsBrigadier", optionsBrigadier);
-  };
   const handleChange = (target) => {
     setData((prevState) => ({
       ...prevState,
@@ -217,6 +215,7 @@ const ModalAdd = ({
                   options={optionsTypeOfWorksArray}
                   onChange={handleChange}
                   error={errors.typeOfWork}
+                  value={data.typeOfWork}
                 />
               </Form.Group>
 
@@ -226,6 +225,7 @@ const ModalAdd = ({
                   label="Работы повышенной опасности"
                   name="isDanger"
                   onChange={handleCheck}
+                  value={data.isDanger}
                 />
               </Form.Group>
             </Row>
@@ -239,6 +239,7 @@ const ModalAdd = ({
                   options={optionsObjectForWork}
                   onChange={handleChange}
                   error={errors.objectForWork}
+                  value={data.objectForWork}
                 />
               </Form.Group>
             </Row>{" "}
@@ -253,6 +254,7 @@ const ModalAdd = ({
                   options={optionsAuto}
                   onChange={handleChange}
                   error={errors.auto}
+                  value={data.auto}
                 />
               </Form.Group>
             </Row>
@@ -316,20 +318,26 @@ const ModalAdd = ({
                 /> */}
                 {/* {console.log("brigada", brigada)} */}
                 <MultiSelectModal
-                  onChange={handleChangeBrigada}
+                  label="Выберите состав бригады"
+                  onChange={handleChange}
                   name="brigada"
                   options={brigada}
+                  value={data.brigada}
                 />
               </Form.Group>{" "}
               <Form.Group as={Col}>
                 <Form.Label className="text-muted">Старший</Form.Label>
-                {console.log("optionsBrigadier", optionsBrigadier)}
                 <SelectModal
                   name="brigadier"
                   label="Необходимо указать старшего бригады..."
                   options={optionsBrigadier}
                   onChange={handleChange}
-                  error={errors.auto}
+                  // error={errors.auto}
+                  value={data.brigadier}
+
+                  ///
+                  /// нужно добавить валидацию на пустое значение
+                  ///
                 />
               </Form.Group>
             </Row>
@@ -337,7 +345,13 @@ const ModalAdd = ({
               {" "}
               <Form.Group className="mb-3">
                 <Form.Label className="text-muted">Комментарий</Form.Label>
-                <Form.Control as="textarea" rows={2} />
+                <Form.Control
+                  as="textarea"
+                  rows={2}
+                  name="comment"
+                  value={data.comment}
+                  onChange={handleChangeComment}
+                />
               </Form.Group>
             </Row>
             <hr />

@@ -1,7 +1,7 @@
 import React from "react";
 import Select from "react-select";
 
-const MultiSelectModal = ({ options, onChange, name }) => {
+const MultiSelectModal = ({ options, onChange, name, label }) => {
   // console.log("options", options);
 
   // if (!Array.isArray(options) && typeof options === "object") {
@@ -29,6 +29,7 @@ const MultiSelectModal = ({ options, onChange, name }) => {
     <Select
       isMulti
       closeMenuOnSelect={false}
+      placeholder={label}
       // defaultValue={defaultValue}
       options={optionsArray}
       className="basic-multi-select"

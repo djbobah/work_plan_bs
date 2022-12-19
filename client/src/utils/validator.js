@@ -42,8 +42,8 @@ export const validator = (data, config) => {
         // console.log("data", typeof data, ".");
         // console.log(getCurrentTime());
         // console.log(getCurrentDay());
-        console.log("dateOfWork", dateOfWork);
-        console.log("getToday() ", getToday());
+        // console.log("dateOfWork", dateOfWork);
+        // console.log("getToday() ", getToday());
 
         if (typeof data !== null) {
           // console.log("data", data, ".///");

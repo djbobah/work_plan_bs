@@ -47,7 +47,7 @@ export const validator = (data, config) => {
 
         if (typeof data !== null) {
           // console.log("data", data, ".///");
-          if (dateOfWork === getToday()) {
+          if (dateOfWork <= getTommorow()) {
             if (getCurrentDay() === 5 && getCurrentTime() > "1400") {
               statusValidate = data;
               break;

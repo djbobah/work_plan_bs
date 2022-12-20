@@ -143,6 +143,11 @@ const ModalAdd = ({
         message: "Наименование организации обязательно для заполнения",
       },
     },
+    brigadier: {
+      isRequiredBrigadier: {
+        message: " обязательно для заполнения",
+      },
+    },
   };
   useEffect(() => {
     validate();
@@ -332,7 +337,7 @@ const ModalAdd = ({
                   label="Необходимо указать старшего бригады..."
                   options={optionsBrigadier}
                   onChange={handleChange}
-                  // error={errors.auto}
+                  error={errors.brigadier}
                   value={data.brigadier}
 
                   ///

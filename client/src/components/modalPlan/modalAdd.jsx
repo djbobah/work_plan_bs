@@ -145,7 +145,7 @@ const ModalAdd = ({
     },
     brigadier: {
       isRequiredBrigadier: {
-        message: " обязательно для заполнения",
+        message: "Необходимо обязательно указать старшего бригады",
       },
     },
   };
@@ -334,7 +334,7 @@ const ModalAdd = ({
                 <Form.Label className="text-muted">Старший</Form.Label>
                 <SelectModal
                   name="brigadier"
-                  label="Необходимо указать старшего бригады..."
+                  label="Выберите старшего бригады..."
                   options={optionsBrigadier}
                   onChange={handleChange}
                   error={errors.brigadier}

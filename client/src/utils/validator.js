@@ -8,7 +8,14 @@ import {
 export const validator = (data, config) => {
   const errors = {};
 
-  function validate(validateMethod, data, config, methodOfWork, dateOfWork) {
+  function validate(
+    validateMethod,
+    data,
+    config,
+    methodOfWork,
+    dateOfWork,
+    brigada
+  ) {
     let statusValidate;
 
     switch (validateMethod) {
@@ -47,6 +54,17 @@ export const validator = (data, config) => {
         }
         break;
       }
+      case "isRequiredBrigadier": {
+        if (brigada.length !== 0) {
+          // console.log("brigada est", brigada);
+
+          if (typeof data === "string") {
+            statusValidate = data.trim() === "";
+            break;
+          }
+        }
+        break;
+      }
       default:
         break;
     }
@@ -59,7 +77,8 @@ export const validator = (data, config) => {
         data[fieldName],
         config[fieldName][validateMethod],
         data["methodOfWork"]["name"],
-        data["dateOfWork"]
+        data["dateOfWork"],
+        data["brigada"]
       );
       if (error && !errors[fieldName]) {
         errors[fieldName] = error;

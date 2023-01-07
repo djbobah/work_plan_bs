@@ -1,0 +1,9 @@
+{
+  "port": 5000,
+  "connectPlanRabot": {
+    "host": "localhost",
+    "user": "root",
+    "database": "plan_rabot",
+    "password": "Kamensk"
+  }
+}

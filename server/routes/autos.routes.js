@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router({ mergeParams: true });
 const mysql = require("mysql2");
+const chalk = require("chalk");
 
 const connection = mysql.createConnection({
   host: "localhost",
@@ -9,7 +10,9 @@ const connection = mysql.createConnection({
   password: "Kamensk",
 });
 
-router.get("/avto", async (req, res) => {
+router.get("/", async (req, res) => {
+  console.log("......................avto");
+
   try {
     connection.connect(function (err) {
       if (err) {
@@ -21,16 +24,13 @@ router.get("/avto", async (req, res) => {
       }
     });
     let vid_rabot = null;
-    connection.query(
-      "SELECT * FROM vid_rabot",
-      function (err, results, fields) {
-        // console.log(err);
-        let vid_rabot = results;
-        // console.log(vid_rabot); // собственно данные
-        // console.log(vid_rabot.length); // мета-данные полей
-        res.json(vid_rabot);
-      }
-    );
+    connection.query("SELECT * FROM avto", function (err, results, fields) {
+      // console.log(err);
+      let vid_rabot = results;
+      // console.log(vid_rabot); // собственно данные
+      // console.log(vid_rabot.length); // мета-данные полей
+      res.status(200).json(vid_rabot);
+    });
     connection.end();
   } catch (e) {
     res.status(500).json({

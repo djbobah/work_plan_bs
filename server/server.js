@@ -24,7 +24,7 @@ console.log("Platform: ", os.platform());
 console.log("User: ", os.userInfo().username);
 console.log("ARM: ", os.hostname());
 
-//console.log(works);
+console.log("PORT", PORT);
 
 // // получение данных
 // app.get("/", (req, res) => {

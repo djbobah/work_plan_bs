@@ -2,10 +2,12 @@ const express = require("express");
 const os = require("os");
 const chalk = require("chalk");
 const config = require("config");
-const mysql = require("mysql2/promise");
+const cors = require("cors");
+// const mysql = require("mysql2/promise");
 const routes = require("./routes");
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use("/api", routes);
@@ -43,7 +45,7 @@ console.log("ARM: ", os.hostname());
 //     console.log(chalk.blue("Подключение к серверу MySQL успешно установлено"));
 //   }
 // });
-let vid_rabot = null;
+// let vid_rabot = null;
 // connection.query("SELECT * FROM vid_rabot", function (err, results, fields) {
 //   // console.log(err);
 //   // let vid_rabot = results;
@@ -56,20 +58,6 @@ let vid_rabot = null;
 
 async function start() {
   try {
-    const conn = await mysql.createConnection(config.get("connectPlanRabot"));
-
-    // const [rows, fields] = await conn.execute("SELECT * FROM vid_rabot");
-    // await conn.end();
-    // было внутри connect
-    // function (err) {  if (err) {
-    //           return console.error("Ошибка: " + err.message);
-    //         } else {
-    //           console.log(
-    //             chalk.blue("Подключение к серверу MySQL успешно установлено")
-    //           );
-    //         }}
-    // console.log("rows", rows);
-
     app.listen(PORT, () => {
       console.log(chalk.blue(`server is running on port ${PORT}`));
     });

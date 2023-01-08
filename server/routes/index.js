@@ -1,10 +1,25 @@
 const express = require("express");
+// const Sequelize = require("sequelize");
+const modelAuto = require("../models/auto");
 
 const router = express.Router({ mergeParams: true });
+const Avtos = modelAuto();
 
+router.use("/avto", require("./autos.routes"));
+// console.log(Avtos.Gn);
 // получение данных
-router.get("/", async (req, res) => {
+router.get("/avto", async (req, res) => {
+  // console.log("modelAuto", Avtos);
+  // console.log("get");
+
   try {
+    console.log("start try");
+    // Avtos.findAll({ raw: true })
+    //   .then((avto) => {
+    //     // console.log(avto);
+    //     res.json(avto);
+    //   })
+    //   .catch((err) => console.log(err));
   } catch (error) {
     res
       .status(500)

@@ -3,7 +3,7 @@
   "connectPlanRabot": {
     "host": "localhost",
     "user": "root",
-    "database": "plan_rabot",
+    "database": "transport",
     "password": "Kamensk"
   }
 }

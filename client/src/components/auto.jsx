@@ -1,6 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
+import axios from "axios";
+
 const Auto = () => {
-  return <h1>Auto</h1>;
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/api/avto")
+      .then((avto) => {
+        console.log("test", avto.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, []);
+  return <h1>avto</h1>;
 };
 
 export default Auto;

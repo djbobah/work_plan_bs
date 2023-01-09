@@ -5,7 +5,7 @@ import NavBar from "./components/NavBar.jsx";
 import WorkPlan from "./components/workPlan";
 import { Route, Routes } from "react-router-dom";
 import DashBoard from "./components/dashBoard";
-import Auto from "./components/auto";
+import Auto from "./components/auto/auto";
 
 function App() {
   return (

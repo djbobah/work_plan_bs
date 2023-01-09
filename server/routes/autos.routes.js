@@ -1,57 +1,37 @@
 const express = require("express");
 const router = express.Router({ mergeParams: true });
-const mysql = require("mysql2");
-const chalk = require("chalk");
+// const mysql = require("mysql2");
+// const chalk = require("chalk");
+// const Sequelize = require("sequelize");
+const modelAuto = require("../models/auto");
 
-const connection = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  database: "transport",
-  password: "Kamensk",
-});
+const ModelAuto = modelAuto();
 
-router.get("/", async (req, res) => {
-  console.log("......................avto");
-
+router.get("/auto", async (req, res) => {
   try {
-    connection.connect(function (err) {
-      if (err) {
-        return console.error("Ошибка: " + err.message);
-      } else {
-        console.log(
-          chalk.blue("Подключение к серверу MySQL успешно установлено")
-        );
-      }
-    });
-    let vid_rabot = null;
-    connection.query("SELECT * FROM avto", function (err, results, fields) {
-      // console.log(err);
-      let vid_rabot = results;
-      // console.log(vid_rabot); // собственно данные
-      // console.log(vid_rabot.length); // мета-данные полей
-      res.status(200).json(vid_rabot);
-    });
-    connection.end();
-  } catch (e) {
-    res.status(500).json({
-      message: "На сервере произошла ошибка. Попробуйте позже",
-    });
+    await ModelAuto.Avtos.findAll({ raw: true })
+      .then((avto) => {
+        res.json(avto);
+      })
+      .catch((err) => console.log(err));
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "На сервере произошла ошибкаю Попробуйте позже..." });
+  }
+});
+router.get("/gn", async (req, res) => {
+  try {
+    await ModelAuto.Gn.findAll({ raw: true })
+      .then((gn) => {
+        res.json(gn);
+      })
+      .catch((err) => console.log(err));
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "На сервере произошла ошибкаю Попробуйте позже..." });
   }
 });
 
 module.exports = router;
-// connection.connect(function (err) {
-//   if (err) {
-//     return console.error("Ошибка: " + err.message);
-//   } else {
-//     console.log(chalk.blue("Подключение к серверу MySQL успешно установлено"));
-//   }
-// });
-// let vid_rabot = null;
-// connection.query("SELECT * FROM vid_rabot", function (err, results, fields) {
-//   // console.log(err);
-//   // let vid_rabot = results;
-//   // console.log(vid_rabot); // собственно данные
-//   // console.log(vid_rabot.length); // мета-данные полей
-// });
-// connection.end();

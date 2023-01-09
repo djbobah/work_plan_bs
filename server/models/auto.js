@@ -62,7 +62,7 @@ const modelAuto = () => {
     },
     { freezeTableName: true }
   );
-  Gn.hasOne(Avtos);
+  // Gn.hasOne(Avtos);
 
   sequelize
     .sync()
@@ -72,7 +72,7 @@ const modelAuto = () => {
     .catch((err) => console.log(err));
 
   // console.log("aaaaaaaaaaaaaa", Avtos);
-  return Avtos;
+  return { Avtos, Gn };
 };
 
 module.exports = modelAuto;

@@ -35,11 +35,13 @@ const Auto = () => {
   const setType = (id) => {
     const filteredTypeAuto = typeAuto.filter((number) => number.id === id);
     console.log("type id ", id);
-    console.log(
-      "filteredTypeAuto ",
-      filteredTypeAuto && filteredTypeAuto[0].name
-    );
-    return filteredTypeAuto[0].name || "";
+    // console.log(
+    //   "filteredTypeAuto ",
+    //   filteredTypeAuto && filteredTypeAuto[0].id
+    // );
+    if (filteredTypeAuto.length > 0) {
+      return filteredTypeAuto[0].name || "";
+    }
   };
   const onDelete = (id) => {
     setStateNumberAuto(

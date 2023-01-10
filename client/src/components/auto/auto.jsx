@@ -33,10 +33,13 @@ const Auto = () => {
     ? stateNumberAuto.filter((number) => number.archive !== "1")
     : stateNumberAuto;
   const setType = (id) => {
-    const filteredTypeAuto = filtredStateNumberAuto.filter(
-      (number) => number.type === id
+    const filteredTypeAuto = typeAuto.filter((number) => number.id === id);
+    console.log("type id ", id);
+    console.log(
+      "filteredTypeAuto ",
+      filteredTypeAuto && filteredTypeAuto[0].name
     );
-    return filteredTypeAuto.name;
+    return filteredTypeAuto[0].name || "";
   };
   const onDelete = (id) => {
     setStateNumberAuto(

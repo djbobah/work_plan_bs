@@ -43,6 +43,18 @@ const Auto = () => {
       return filteredTypeAuto[0].name || "";
     }
   };
+
+  const onEdit = (id) => {
+    axios
+      .post("http://localhost:5000/api/auto/auto", { id: id })
+      .then((gn) => {
+        console.log("gn", gn);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+    console.log("edit id:", id);
+  };
   const onDelete = (id) => {
     setStateNumberAuto(
       filtredStateNumberAuto.filter((number) => number.id !== id)
@@ -74,7 +86,7 @@ const Auto = () => {
                 <div className="d-flex">
                   <button
                     className="btn btn-light border border-secondary rounded mt-2 mb-2 p-1 "
-                    // onClick={() => onDelete(row.id)}
+                    onClick={() => onEdit(number.id)}
                   >
                     <svg
                       width="20"

@@ -43,6 +43,17 @@ const Auto = () => {
       filtredStateNumberAuto.filter((number) => number.id !== id)
     );
   };
+  const onEdit = (id) => {
+    axios
+      .post("http://localhost:5000/api/auto/auto", { id: id })
+      .then((gn) => {
+        console.log("gn", gn);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+    console.log("edit id:", id);
+  };
   return (
     <div className="container border rounded mt-3">
       <table className="table table-striped table-hover table-bordered caption-top border-rounded">
@@ -69,7 +80,7 @@ const Auto = () => {
                 <div className="d-flex">
                   <button
                     className="btn btn-light border border-secondary rounded mt-2 mb-2 p-1 "
-                    // onClick={() => onDelete(row.id)}
+                    onClick={() => onEdit(number.id)}
                   >
                     <svg
                       width="20"

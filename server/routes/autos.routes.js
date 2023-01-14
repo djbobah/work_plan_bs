@@ -33,5 +33,14 @@ router.get("/gn", async (req, res) => {
       .json({ message: "На сервере произошла ошибкаю Попробуйте позже..." });
   }
 });
+router.post("/auto", async (req, res) => {
+  try {
+    console.log(req.body);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "На сервере произошла ошибкаю Попробуйте позже..." });
+  }
+});
 
 module.exports = router;

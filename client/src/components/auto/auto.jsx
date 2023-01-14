@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import ModalAuto from "./modalAuto";
 import axios from "axios";
 
 import deletePng from "../../static/img/delete.png";
@@ -7,6 +8,7 @@ import copyPng from "../../static/img/copy-two-paper-sheets-interface-symbol_ico
 
 const Auto = () => {
   const [stateNumberAuto, setStateNumberAuto] = useState([]);
+  const [showModalAuto, setShowModalAuto] = useState(false);
   const [typeAuto, setTypeAuto] = useState();
   useEffect(() => {
     axios
@@ -60,8 +62,19 @@ const Auto = () => {
       filtredStateNumberAuto.filter((number) => number.id !== id)
     );
   };
+  const handleShowModalAuto = () => {
+    console.log("show");
+    setShowModalAuto(true);
+  };
+  const handleCloseModalAuto = () => {
+    setShowModalAuto(false);
+  };
   return (
     <div className="container border rounded mt-3">
+      <ModalAuto show={showModalAuto} onClose={handleCloseModalAuto} />
+      <button className="btn btn-primary" onClick={handleShowModalAuto}>
+        Создать новый автомобиль
+      </button>
       <table className="table table-striped table-hover table-bordered caption-top border-rounded">
         <caption>Автомобили</caption>
         <thead className="table-dark">

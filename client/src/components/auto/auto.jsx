@@ -29,14 +29,14 @@ const Auto = () => {
       .catch((e) => {
         console.log(e);
       });
-  }, []);
+  }, [showModalAuto]);
 
   const filtredStateNumberAuto = stateNumberAuto
     ? stateNumberAuto.filter((number) => number.archive !== "1")
     : stateNumberAuto;
   const setType = (id) => {
     const filteredTypeAuto = typeAuto.filter((number) => number.id === id);
-    console.log("type id ", id);
+    // console.log("type id ", id);
     // console.log(
     //   "filteredTypeAuto ",
     //   filteredTypeAuto && filteredTypeAuto[0].id
@@ -71,8 +71,10 @@ const Auto = () => {
   };
   return (
     <div className="container border rounded mt-3">
-      <ModalAuto show={showModalAuto} onClose={handleCloseModalAuto} />
-      <button className="btn btn-primary" onClick={handleShowModalAuto}>
+      <button
+        className="btn btn-primary float-end mt-2"
+        onClick={handleShowModalAuto}
+      >
         Создать новый автомобиль
       </button>
       <table className="table table-striped table-hover table-bordered caption-top border-rounded">
@@ -142,6 +144,13 @@ const Auto = () => {
           ))}
         </tbody>
       </table>
+      {typeAuto && (
+        <ModalAuto
+          show={showModalAuto}
+          onClose={handleCloseModalAuto}
+          typeAuto={typeAuto}
+        />
+      )}
     </div>
   );
 };

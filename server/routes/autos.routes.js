@@ -35,7 +35,17 @@ router.get("/gn", async (req, res) => {
 });
 router.post("/auto", async (req, res) => {
   try {
+    const gn = ModelAuto.Gn.create({
+      type: req.body.data.typeAuto.value,
+      marka: req.body.data.brandAuto,
+      nomer: req.body.data.gnAuto,
+      archive: "",
+      comment: req.body.data.comment,
+    });
+    console.log("gn's auto-generated ID:", gn.id);
     console.log(req.body);
+    console.log(req.body.data.typeAuto.value);
+    //req.status(200);
   } catch (error) {
     res
       .status(500)

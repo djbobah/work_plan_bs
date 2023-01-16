@@ -6,10 +6,13 @@ import deletePng from "../../static/img/delete.png";
 // import editPng from "../../static/img/edit.png";
 import copyPng from "../../static/img/copy-two-paper-sheets-interface-symbol_icon-icons.com_73283.svg";
 
+const initialData = { typeAuto: "", brandAuto: "", gnAuto: "", comment: "" };
 const Auto = () => {
   const [stateNumberAuto, setStateNumberAuto] = useState([]);
   const [showModalAuto, setShowModalAuto] = useState(false);
+  const [edit, setEdit] = useState(false);
   const [typeAuto, setTypeAuto] = useState();
+  const [data, setData] = useState(initialData);
   useEffect(() => {
     axios
       .get("http://localhost:5000/api/auto/auto")
@@ -31,11 +34,18 @@ const Auto = () => {
       });
   }, [showModalAuto]);
 
+  // if (typeAuto) {
+  const optionsTypeAuto = typeAuto?.map((type) => ({
+    label: type.name,
+    value: type.id,
+  }));
+  // }
+
   const filtredStateNumberAuto = stateNumberAuto
     ? stateNumberAuto.filter((number) => number.archive !== "1")
     : stateNumberAuto;
   const setType = (id) => {
-    const filteredTypeAuto = typeAuto.filter((number) => number.id === id);
+    const filteredTypeAuto = typeAuto?.filter((number) => number.id === id);
     // console.log("type id ", id);
     // console.log(
     //   "filteredTypeAuto ",
@@ -47,20 +57,69 @@ const Auto = () => {
   };
 
   const onEdit = (id) => {
-    axios
-      .post("http://localhost:5000/api/auto/auto", { id: id })
-      .then((gn) => {
-        console.log("gn", gn);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    // axios
+    //   .put("http://localhost:5000/api/auto/auto", { id: id })
+    //   .then((gn) => {
+    //     console.log("gn", gn);
+    //   })
+    //   .catch((e) => {
+    //     console.log(e);
+    //   });
     console.log("edit id:", id);
+    console.log(filtredStateNumberAuto.filter((number) => number.id === id));
   };
   const onDelete = (id) => {
     setStateNumberAuto(
       filtredStateNumberAuto.filter((number) => number.id !== id)
     );
+    // axios
+    //   .put("http://localhost:5000/api/auto/auto/", { id: id })
+    //   .then((gn) => {
+    //     console.log("gn", gn);
+    //   })
+    //   .catch((e) => {
+    //     console.log(e);
+    //   });
+    console.log("delete id:", id);
+  };
+  const onAddAuto = () => {
+    setEdit(false);
+    handleShowModalAuto();
+    setData(initialData);
+  };
+
+  const onEditAuto = (id) => {
+    setEdit(true);
+    handleShowModalAuto();
+    console.log("edit id:", id);
+    const editAuto = filtredStateNumberAuto.filter(
+      (number) => number.id === id
+    )[0];
+    setData({
+      typeAuto: {
+        label: setType(editAuto.type),
+        value: editAuto.type,
+      },
+
+      brandAuto: editAuto.marka,
+      gnAuto: editAuto.nomer,
+      comment: editAuto.comment,
+    });
+    console.log("data", data);
+  };
+  const handleChange = (target) => {
+    console.log(target);
+    setData((prevState) => ({
+      ...prevState,
+      [target.name]: target.value,
+    }));
+  };
+
+  const handleChangeComment = ({ target }) => {
+    setData((prevState) => ({
+      ...prevState,
+      [target.name]: target.value,
+    }));
   };
   const handleShowModalAuto = () => {
     console.log("show");
@@ -68,13 +127,11 @@ const Auto = () => {
   };
   const handleCloseModalAuto = () => {
     setShowModalAuto(false);
+    setData(initialData);
   };
   return (
     <div className="container border rounded mt-3">
-      <button
-        className="btn btn-primary float-end mt-2"
-        onClick={handleShowModalAuto}
-      >
+      <button className="btn btn-primary float-end mt-2" onClick={onAddAuto}>
         Создать новый автомобиль
       </button>
       <table className="table table-striped table-hover table-bordered caption-top border-rounded">
@@ -101,7 +158,7 @@ const Auto = () => {
                 <div className="d-flex">
                   <button
                     className="btn btn-light border border-secondary rounded mt-2 mb-2 p-1 "
-                    onClick={() => onEdit(number.id)}
+                    onClick={() => onEditAuto(number.id)}
                   >
                     <svg
                       width="20"
@@ -147,8 +204,12 @@ const Auto = () => {
       {typeAuto && (
         <ModalAuto
           show={showModalAuto}
+          edit={edit}
           onClose={handleCloseModalAuto}
-          typeAuto={typeAuto}
+          onChange={handleChange}
+          onChangeComment={handleChangeComment}
+          optionsTypeAuto={optionsTypeAuto}
+          data={data}
         />
       )}
     </div>

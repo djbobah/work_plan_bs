@@ -1,51 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Modal, Form, Col } from "react-bootstrap";
 import CreatableSelectModal from "../modalPlan//creatableSelectModal";
 // import SelectModal from "../modalPlan/selectModal";
 // import MultiSelectModal from "../modalPlan//multiSelectModal";
 import axios from "axios";
 
-const initialData = { typeAuto: "", brandAuto: "", gnAuto: "", comment: "" };
-
-const ModalAuto = ({ show, onClose, typeAuto }) => {
-  const [data, setData] = useState(initialData);
-
-  // console.log(typeAuto);
-  const optionsTypeAuto = typeAuto.map((type) => ({
-    label: type.name,
-    value: type.id,
-  }));
-
-  const handleChange = (target) => {
-    console.log(target);
-    setData((prevState) => ({
-      ...prevState,
-      [target.name]: target.value,
-    }));
-  };
-  const handleChangeComment = ({ target }) => {
-    setData((prevState) => ({
-      ...prevState,
-      [target.name]: target.value,
-    }));
-  };
-
+const ModalAuto = ({
+  show,
+  onClose,
+  optionsTypeAuto,
+  onChange,
+  data,
+  onChangeComment,
+}) => {
+  // console.log("data typeauto", optionsTypeAuto[1]);
   const handleSubmit = (e) => {
     e.preventDefault();
-    // const isValid = validate();
-    // if (!isValid) return;
 
     axios
       .post("http://localhost:5000/api/auto/auto", { data })
       .then((gn) => {
-        console.log("gn", gn);
+        console.log("gn", data);
       })
       .catch((e) => {
         console.log(e);
       });
-    // console.log("edit id:", data);
-
-    // console.log(data);
 
     onClose();
   };
@@ -72,8 +51,9 @@ const ModalAuto = ({ show, onClose, typeAuto }) => {
               <CreatableSelectModal
                 name="typeAuto"
                 options={optionsTypeAuto}
-                onChange={handleChange}
+                onChange={onChange}
                 // error={errors.typeOfWork}
+                // defaultValue={optionsTypeAuto[1]}
                 value={data.typeAuto}
               />
             </Form.Group>
@@ -84,7 +64,7 @@ const ModalAuto = ({ show, onClose, typeAuto }) => {
               <Form.Control
                 name="brandAuto"
                 // options={optionsTypeAuto}
-                onChange={handleChangeComment}
+                onChange={onChangeComment}
                 // error={errors.typeOfWork}
                 value={data.brandAuto}
               />
@@ -96,7 +76,7 @@ const ModalAuto = ({ show, onClose, typeAuto }) => {
               <Form.Control
                 name="gnAuto"
                 // options={optionsTypeAuto}
-                onChange={handleChangeComment}
+                onChange={onChangeComment}
                 // error={errors.typeOfWork}
                 value={data.gnAuto}
               />
@@ -108,7 +88,7 @@ const ModalAuto = ({ show, onClose, typeAuto }) => {
                 rows={2}
                 name="comment"
                 value={data.comment}
-                onChange={handleChangeComment}
+                onChange={onChangeComment}
               />
             </Form.Group>
             <hr />

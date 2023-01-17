@@ -35,17 +35,19 @@ router.get("/gn", async (req, res) => {
 });
 router.post("/auto", async (req, res) => {
   try {
-    const gn = ModelAuto.Gn.create({
+    const gn = await ModelAuto.Gn.create({
       type: req.body.data.typeAuto.value,
       marka: req.body.data.brandAuto,
       nomer: req.body.data.gnAuto,
       archive: "",
       comment: req.body.data.comment,
     });
-    console.log("gn's auto-generated ID:", gn.id);
-    console.log(req.body);
-    console.log(req.body.data.typeAuto.value);
-    //req.status(200);
+    // console.log("res--------------", res);
+    // console.log("gn's auto-generated ID:", gn.id);
+    // console.log(req.body);
+    // console.log(req.body.data.typeAuto.value);
+    res.status(200);
+    res.data(gn);
   } catch (error) {
     res
       .status(500)
@@ -69,6 +71,30 @@ router.put("/auto/del", async (req, res) => {
     console.log(req.body);
     console.log(req.body.data.typeAuto.value);
     //req.status(200);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "На сервере произошла ошибкаю Попробуйте позже..." });
+  }
+});
+router.put("/auto/", async (req, res) => {
+  try {
+    // const gn = await ModelAuto.Gn.update(
+    //   {
+    //     type: req.body.data.typeAuto.value,
+    //     marka: req.body.data.brandAuto,
+    //     nomer: req.body.data.gnAuto,
+    //     archive: "",
+    //     comment: req.body.data.comment,
+    //   },
+    //   { where: { id: id } }
+    // );
+    // console.log("gn's auto-generated ID:", gn.id);
+    console.log("------------------------------");
+    console.log(req.body);
+    console.log("------------------------------");
+    // console.log(req.body.data.typeAuto.value);
+    res.status(200);
   } catch (error) {
     res
       .status(500)

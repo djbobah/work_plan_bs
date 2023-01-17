@@ -11,21 +11,33 @@ const ModalAuto = ({
   optionsTypeAuto,
   onChange,
   data,
+  edit,
   onChangeComment,
 }) => {
   // console.log("data typeauto", optionsTypeAuto[1]);
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    axios
-      .post("http://localhost:5000/api/auto/auto", { data })
-      .then((gn) => {
-        console.log("gn", data);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-
+    if (edit) {
+      console.log("edit");
+      console.log(data);
+      axios
+        .put("http://localhost:5000/api/auto/auto", { data })
+        .then((gn) => {
+          console.log("put----------------------", gn.data);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    } else {
+      axios
+        .post("http://localhost:5000/api/auto/auto", { data })
+        .then((gn) => {
+          console.log("post------------", gn.data);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
     onClose();
   };
   return (

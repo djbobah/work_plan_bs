@@ -6,7 +6,13 @@ import deletePng from "../../static/img/delete.png";
 // import editPng from "../../static/img/edit.png";
 import copyPng from "../../static/img/copy-two-paper-sheets-interface-symbol_icon-icons.com_73283.svg";
 
-const initialData = { typeAuto: "", brandAuto: "", gnAuto: "", comment: "" };
+const initialData = {
+  id: "",
+  typeAuto: "",
+  brandAuto: "",
+  gnAuto: "",
+  comment: "",
+};
 const Auto = () => {
   const [stateNumberAuto, setStateNumberAuto] = useState([]);
   const [showModalAuto, setShowModalAuto] = useState(false);
@@ -96,6 +102,7 @@ const Auto = () => {
       (number) => number.id === id
     )[0];
     setData({
+      id: id,
       typeAuto: {
         label: setType(editAuto.type),
         value: editAuto.type,
@@ -105,6 +112,7 @@ const Auto = () => {
       gnAuto: editAuto.nomer,
       comment: editAuto.comment,
     });
+
     console.log("data", data);
   };
   const handleChange = (target) => {

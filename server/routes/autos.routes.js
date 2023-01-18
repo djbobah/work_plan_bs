@@ -11,7 +11,7 @@ router.get("/auto", async (req, res) => {
   try {
     await ModelAuto.Avtos.findAll({ raw: true })
       .then((avto) => {
-        res.json(avto);
+        res.status(200).json(avto);
       })
       .catch((err) => console.log(err));
   } catch (error) {
@@ -24,7 +24,7 @@ router.get("/gn", async (req, res) => {
   try {
     await ModelAuto.Gn.findAll({ raw: true })
       .then((gn) => {
-        res.json(gn);
+        res.status(200).json(gn);
       })
       .catch((err) => console.log(err));
   } catch (error) {
@@ -42,12 +42,12 @@ router.post("/auto", async (req, res) => {
       archive: "",
       comment: req.body.data.comment,
     });
-    // console.log("res--------------", res);
+    console.log("res--------------", res.data.Gn);
     // console.log("gn's auto-generated ID:", gn.id);
     // console.log(req.body);
     // console.log(req.body.data.typeAuto.value);
     res.status(200);
-    res.data(gn);
+    //res.data(gn);
   } catch (error) {
     res
       .status(500)

@@ -29,7 +29,7 @@ const ModalAuto = ({
           console.log(e);
         });
     } else {
-      axios
+      let result = axios
         .post("http://localhost:5000/api/auto/auto", { data })
         .then((gn) => {
           console.log("post------------", gn.data);
@@ -37,6 +37,7 @@ const ModalAuto = ({
         .catch((e) => {
           console.log(e);
         });
+      console.log("result", result);
     }
     onClose();
   };

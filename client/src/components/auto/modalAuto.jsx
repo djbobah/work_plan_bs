@@ -21,7 +21,7 @@ const ModalAuto = ({
       console.log("edit");
       console.log(data);
       axios
-        .put("http://localhost:5000/api/auto/auto", { data })
+        .patch("http://localhost:5000/api/auto/auto", { data })
         .then((gn) => {
           console.log("put----------------------", gn.data);
         })
@@ -37,7 +37,7 @@ const ModalAuto = ({
         .catch((e) => {
           console.log(e);
         });
-      console.log("result", result);
+      // console.log("result", result);
     }
     onClose();
   };

@@ -11,7 +11,7 @@ router.get("/auto", async (req, res) => {
   try {
     await ModelAuto.Avtos.findAll({ raw: true })
       .then((avto) => {
-        res.status(200).json(avto);
+        res.status(200).send(avto);
       })
       .catch((err) => console.log(err));
   } catch (error) {
@@ -24,7 +24,7 @@ router.get("/gn", async (req, res) => {
   try {
     await ModelAuto.Gn.findAll({ raw: true })
       .then((gn) => {
-        res.status(200).json(gn);
+        res.status(200).send(gn);
       })
       .catch((err) => console.log(err));
   } catch (error) {
@@ -42,11 +42,11 @@ router.post("/auto", async (req, res) => {
       archive: "",
       comment: req.body.data.comment,
     });
-    console.log("res--------------", res.data.Gn);
+    console.log("gn--------------", gn);
     // console.log("gn's auto-generated ID:", gn.id);
     // console.log(req.body);
     // console.log(req.body.data.typeAuto.value);
-    res.status(200);
+    res.status(200).send({ gn });
     //res.data(gn);
   } catch (error) {
     res
@@ -55,7 +55,7 @@ router.post("/auto", async (req, res) => {
   }
 });
 
-router.put("/auto/del", async (req, res) => {
+router.patch("/auto/del", async (req, res) => {
   try {
     const gn = ModelAuto.Gn.update(
       {
@@ -67,6 +67,7 @@ router.put("/auto/del", async (req, res) => {
       },
       { where: { id: id } }
     );
+
     console.log("gn's auto-generated ID:", gn.id);
     console.log(req.body);
     console.log(req.body.data.typeAuto.value);
@@ -77,24 +78,25 @@ router.put("/auto/del", async (req, res) => {
       .json({ message: "На сервере произошла ошибкаю Попробуйте позже..." });
   }
 });
-router.put("/auto/", async (req, res) => {
+router.patch("/auto/", async (req, res) => {
   try {
-    // const gn = await ModelAuto.Gn.update(
-    //   {
-    //     type: req.body.data.typeAuto.value,
-    //     marka: req.body.data.brandAuto,
-    //     nomer: req.body.data.gnAuto,
-    //     archive: "",
-    //     comment: req.body.data.comment,
-    //   },
-    //   { where: { id: id } }
-    // );
+    const gn = await ModelAuto.Gn.update(
+      {
+        type: req.body.data.typeAuto.value,
+        marka: req.body.data.brandAuto,
+        nomer: req.body.data.gnAuto,
+        archive: "",
+        comment: req.body.data.comment,
+      },
+      { where: { id: req.body.data.id } }
+    ).then((result) => console.log("updated"));
     // console.log("gn's auto-generated ID:", gn.id);
+
     console.log("------------------------------");
     console.log(req.body);
     console.log("------------------------------");
     // console.log(req.body.data.typeAuto.value);
-    res.status(200);
+    res.status(200).send({ gn });
   } catch (error) {
     res
       .status(500)

@@ -55,23 +55,20 @@ router.post("/auto", async (req, res) => {
   }
 });
 
-router.patch("/auto/del", async (req, res) => {
+router.patch("/delete", async (req, res) => {
   try {
     const gn = ModelAuto.Gn.update(
       {
-        type: req.body.data.typeAuto.value,
-        marka: req.body.data.brandAuto,
-        nomer: req.body.data.gnAuto,
-        archive: "",
-        comment: req.body.data.comment,
+        archive: "1",
       },
-      { where: { id: id } }
+      { where: { id: req.body.id } }
     );
 
-    console.log("gn's auto-generated ID:", gn.id);
-    console.log(req.body);
-    console.log(req.body.data.typeAuto.value);
-    //req.status(200);
+    // console.log("gn's auto-generated ID:", gn.id);
+    console.log("id:-------------------------------- ");
+    console.log("id: ", req.body);
+    // console.log(req.body.data.typeAuto.value);
+    res.status(200);
   } catch (error) {
     res
       .status(500)

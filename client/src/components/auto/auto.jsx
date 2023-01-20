@@ -62,22 +62,18 @@ const Auto = () => {
     }
   };
 
-  const onEdit = (id) => {
-    // axios
-    //   .put("http://localhost:5000/api/auto/auto", { id: id })
-    //   .then((gn) => {
-    //     console.log("gn", gn);
-    //   })
-    //   .catch((e) => {
-    //     console.log(e);
-    //   });
-    console.log("edit id:", id);
-    console.log(filtredStateNumberAuto.filter((number) => number.id === id));
-  };
   const onDelete = (id) => {
     setStateNumberAuto(
       filtredStateNumberAuto.filter((number) => number.id !== id)
     );
+    axios
+      .patch("http://localhost:5000/api/auto/delete", { id })
+      .then((gn) => {
+        console.log("put----------------------", gn.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
     // axios
     //   .put("http://localhost:5000/api/auto/auto/", { id: id })
     //   .then((gn) => {
@@ -97,7 +93,7 @@ const Auto = () => {
   const onEditAuto = (id) => {
     setEdit(true);
     handleShowModalAuto();
-    console.log("edit id:", id);
+    // console.log("edit id:", id);
     const editAuto = filtredStateNumberAuto.filter(
       (number) => number.id === id
     )[0];
@@ -113,7 +109,7 @@ const Auto = () => {
       comment: editAuto.comment,
     });
 
-    console.log("data", data);
+    //console.log("data", data);
   };
   const handleChange = (target) => {
     console.log(target);
@@ -185,7 +181,8 @@ const Auto = () => {
                   </button>
                   <button
                     className="btn  btn-light border border-secondary rounded  m-2 p-1"
-                    // onClick={() => onDelete(number.id)}
+                    onClick={() => onDelete(number.id)}
+                    disabled
                   >
                     <img
                       src={copyPng}

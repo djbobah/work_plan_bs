@@ -1,4 +1,5 @@
 const Sequelize = require("sequelize");
+const chalk = require("chalk");
 
 const modelAuto = () => {
   const sequelize = new Sequelize("transport", "root", "Kamensk", {
@@ -18,14 +19,8 @@ const modelAuto = () => {
         primaryKey: true,
         allowNull: false,
       },
-      name: {
-        type: Sequelize.TEXT,
-        allowNull: false,
-      },
-      comment: {
-        type: Sequelize.TEXT,
-        allowNull: true,
-      },
+      name: { type: Sequelize.TEXT, allowNull: false },
+      comment: { type: Sequelize.TEXT, allowNull: true },
     },
     { freezeTableName: true }
   );
@@ -39,39 +34,22 @@ const modelAuto = () => {
         primaryKey: true,
         allowNull: false,
       },
-      type: {
-        type: Sequelize.TEXT,
-        allowNull: false,
-      },
-      marka: {
-        type: Sequelize.TEXT,
-        allowNull: true,
-      },
-      nomer: {
-        type: Sequelize.TEXT,
-        allowNull: true,
-      },
-      archive: {
-        type: Sequelize.CHAR,
-        allowNull: true,
-      },
-      comment: {
-        type: Sequelize.TEXT,
-        allowNull: true,
-      },
+      type: { type: Sequelize.TEXT, allowNull: false },
+      marka: { type: Sequelize.TEXT, allowNull: true },
+      nomer: { type: Sequelize.TEXT, allowNull: true },
+      archive: { type: Sequelize.CHAR, allowNull: true },
+      comment: { type: Sequelize.TEXT, allowNull: true },
     },
     { freezeTableName: true }
   );
-  // Gn.hasOne(Avtos);
 
   sequelize
     .sync()
     .then(() => {
-      console.log("DB connection sucessful.");
+      console.log(chalk.green("DB AUTO connection sucessful."));
     })
     .catch((err) => console.log(err));
 
-  // console.log("aaaaaaaaaaaaaa", Avtos);
   return { Avtos, Gn };
 };
 

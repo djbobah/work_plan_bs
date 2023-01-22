@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import ControlPanel from "./ControlPanel";
 import Table from "./Table";
 import api from "../api";
+import axios from "axios";
 import styles from "./workPlan.module.css";
 
 const WorkPlan = () => {
@@ -12,17 +13,76 @@ const WorkPlan = () => {
   const [gn, setGn] = useState();
   const [brigada, setBrigada] = useState();
   const [contractingOrganization, setContractingOrganization] = useState();
-
+  const [showModalAdd, setShowModalAdd] = useState(false);
   useEffect(() => {
-    api.plan.fetchAll().then((data) => setPlans(data));
-    api.vid_rabot.fetchAll().then((work) => setWorks(work));
-    api.object.fetchAll().then((object) => setObjects(object));
-    api.avto.fetchAll().then((auto) => setAuto(auto));
-    api.gn.fetchAll().then((gn) => setGn(gn));
-    api.user.fetchAll().then((brigada) => setBrigada(brigada));
-    api.podr_org
-      .fetchAll()
-      .then((contracting) => setContractingOrganization(contracting));
+    // api.plan.fetchAll().then((data) => setPlans(data));
+    // api.vid_rabot.fetchAll().then((work) => setWorks(work));
+    // получаем данные о планах работ из БД
+    axios
+      .get("http://localhost:5000/api/plan/plan")
+      .then((plan) => {
+        console.log(plan.data);
+        setPlans(plan.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+    // получаем данные о виде работ из БД
+    axios
+      .get("http://localhost:5000/api/plan/vid")
+      .then((vid) => {
+        setWorks(vid.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+    // получаем данные об объектах  из БД
+    axios
+      .get("http://localhost:5000/api/plan/object")
+      .then((object) => {
+        setObjects(object.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+    // получаем данные о моделях автомобилей из БД
+    axios
+      .get("http://localhost:5000/api/auto/auto")
+      .then((avto) => {
+        setAuto(avto.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+    // получаем данные о автомобилях из БД
+    axios
+      .get("http://localhost:5000/api/auto/gn")
+      .then((gn) => {
+        setGn(gn.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+
+    // получаем данные о пользователях из БД
+    axios
+      .get("http://localhost:5000/api/users/user")
+      .then((user) => {
+        // console.log("gn", gn.data);
+        setBrigada(user.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+    // получаем данные о подрядных организациях из БД
+    axios
+      .get("http://localhost:5000/api/plan/podr")
+      .then((podr) => {
+        setContractingOrganization(podr.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   }, []);
 
   const columns = [
@@ -33,7 +93,7 @@ const WorkPlan = () => {
     { title: "Объект", path: "id_object", id: 5, width: 200 },
     {
       title: "Состав бригады / наименование подрядной организации",
-      path: "brigada",
+      path: "Brigada",
       id: 6,
       width: 100,
     },
@@ -55,10 +115,17 @@ const WorkPlan = () => {
   };
 
   //console.log("WorkPlan", works);
+
+  const handleClickAddShow = () => {
+    setShowModalAdd(true);
+  };
+  const handleClickAddClose = () => {
+    setShowModalAdd(false);
+  };
   return (
     <>
       <div className={styles["work-plan"]}>
-        {works && contractingOrganization && (
+        {works && contractingOrganization && auto && (
           <ControlPanel
             title="Панель действий"
             works={works}
@@ -66,6 +133,9 @@ const WorkPlan = () => {
             auto={auto}
             contractingOrganization={contractingOrganization}
             brigada={brigada}
+            onShow={handleClickAddShow}
+            onClose={handleClickAddClose}
+            show={showModalAdd}
           />
         )}
 

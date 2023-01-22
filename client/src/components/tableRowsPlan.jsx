@@ -3,7 +3,7 @@ import React from "react";
 import { convertDate } from "../utils/DateTimeFunctions";
 import { shortFio } from "../utils/fioUtils";
 import deletePng from "../static/img/delete.png";
-import editPng from "../static/img/edit.png";
+// import editPng from "../static/img/edit.png";
 import copyPng from "../static/img/copy-two-paper-sheets-interface-symbol_icon-icons.com_73283.svg";
 
 const TableRowsPlan = ({
@@ -27,7 +27,7 @@ const TableRowsPlan = ({
       return convertDate(row[column]);
     }
     if (column === "id_vid_rabot") {
-      return works.filter((work) => work.id === row[column])[0].name;
+      return works.filter((work) => work.id === Number(row[column]))[0].name;
     }
     if (column === "sposob") {
       if (row[column] === "ss") {
@@ -35,34 +35,49 @@ const TableRowsPlan = ({
       } else return "подрядная организация";
     }
     if (column === "id_object") {
-      return objects.filter((object) => object.id === row[column])[0].name;
+      return objects.filter((object) => object.id === Number(row[column]))[0]
+        .name;
     }
-    if (column === "brigada") {
-      // console.log(row[column]);
-      const idArr = row[column].split(",");
+    if (column === "Brigada") {
+      // console.log("row[column]", row[column]);
+      const idArr = row[column].split(";");
+
       let fioList = "";
+      // console.log("brigada", brigada);
+      console.log("idArr", idArr);
       brigada &&
         idArr.map((id) => {
-          // console.log(row["st_brigadi"]);
-          if (id === row["st_brigadi"]) {
-            fioList +=
-              shortFio(brigada.filter((brigada) => brigada.id === id)[0].fio) +
-              "(ст.), ";
-          } else {
-            fioList +=
-              shortFio(brigada.filter((brigada) => brigada.id === id)[0].fio) +
-              ", ";
+          if (id) {
+            if (id === row["st_brigadi"]) {
+              console.log(
+                "brigada.filter((brigada) => brigada.id === Number(id))[0].fio",
+                brigada.filter((brigada) => brigada.id === Number(id))[0].fio
+              );
+              fioList +=
+                shortFio(
+                  brigada.filter((brigada) => brigada.id === Number(id))[0].fio
+                ) + "(ст.), ";
+            } else {
+              console.log(
+                "brigada.filter((brigada) => brigada.id === Number(id))[0].fio",
+                brigada.filter((brigada) => brigada.id === Number(id))[0].fio
+              );
+              fioList +=
+                shortFio(
+                  brigada.filter((brigada) => brigada.id === Number(id))[0].fio
+                ) + ", ";
+            }
           }
         });
       return fioList.trim().slice(0, -1);
     }
-
     if (column === "avto") {
-      return auto.filter((auto) => auto.id === row[column])[0].name;
+      return auto.filter((auto) => auto.id === Number(row[column]))[0].name;
     }
     if (column === "id_gn") {
       if (gn) {
-        const avtoNumber = gn.filter((gn) => gn.type === row[column]);
+        const avtoNumber = gn.filter((gn) => gn.id === Number(row[column]));
+        // console.log("avtoNumber", avtoNumber);
         return avtoNumber[0].marka + " " + avtoNumber[0].nomer;
       }
     }

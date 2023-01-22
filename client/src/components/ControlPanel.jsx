@@ -15,12 +15,15 @@ const ControlPanel = ({
   auto,
   contractingOrganization,
   brigada,
+  onShow,
+  onClose,
+  show,
 }) => {
   const [DateFrom, setDateFrom] = useState(getToday().toString());
   const [DateEnd, setDateEnd] = useState(getTommorow(DateFrom));
   const [toastShow, setToastShow] = useState(false);
   const [State, setState] = useState("");
-  const [showModalAdd, setShowModalAdd] = useState(false);
+  // const [showModalAdd, setShowModalAdd] = useState(false);
   const [checkButtons, setCheckButtons] = useState([
     { title: "Все подразделения", name: "AllUnits", id: 1, checked: false },
     {
@@ -73,12 +76,12 @@ const ControlPanel = ({
     setDateEnd(DateFrom);
   };
 
-  const handleClickAddShow = () => {
-    setShowModalAdd(true);
-  };
-  const handleClickAddClose = () => {
-    setShowModalAdd(false);
-  };
+  // const handleClickAddShow = () => {
+  //   setShowModalAdd(true);
+  // };
+  // const handleClickAddClose = () => {
+  //   setShowModalAdd(false);
+  // };
 
   // console.log("cp works", works);
 
@@ -152,11 +155,7 @@ const ControlPanel = ({
         ))}
       </div>
       <div className="d-flex p-2 justify-content-between">
-        <div
-          className="border rounded p-1 me-2"
-          onClick={handleClickAddShow}
-          role="button"
-        >
+        <div className="border rounded p-1 me-2" onClick={onShow} role="button">
           <img width={24} src={AddImage} alt="Запланировать работу..." />
         </div>
 
@@ -168,9 +167,9 @@ const ControlPanel = ({
         </div>
       </div>
       <ModalAdd
-        show={showModalAdd}
-        onShow={handleClickAddShow}
-        onClose={handleClickAddClose}
+        show={show}
+        onShow={onShow}
+        onClose={onClose}
         works={works}
         objects={objects}
         auto={auto}

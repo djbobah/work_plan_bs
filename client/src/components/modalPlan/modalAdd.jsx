@@ -51,6 +51,7 @@ const ModalAdd = ({
     label: object.name,
     value: object.id,
   }));
+
   const optionsAuto = auto.map((auto) => ({
     label: auto.name,
     value: auto.id,
@@ -373,7 +374,7 @@ const ModalAdd = ({
                   className="btn btn-secondary"
                   // disabled={!isValid}
                   type="button"
-                  // onClick={onClose}
+                  onClick={onClose}
                 >
                   Отмена
                 </button>

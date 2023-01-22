@@ -88,8 +88,8 @@ const TableRowsPlan = ({
             onClick={() => onDelete(row.id)}
           >
             <svg
-              width="25"
-              height="25"
+              width="20"
+              height="20"
               color="primary"
               fill="bg-secondary"
               className="bi bi-pencil-square "
@@ -106,13 +106,13 @@ const TableRowsPlan = ({
             className="btn  btn-light border border-secondary rounded  m-1 p-1"
             onClick={() => onDelete(row.id)}
           >
-            <img src={copyPng} width="30px" alt="Добавить копированием" />
+            <img src={copyPng} width="20px" alt="Добавить копированием" />
           </button>
           <button
             className="btn btn-light border border-secondary rounded m-1 p-1"
             onClick={() => onDelete(row.id)}
           >
-            <img src={deletePng} width="30px" alt="Удалить строку плана" />
+            <img src={deletePng} width="20px" alt="Удалить строку плана" />
           </button>
         </div>
       );

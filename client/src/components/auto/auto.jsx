@@ -4,7 +4,7 @@ import axios from "axios";
 
 import deletePng from "../../static/img/delete.png";
 // import editPng from "../../static/img/edit.png";
-import copyPng from "../../static/img/copy-two-paper-sheets-interface-symbol_icon-icons.com_73283.svg";
+// import copyPng from "../../static/img/copy-two-paper-sheets-interface-symbol_icon-icons.com_73283.svg";
 
 const initialData = {
   id: "",
@@ -161,7 +161,7 @@ const Auto = () => {
               <td>
                 <div className="d-flex">
                   <button
-                    className="btn btn-light border border-secondary rounded mt-2 mb-2 p-1 "
+                    className="btn btn-light border border-secondary rounded  m-2  p-1 "
                     onClick={() => onEditAuto(number.id)}
                   >
                     <svg
@@ -179,7 +179,7 @@ const Auto = () => {
                       />
                     </svg>
                   </button>
-                  <button
+                  {/* <button
                     className="btn  btn-light border border-secondary rounded  m-2 p-1"
                     onClick={() => onDelete(number.id)}
                     disabled
@@ -189,7 +189,7 @@ const Auto = () => {
                       width="20px"
                       alt="Добавить копированием"
                     />
-                  </button>
+                  </button> */}
                   <button
                     className="btn btn-light border border-secondary rounded mt-2 mb-2 p-1"
                     onClick={() => onDelete(number.id)}

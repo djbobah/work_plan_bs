@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import ControlPanel from "./ControlPanel";
 import Table from "./Table";
 import api from "../api";
+import styles from "./workPlan.module.css";
 
 const WorkPlan = () => {
   const [plans, setPlans] = useState();
@@ -56,32 +57,35 @@ const WorkPlan = () => {
   //console.log("WorkPlan", works);
   return (
     <>
-      {works && contractingOrganization && (
-        <ControlPanel
-          title="Панель действий"
-          works={works}
-          objects={objects}
-          auto={auto}
-          contractingOrganization={contractingOrganization}
-          brigada={brigada}
-        />
-      )}
+      <div className={styles["work-plan"]}>
+        {works && contractingOrganization && (
+          <ControlPanel
+            title="Панель действий"
+            works={works}
+            objects={objects}
+            auto={auto}
+            contractingOrganization={contractingOrganization}
+            brigada={brigada}
+          />
+        )}
 
-      {plans && plans.length > 0 ? (
-        <Table
-          columns={columns}
-          rows={plans}
-          works={works}
-          objects={objects}
-          auto={auto}
-          gn={gn}
-          brigada={brigada}
-          onDelete={handleRowDelete}
-          contractingOrganization={contractingOrganization}
-        />
-      ) : (
-        <h1>Загрузка...</h1>
-      )}
+        {plans && plans.length > 0 ? (
+          <Table
+            className="w"
+            columns={columns}
+            rows={plans}
+            works={works}
+            objects={objects}
+            auto={auto}
+            gn={gn}
+            brigada={brigada}
+            onDelete={handleRowDelete}
+            contractingOrganization={contractingOrganization}
+          />
+        ) : (
+          <h1>Загрузка...</h1>
+        )}
+      </div>
     </>
   );
 };

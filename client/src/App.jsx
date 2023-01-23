@@ -8,6 +8,11 @@ import DashBoard from "./components/dashBoard";
 import Auto from "./components/auto/auto";
 
 function App() {
+  localStorage.setItem("id_sl", "16-а00134");
+  localStorage.setItem(
+    "name_sl",
+    "Служба автоматизации и метрологического обеспечения"
+  );
   return (
     <>
       <NavBar />

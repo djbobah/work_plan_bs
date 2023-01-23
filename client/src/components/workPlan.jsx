@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ControlPanel from "./ControlPanel";
 import Table from "./Table";
-import api from "../api";
+// import api from "../api";
 import axios from "axios";
 import styles from "./workPlan.module.css";
 
@@ -17,10 +17,15 @@ const WorkPlan = () => {
 
   useEffect(() => {
     // получаем данные о планах работ из БД
+
+    console.log("rerender PLAN");
     axios
-      .get("http://localhost:5000/api/plan/plan")
+      .get("http://localhost:5000/api/plan/plan", {
+        params: {
+          id_sl: localStorage.getItem("id_sl"),
+        },
+      })
       .then((plan) => {
-        console.log(plan.data);
         setPlans(plan.data);
       })
       .catch((e) => {
@@ -28,6 +33,7 @@ const WorkPlan = () => {
       });
   }, []);
   useEffect(() => {
+    console.log("rerender VID RABOT");
     // получаем данные о виде работ из БД
     axios
       .get("http://localhost:5000/api/plan/vid")
@@ -39,6 +45,7 @@ const WorkPlan = () => {
       });
   }, []);
   useEffect(() => {
+    console.log("rerender OTHER");
     // получаем данные об объектах  из БД
     axios
       .get("http://localhost:5000/api/plan/object")
@@ -125,6 +132,7 @@ const WorkPlan = () => {
   const handleClickAddClose = () => {
     setShowModalAdd(false);
   };
+
   return (
     <>
       <div className={styles["work-plan"]}>
@@ -141,25 +149,32 @@ const WorkPlan = () => {
             show={showModalAdd}
           />
         )}
-
+        {/* works && auto && objects && gn && brigada && */}
         {works &&
         auto &&
         objects &&
         gn &&
         brigada &&
+        objects &&
         plans &&
         plans.length > 0 ? (
-          <Table
-            columns={columns}
-            rows={plans}
-            works={works}
-            objects={objects}
-            auto={auto}
-            gn={gn}
-            brigada={brigada}
-            onDelete={handleRowDelete}
-            contractingOrganization={contractingOrganization}
-          />
+          works &&
+          auto &&
+          objects &&
+          gn &&
+          brigada && (
+            <Table
+              columns={columns}
+              rows={plans}
+              works={works}
+              objects={objects}
+              auto={auto}
+              gn={gn}
+              brigada={brigada}
+              onDelete={handleRowDelete}
+              contractingOrganization={contractingOrganization}
+            />
+          )
         ) : (
           <h1>Загрузка...</h1>
         )}

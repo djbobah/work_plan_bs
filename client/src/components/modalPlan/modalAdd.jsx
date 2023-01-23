@@ -46,8 +46,7 @@ const ModalAdd = ({
     label: work.name,
     value: work.id,
   }));
-  console.log("objects", objects);
-  const optionsObjectForWork = objects.map((object) => ({
+  const optionsObjectForWork = objects?.map((object) => ({
     label: object.name,
     value: object.id,
   }));
@@ -162,7 +161,7 @@ const ModalAdd = ({
 
   const validate = () => {
     const errors = validator(data, validatorConfig);
-    console.log("errors", errors);
+    // console.log("errors", errors);
     setErrors(errors);
     return Object.keys(errors).length === 0;
   };

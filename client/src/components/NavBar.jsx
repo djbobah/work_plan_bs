@@ -30,7 +30,7 @@ const NavBar = () => {
           </div>
         </Link>
         <div className={styles["nav-body"]}>
-          Линейно-эксплуатационная служба
+          {localStorage.getItem("name_sl")}
         </div>
         <div className={styles.actions}>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">

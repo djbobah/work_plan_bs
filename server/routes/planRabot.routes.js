@@ -49,9 +49,19 @@ router.get("/podr", async (req, res) => {
   }
 });
 router.get("/plan", async (req, res) => {
+  // const paramIdSl = () => {
+  //   if (req.query.id_s !== "") {
+  //     return ( id_sl: { [Op.eq]: req.query.id_sl } );
+  //   }
+  // };
+
   try {
+    console.log(req.query.id_sl);
     await ModelPlanRabot.Plan.findAll({
-      where: { data_rabot: { [Op.gte]: "2022-12-25" } },
+      where: {
+        data_rabot: { [Op.gte]: "2022-12-25" },
+        id_sl: { [Op.eq]: req.query.id_sl },
+      },
       raw: true,
     })
       .then((plan) => {

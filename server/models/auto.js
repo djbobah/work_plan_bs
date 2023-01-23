@@ -1,14 +1,20 @@
 const Sequelize = require("sequelize");
+const config = require("config");
 const chalk = require("chalk");
 
 const modelAuto = () => {
-  const sequelize = new Sequelize("transport", "root", "Kamensk", {
-    dialect: "mysql",
-    host: "localhost",
-    define: {
-      timestamps: false,
-    },
-  });
+  const sequelize = new Sequelize(
+    "transport",
+    config.get("connectPlanRabot.user"),
+    config.get("connectPlanRabot.password"),
+    {
+      dialect: "mysql",
+      host: config.get("connectPlanRabot.host"),
+      define: {
+        timestamps: false,
+      },
+    }
+  );
 
   const Avtos = sequelize.define(
     "avto",

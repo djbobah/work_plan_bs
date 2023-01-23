@@ -108,7 +108,12 @@ const WorkPlan = () => {
       width: 100,
     },
     { title: "Тип транспорта", path: "avto", id: 7, width: 0 },
-    { title: "Марка - Гос.№", path: "id_gn", id: 8, width: 0 },
+    {
+      title: "Cогласованный автомобиль Марка - Гос.№",
+      path: "id_gn",
+      id: 8,
+      width: 0,
+    },
     { title: "Комментарий", path: "comment", id: 9, width: 0 },
     {
       title: "Согласование работ повышенной опасности",

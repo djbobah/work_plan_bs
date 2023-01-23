@@ -65,7 +65,7 @@ router.get("/plan", async (req, res) => {
       raw: true,
     })
       .then((plan) => {
-        console.log(chalk.red(plan));
+        // console.log(chalk.red(plan));
         res.status(200).send(plan);
       })
       .catch((err) => console.log(err));

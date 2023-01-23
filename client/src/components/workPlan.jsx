@@ -14,9 +14,8 @@ const WorkPlan = () => {
   const [brigada, setBrigada] = useState();
   const [contractingOrganization, setContractingOrganization] = useState();
   const [showModalAdd, setShowModalAdd] = useState(false);
+
   useEffect(() => {
-    // api.plan.fetchAll().then((data) => setPlans(data));
-    // api.vid_rabot.fetchAll().then((work) => setWorks(work));
     // получаем данные о планах работ из БД
     axios
       .get("http://localhost:5000/api/plan/plan")
@@ -27,6 +26,8 @@ const WorkPlan = () => {
       .catch((e) => {
         console.log(e);
       });
+  }, []);
+  useEffect(() => {
     // получаем данные о виде работ из БД
     axios
       .get("http://localhost:5000/api/plan/vid")
@@ -36,6 +37,8 @@ const WorkPlan = () => {
       .catch((e) => {
         console.log(e);
       });
+  }, []);
+  useEffect(() => {
     // получаем данные об объектах  из БД
     axios
       .get("http://localhost:5000/api/plan/object")
@@ -139,9 +142,14 @@ const WorkPlan = () => {
           />
         )}
 
-        {plans && plans.length > 0 ? (
+        {works &&
+        auto &&
+        objects &&
+        gn &&
+        brigada &&
+        plans &&
+        plans.length > 0 ? (
           <Table
-            className="w"
             columns={columns}
             rows={plans}
             works={works}

@@ -51,7 +51,7 @@ router.get("/podr", async (req, res) => {
 router.get("/plan", async (req, res) => {
   try {
     await ModelPlanRabot.Plan.findAll({
-      where: { data_rabot: { [Op.gte]: "2022-10-25" } },
+      where: { data_rabot: { [Op.gte]: "2022-12-25" } },
       raw: true,
     })
       .then((plan) => {

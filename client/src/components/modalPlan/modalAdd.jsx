@@ -46,7 +46,7 @@ const ModalAdd = ({
     label: work.name,
     value: work.id,
   }));
-
+  console.log("objects", objects);
   const optionsObjectForWork = objects.map((object) => ({
     label: object.name,
     value: object.id,

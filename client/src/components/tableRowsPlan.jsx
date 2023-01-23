@@ -27,7 +27,9 @@ const TableRowsPlan = ({
       return convertDate(row[column]);
     }
     if (column === "id_vid_rabot") {
-      return works.filter((work) => work.id === Number(row[column]))[0].name;
+      if (works) {
+        return works.filter((work) => work.id === Number(row[column]))[0]?.name;
+      }
     }
     if (column === "sposob") {
       if (row[column] === "ss") {
@@ -36,7 +38,7 @@ const TableRowsPlan = ({
     }
     if (column === "id_object") {
       return objects.filter((object) => object.id === Number(row[column]))[0]
-        .name;
+        ?.name;
     }
     if (column === "Brigada") {
       // console.log("row[column]", row[column]);
@@ -44,24 +46,15 @@ const TableRowsPlan = ({
 
       let fioList = "";
       // console.log("brigada", brigada);
-      console.log("idArr", idArr);
       brigada &&
         idArr.map((id) => {
-          if (id) {
+          if (id !== "") {
             if (id === row["st_brigadi"]) {
-              console.log(
-                "brigada.filter((brigada) => brigada.id === Number(id))[0].fio",
-                brigada.filter((brigada) => brigada.id === Number(id))[0].fio
-              );
               fioList +=
                 shortFio(
                   brigada.filter((brigada) => brigada.id === Number(id))[0].fio
                 ) + "(ст.), ";
             } else {
-              console.log(
-                "brigada.filter((brigada) => brigada.id === Number(id))[0].fio",
-                brigada.filter((brigada) => brigada.id === Number(id))[0].fio
-              );
               fioList +=
                 shortFio(
                   brigada.filter((brigada) => brigada.id === Number(id))[0].fio

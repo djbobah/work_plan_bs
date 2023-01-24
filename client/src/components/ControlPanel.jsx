@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import NavCheckButton from "./NavCheckButton";
-import { getToday, getTommorow } from "../utils/DateTimeFunctions";
+// import { getToday, getTommorow } from "../utils/DateTimeFunctions";
 import AddImage from "../static/img/add.png";
 import PrinterImage from "../static/img/printer.png";
 import ExcelImage from "../static/img/Microsoft_Office_-_Excel.png";
@@ -18,10 +18,16 @@ const ControlPanel = ({
   onShow,
   onClose,
   show,
+  dateFrom,
+  onDateFromChange,
+  dateEnd,
+  onDateEndChange,
+  toastShow,
+  onToastClose,
 }) => {
-  const [DateFrom, setDateFrom] = useState(getToday().toString());
-  const [DateEnd, setDateEnd] = useState(getTommorow(DateFrom));
-  const [toastShow, setToastShow] = useState(false);
+  // const [DateFrom, setDateFrom] = useState(getToday().toString());
+  // const [DateEnd, setDateEnd] = useState(getTommorow(DateFrom));
+  // const [toastShow, setToastShow] = useState(false);
   const [State, setState] = useState("");
   // const [showModalAdd, setShowModalAdd] = useState(false);
   const [checkButtons, setCheckButtons] = useState([
@@ -40,19 +46,19 @@ const ControlPanel = ({
     },
   ]);
 
-  const handleDateFromChange = (e) => {
-    setDateFrom(e.target.value);
+  // const handleDateFromChange = (e) => {
+  //   setDateFrom(e.target.value);
 
-    // console.log("change datefrom ", DateFrom);
-    setDateEnd(getTommorow(e.target.value));
-  };
+  //   // console.log("change datefrom ", DateFrom);
+  //   setDateEnd(getTommorow(e.target.value));
+  // };
 
-  const handleDateEndChange = (e) => {
-    setDateEnd(e.target.value);
-    if (DateFrom > e.target.value) {
-      setToastShow(true);
-    }
-  };
+  // const handleDateEndChange = (e) => {
+  //   setDateEnd(e.target.value);
+  //   if (DateFrom > e.target.value) {
+  //     setToastShow(true);
+  //   }
+  // };
   const handleStateChange = (e) => {
     setState(e.target.value);
   };
@@ -71,10 +77,10 @@ const ControlPanel = ({
     setCheckButtons(newCheckButtons);
   };
 
-  const handleToastClose = () => {
-    setToastShow(false);
-    setDateEnd(DateFrom);
-  };
+  // const handleToastClose = () => {
+  //   setToastShow(false);
+  //   // setDateEnd(DateFrom);
+  // };
 
   // const handleClickAddShow = () => {
   //   setShowModalAdd(true);
@@ -99,8 +105,8 @@ const ControlPanel = ({
             name="DateFrom"
             id="DateFrom"
             className={`m-1  border rounded ${styles.setMinHeight}`}
-            value={DateFrom}
-            onChange={handleDateFromChange}
+            value={dateFrom}
+            onChange={onDateFromChange}
             role="button"
           />
         </div>
@@ -113,8 +119,8 @@ const ControlPanel = ({
             name="DateEnd"
             id="DateEnd"
             className={`m-1  border rounded ${styles.setMinHeight}`}
-            value={DateEnd}
-            onChange={handleDateEndChange}
+            value={dateEnd}
+            onChange={onDateEndChange}
             role="button"
           />
         </div>
@@ -122,7 +128,7 @@ const ControlPanel = ({
           show={toastShow}
           message="Дата окончания периода не может быть меньше даты начала периода!"
           title="Внимание!!!"
-          onToastClose={handleToastClose}
+          onToastClose={onToastClose}
         />
         <div>
           <label htmlFor="State" className="p-2">

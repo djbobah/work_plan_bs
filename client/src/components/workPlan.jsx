@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from "react";
 import ControlPanel from "./ControlPanel";
 import Table from "./Table";
+import { getToday, getTommorow } from "../utils/DateTimeFunctions";
 // import api from "../api";
 import axios from "axios";
 import styles from "./workPlan.module.css";
 
 const WorkPlan = () => {
+  const [DateFrom, setDateFrom] = useState(getToday().toString());
+  const [DateEnd, setDateEnd] = useState(getTommorow(DateFrom));
+  const [toastShow, setToastShow] = useState(false);
+
   const [plans, setPlans] = useState();
   const [works, setWorks] = useState();
   const [objects, setObjects] = useState();
@@ -125,6 +130,24 @@ const WorkPlan = () => {
     { title: "", path: "delete", id: 12, width: 0 },
   ];
 
+  const handleDateFromChange = (e) => {
+    setDateFrom(e.target.value);
+
+    // console.log("change datefrom ", DateFrom);
+    setDateEnd(getTommorow(e.target.value));
+  };
+  const handleDateEndChange = (e) => {
+    setDateEnd(e.target.value);
+    if (DateFrom > e.target.value) {
+      setToastShow(true);
+    }
+  };
+
+  const handleToastClose = () => {
+    setToastShow(false);
+    setDateEnd(DateFrom);
+  };
+
   const handleRowDelete = (id) => {
     setPlans(plans.filter((row) => row.id !== id));
   };
@@ -152,6 +175,12 @@ const WorkPlan = () => {
             onShow={handleClickAddShow}
             onClose={handleClickAddClose}
             show={showModalAdd}
+            dateFrom={DateFrom}
+            onDateFromChange={handleDateFromChange}
+            dateEnd={DateEnd}
+            onDateEndChange={handleDateEndChange}
+            toastShow={toastShow}
+            onToastClose={handleToastClose}
           />
         )}
         {/* works && auto && objects && gn && brigada && */}

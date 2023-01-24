@@ -10,7 +10,7 @@ const WorkPlan = () => {
   const [DateFrom, setDateFrom] = useState(getToday().toString());
   const [DateEnd, setDateEnd] = useState(getTommorow(DateFrom));
   const [toastShow, setToastShow] = useState(false);
-
+  const [state, setState] = useState("");
   const [plans, setPlans] = useState();
   const [works, setWorks] = useState();
   const [objects, setObjects] = useState();
@@ -28,6 +28,8 @@ const WorkPlan = () => {
       .get("http://localhost:5000/api/plan/plan", {
         params: {
           id_sl: localStorage.getItem("id_sl"),
+          dateFrom: DateFrom,
+          dateEnd: DateEnd,
         },
       })
       .then((plan) => {
@@ -36,12 +38,16 @@ const WorkPlan = () => {
       .catch((e) => {
         console.log(e);
       });
-  }, []);
+  }, [DateFrom, DateEnd]);
   useEffect(() => {
     console.log("rerender VID RABOT");
     // получаем данные о виде работ из БД
     axios
-      .get("http://localhost:5000/api/plan/vid")
+      .get("http://localhost:5000/api/plan/vid", {
+        params: {
+          id_sl: localStorage.getItem("id_sl"),
+        },
+      })
       .then((vid) => {
         setWorks(vid.data);
       })
@@ -81,7 +87,11 @@ const WorkPlan = () => {
 
     // получаем данные о пользователях из БД
     axios
-      .get("http://localhost:5000/api/users/user")
+      .get("http://localhost:5000/api/users/user", {
+        params: {
+          id_sl: localStorage.getItem("id_sl"),
+        },
+      })
       .then((user) => {
         // console.log("gn", gn.data);
         setBrigada(user.data);
@@ -147,6 +157,9 @@ const WorkPlan = () => {
     setToastShow(false);
     setDateEnd(DateFrom);
   };
+  const handleStateChange = (e) => {
+    setState(e.target.value);
+  };
 
   const handleRowDelete = (id) => {
     setPlans(plans.filter((row) => row.id !== id));
@@ -181,6 +194,8 @@ const WorkPlan = () => {
             onDateEndChange={handleDateEndChange}
             toastShow={toastShow}
             onToastClose={handleToastClose}
+            state={state}
+            onChangeState={handleStateChange}
           />
         )}
         {/* works && auto && objects && gn && brigada && */}

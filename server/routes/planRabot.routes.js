@@ -11,7 +11,9 @@ const ModelPlanRabot = modelPlanRabot();
 
 router.get("/object", async (req, res) => {
   try {
-    await ModelPlanRabot.Object.findAll({ raw: true })
+    await ModelPlanRabot.Object.findAll({
+      raw: true,
+    })
       .then((object) => {
         res.status(200).send(object);
       })
@@ -24,7 +26,12 @@ router.get("/object", async (req, res) => {
 });
 router.get("/vid", async (req, res) => {
   try {
-    await ModelPlanRabot.VidRabot.findAll({ raw: true })
+    await ModelPlanRabot.VidRabot.findAll({
+      where: {
+        id_sl: { [Op.eq]: req.query.id_sl },
+      },
+      raw: true,
+    })
       .then((vid) => {
         res.status(200).send(vid);
       })
@@ -49,17 +56,16 @@ router.get("/podr", async (req, res) => {
   }
 });
 router.get("/plan", async (req, res) => {
-  // const paramIdSl = () => {
-  //   if (req.query.id_s !== "") {
-  //     return ( id_sl: { [Op.eq]: req.query.id_sl } );
-  //   }
-  // };
-
   try {
-    console.log(req.query.id_sl);
+    // console.log(req.query.id_sl);
+    // console.log(chalk.blue("--------------------"));
+    // console.log(chalk.blue(req.query.dateEnd));
     await ModelPlanRabot.Plan.findAll({
       where: {
-        data_rabot: { [Op.gte]: "2022-12-25" },
+        data_rabot: {
+          [Op.gte]: req.query.dateFrom,
+          [Op.lte]: req.query.dateEnd,
+        },
         id_sl: { [Op.eq]: req.query.id_sl },
       },
       raw: true,

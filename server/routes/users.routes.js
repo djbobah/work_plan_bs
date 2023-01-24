@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router({ mergeParams: true });
+const chalk = require("chalk");
 // const mysql = require("mysql2");
 // const chalk = require("chalk");
 // const Sequelize = require("sequelize");
@@ -8,8 +9,14 @@ const modelUsers = require("../models/users");
 const ModelUsers = modelUsers();
 
 router.get("/user", async (req, res) => {
+  console.log(chalk.red(req.query.id_sl));
   try {
-    await ModelUsers.User.findAll({ raw: true })
+    await ModelUsers.User.findAll({
+      where: {
+        id_sl: { [Op.eq]: `${req.query.id_sl}` },
+      },
+      raw: true,
+    })
       .then((user) => {
         res.status(200).send(user);
       })

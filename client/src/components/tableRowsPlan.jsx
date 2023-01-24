@@ -52,12 +52,12 @@ const TableRowsPlan = ({
             if (id === row["st_brigadi"]) {
               fioList +=
                 shortFio(
-                  brigada.filter((brigada) => brigada.id === Number(id))[0].fio
+                  brigada?.filter((brigada) => brigada.id === Number(id))[0].fio
                 ) + "(ст.), ";
             } else {
               fioList +=
                 shortFio(
-                  brigada?.filter((brigada) => brigada.id === Number(id))[0].fio
+                  brigada.filter((brigada) => brigada.id === Number(id))[0].fio
                 ) + ", ";
             }
           }

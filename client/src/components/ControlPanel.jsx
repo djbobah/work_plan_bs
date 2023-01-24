@@ -24,12 +24,9 @@ const ControlPanel = ({
   onDateEndChange,
   toastShow,
   onToastClose,
+  state,
+  onChangeState,
 }) => {
-  // const [DateFrom, setDateFrom] = useState(getToday().toString());
-  // const [DateEnd, setDateEnd] = useState(getTommorow(DateFrom));
-  // const [toastShow, setToastShow] = useState(false);
-  const [State, setState] = useState("");
-  // const [showModalAdd, setShowModalAdd] = useState(false);
   const [checkButtons, setCheckButtons] = useState([
     { title: "Все подразделения", name: "AllUnits", id: 1, checked: false },
     {
@@ -46,23 +43,6 @@ const ControlPanel = ({
     },
   ]);
 
-  // const handleDateFromChange = (e) => {
-  //   setDateFrom(e.target.value);
-
-  //   // console.log("change datefrom ", DateFrom);
-  //   setDateEnd(getTommorow(e.target.value));
-  // };
-
-  // const handleDateEndChange = (e) => {
-  //   setDateEnd(e.target.value);
-  //   if (DateFrom > e.target.value) {
-  //     setToastShow(true);
-  //   }
-  // };
-  const handleStateChange = (e) => {
-    setState(e.target.value);
-  };
-
   const handleCheckClick = (checkId) => {
     let newCheckButtons = checkButtons.map((checkButton) =>
       checkButton.id === checkId
@@ -76,20 +56,6 @@ const ControlPanel = ({
     );
     setCheckButtons(newCheckButtons);
   };
-
-  // const handleToastClose = () => {
-  //   setToastShow(false);
-  //   // setDateEnd(DateFrom);
-  // };
-
-  // const handleClickAddShow = () => {
-  //   setShowModalAdd(true);
-  // };
-  // const handleClickAddClose = () => {
-  //   setShowModalAdd(false);
-  // };
-
-  // console.log("cp works", works);
 
   return (
     <div
@@ -138,8 +104,8 @@ const ControlPanel = ({
             name="State"
             id="State"
             className={`m-1  border rounded ${styles.setMinHeight}`}
-            value={State}
-            onChange={handleStateChange}
+            value={state}
+            onChange={onChangeState}
             role="button"
           >
             <option>Все</option>

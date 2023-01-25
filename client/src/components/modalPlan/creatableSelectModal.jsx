@@ -1,9 +1,19 @@
 import React from "react";
 import CreatableSelect from "react-select/creatable";
 
-const CreatableSelectModal = ({ name, options, onChange, error, value }) => {
+const CreatableSelectModal = ({
+  name,
+  options,
+  onChange,
+  error,
+  value,
+  onCreateOption,
+}) => {
   const handleChange = (value) => {
     onChange({ name: name, value });
+  };
+  const handleCreateOption = (value) => {
+    onCreateOption({ name: name, value });
   };
   // const error = "ddddd";
   return (
@@ -20,6 +30,7 @@ const CreatableSelectModal = ({ name, options, onChange, error, value }) => {
         defaultOption=" Choose..."
         options={options}
         // menuIsOpen={false}
+        onCreateOption={handleCreateOption}
         onChange={handleChange}
         value={value}
       />{" "}

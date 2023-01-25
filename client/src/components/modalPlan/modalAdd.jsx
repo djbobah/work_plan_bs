@@ -14,6 +14,7 @@ import { convertDate, getTommorow } from "../../utils/DateTimeFunctions";
 import CreatableSelectModal from "./creatableSelectModal";
 import SelectModal from "./selectModal";
 import MultiSelectModal from "./multiSelectModal";
+import axios from "axios";
 
 const ModalAdd = ({
   show,
@@ -96,14 +97,10 @@ const ModalAdd = ({
         [target.name]: { name: target.value, checked: target.checked },
       }));
     }
-    //console.log("target.value", target.value);
-    // console.log(target.value);
   };
 
   useEffect(() => {
     setOptionsBrigadier(data.brigada);
-    // console.log("data.brigada", data.brigada);
-    // console.log("optionsBrigadier", optionsBrigadier);
   }, [data.brigada]);
 
   const handleChange = (target) => {
@@ -176,6 +173,22 @@ const ModalAdd = ({
     console.log(data);
   };
 
+  const onCreateOption = (target) => {
+    console.log("Creatable select name: ", target);
+    if ((target.name = "typeOfWork")) {
+      target.id_sl = localStorage.getItem("id_sl");
+      axios
+        .post("http://localhost:5000/api/plan/work", target)
+        .then((work) => {
+          console.log("post----------------------", work.data);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
+    console.log("optionsTypeOfWorksArray", optionsTypeOfWorksArray);
+  };
+
   return (
     <>
       <Modal
@@ -221,6 +234,7 @@ const ModalAdd = ({
                   onChange={handleChange}
                   error={errors.typeOfWork}
                   value={data.typeOfWork}
+                  onCreateOption={onCreateOption}
                 />
               </Form.Group>
 

@@ -81,5 +81,32 @@ router.get("/plan", async (req, res) => {
       .json({ message: "На сервере произошла ошибкаю Попробуйте позже..." });
   }
 });
+router.post("/work", async (req, res) => {
+  try {
+    const work = await ModelPlanRabot.VidRabot.create({
+      name: req.body.value,
+      comment: "",
+      id_sl: req.body.id_sl,
+    });
+    // const gn = await ModelAuto.Gn.create({
+    //   type: req.body.data.typeAuto.value,
+    //   marka: req.body.data.brandAuto,
+    //   nomer: req.body.data.gnAuto,
+    //   archive: "",
+    //   comment: req.body.data.comment,
+    // });
+    console.log(chalk.green("WORK--------------", req.body.value));
+    console.log(chalk.green("WORK--------------", req.body.id_sl));
+    // console.log("gn's auto-generated ID:", gn.id);
+    // console.log(req.body);
+    // console.log(req.body.data.typeAuto.value);
+    res.status(200).send(work);
+    //res.data(gn);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "На сервере произошла ошибкаю Попробуйте позже..." });
+  }
+});
 
 module.exports = router;

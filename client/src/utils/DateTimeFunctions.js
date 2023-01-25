@@ -62,9 +62,9 @@ export function getTommorow(currentDay) {
       month = "0" + month;
     }
   }
-  console.log("--------------------------------");
-  console.log(`${year}-${month}-${day}`);
-  console.log("-------------------------------");
+  // console.log("--------------------------------");
+  // console.log(`${year}-${month}-${day}`);
+  // console.log("-------------------------------");
 
   //   console.log(`${year}-${month}-${day}`);
   return `${year}-${month}-${day}`;

@@ -111,7 +111,7 @@ const ModalAdd = ({
       ...prevState,
       [target.name]: target.value,
     }));
-    // console.log(target);
+    console.log(target);
   };
 
   const validatorConfig = {

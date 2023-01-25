@@ -18,6 +18,11 @@ export function getToday() {
   //return day
 }
 
+function getLastDayOfMonth(year, month) {
+  let date = new Date(year, month, 0);
+  return date.getDate();
+}
+
 export function getTommorow(currentDay) {
   //const getCurrentDay = new Date();
 
@@ -29,15 +34,38 @@ export function getTommorow(currentDay) {
 
   //   console.log(currentDay);
 
-  const year = currentDay.getFullYear();
+  // const lastDayMonth = Date.today().clearTime().moveToLastDayOfMonth();
+  // alert("last day", lastDayOfMonth);
+
+  //alert(); // 31
+  // alert(getLastDayOfMonth(2012, 1)); // 29
+  // alert(getLastDayOfMonth(2013, 1)); // 28
+
+  let year = currentDay.getFullYear();
   let month = currentDay.getMonth() + 1;
   if (month < 10) {
     month = "0" + month;
   }
+
   let day = currentDay.getDate() + 1;
   if (day < 10) {
     day = "0" + day;
   }
+
+  if (currentDay.getDate() === getLastDayOfMonth(year, month)) {
+    day = "01";
+    month = currentDay.getMonth() + 1;
+    if (month === 12) {
+      month = "01";
+      year = String(Number(year) + 1);
+    } else if (month < 10) {
+      month = "0" + month;
+    }
+  }
+  console.log("--------------------------------");
+  console.log(`${year}-${month}-${day}`);
+  console.log("-------------------------------");
+
   //   console.log(`${year}-${month}-${day}`);
   return `${year}-${month}-${day}`;
   //  console.log(month)

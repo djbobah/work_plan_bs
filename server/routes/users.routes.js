@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router({ mergeParams: true });
+const { Op } = require("sequelize");
 const chalk = require("chalk");
 // const mysql = require("mysql2");
 // const chalk = require("chalk");
@@ -15,6 +16,10 @@ router.get("/user", async (req, res) => {
       where: {
         id_sl: { [Op.eq]: `${req.query.id_sl}` },
       },
+      order: [
+        // Will escape title and validate DESC against a list of valid direction parameters
+        ["FIO", "ASC"],
+      ],
       raw: true,
     })
       .then((user) => {

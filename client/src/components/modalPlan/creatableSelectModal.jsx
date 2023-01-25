@@ -19,6 +19,7 @@ const CreatableSelectModal = ({ name, options, onChange, error, value }) => {
         name={name}
         defaultOption=" Choose..."
         options={options}
+        // menuIsOpen={false}
         onChange={handleChange}
         value={value}
       />{" "}

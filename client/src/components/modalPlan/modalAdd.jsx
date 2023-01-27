@@ -181,6 +181,11 @@ const ModalAdd = ({
         .post("http://localhost:5000/api/plan/work", target)
         .then((work) => {
           console.log("post----------------------", work.data);
+          console.log("post----------------------", work.data.id);
+          setData((prevState) => ({
+            ...prevState,
+            [target.name]: { label: work.data.name, value: work.data.id },
+          }));
         })
         .catch((e) => {
           console.log(e);

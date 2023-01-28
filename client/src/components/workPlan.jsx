@@ -19,7 +19,7 @@ const WorkPlan = () => {
   const [brigada, setBrigada] = useState();
   const [contractingOrganization, setContractingOrganization] = useState();
   const [showModalAdd, setShowModalAdd] = useState(false);
-
+  const [edit, setEdit] = useState(false);
   useEffect(() => {
     // получаем данные о планах работ из БД
 
@@ -173,7 +173,12 @@ const WorkPlan = () => {
   const handleClickAddClose = () => {
     setShowModalAdd(false);
   };
-
+  const handleChangeEdit = () => {
+    setEdit(true);
+  };
+  const handleAdd = () => {
+    setEdit(false);
+  };
   return (
     <>
       <div className={styles["work-plan"]}>
@@ -196,6 +201,9 @@ const WorkPlan = () => {
             onToastClose={handleToastClose}
             state={state}
             onChangeState={handleStateChange}
+            edit={edit}
+            onAdd={handleAdd}
+            // onEdit={handleChangeEdit}
           />
         )}
         {/* works && auto && objects && gn && brigada && */}

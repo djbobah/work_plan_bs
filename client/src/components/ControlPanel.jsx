@@ -26,6 +26,8 @@ const ControlPanel = ({
   onToastClose,
   state,
   onChangeState,
+  edit,
+  onEdit,
 }) => {
   const [checkButtons, setCheckButtons] = useState([
     { title: "Все подразделения", name: "AllUnits", id: 1, checked: false },
@@ -139,6 +141,8 @@ const ControlPanel = ({
         </div>
       </div>
       <ModalAdd
+        edit={edit}
+        onEdit={onEdit}
         show={show}
         onShow={onShow}
         onClose={onClose}

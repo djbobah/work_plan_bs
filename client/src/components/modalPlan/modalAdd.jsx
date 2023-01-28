@@ -16,6 +16,19 @@ import SelectModal from "./selectModal";
 import MultiSelectModal from "./multiSelectModal";
 import axios from "axios";
 
+const initialState = {
+  dateOfWork: getTommorow(),
+  typeOfWork: "",
+  isDanger: false,
+  objectForWork: "",
+  auto: null,
+  methodOfWork: { name: "ss", checked: true },
+  contractingOrganization: "",
+  brigada: [],
+  brigadier: "",
+  comment: "",
+};
+
 const ModalAdd = ({
   show,
   onShow,
@@ -26,24 +39,15 @@ const ModalAdd = ({
   auto,
   contractingOrganization,
   brigada,
+  edit,
+  onEdit,
 }) => {
-  const [data, setData] = useState({
-    dateOfWork: getTommorow(),
-    typeOfWork: "",
-    isDanger: false,
-    objectForWork: "",
-    auto: null,
-    methodOfWork: { name: "ss", checked: true },
-    contractingOrganization: "",
-    brigada: [],
-    brigadier: "",
-    comment: "",
-  });
+  const [data, setData] = useState(initialState);
   const [errors, setErrors] = useState({});
   const [optionsBrigadier, setOptionsBrigadier] = useState([]);
 
   // let optionsBrigadier = [];
-  const optionsTypeOfWorksArray = works.map((work) => ({
+  let optionsTypeOfWorksArray = works.map((work) => ({
     label: work.name,
     value: work.id,
   }));
@@ -169,7 +173,7 @@ const ModalAdd = ({
     e.preventDefault();
     // const isValid = validate();
     // if (!isValid) return;
-
+    setData(initialState);
     console.log(data);
   };
 
@@ -186,12 +190,16 @@ const ModalAdd = ({
             ...prevState,
             [target.name]: { label: work.data.name, value: work.data.id },
           }));
+          optionsTypeOfWorksArray.push({
+            label: work.data.name,
+            value: work.data.id,
+          });
+          console.log("optionsTypeOfWorksArray", optionsTypeOfWorksArray);
         })
         .catch((e) => {
           console.log(e);
         });
     }
-    console.log("optionsTypeOfWorksArray", optionsTypeOfWorksArray);
   };
 
   return (

@@ -165,7 +165,8 @@ const ModalAdd = ({
     setErrors(errors);
     return Object.keys(errors).length === 0;
   };
-  const isValid = Object.keys(errors).length === 0;
+  // const isValid = Object.keys(errors).length === 0;
+  const isValid = true;
 
   // const isValid = false;
   const handleSubmit = (e) => {

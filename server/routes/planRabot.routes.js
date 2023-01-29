@@ -139,26 +139,33 @@ router.post("/plan", async (req, res) => {
       typeof req.body.data.contractingOrganization != "object"
         ? "0"
         : req.body.data.contractingOrganization.value;
-    console.log(chalk.green("contractingOrganization--------------", podrOrg));
+    const auto = req.body.data.auto === null ? 1 : req.body.data.auto.value;
+    const newBrigadaArr = req.body.data.brigada.map((el) => {
+      return el.value;
+    });
+    const newBrigadaStr = newBrigadaArr.join(";");
 
-    // const workPlan = await ModelPlanRabot.Plan.create({
-    //   id_sl: localStorage.getItem("d_sl"),
-    //   id_object: req.body.data.objectForWork.value,
-    //   id_vid_rabot: req.body.data.typeOfWork.value,
-    //   id_podr_org: podrOrg,
-    //   sposob: req.body.data.methodOfWork.name,
-    //   //   Brigada: { type: Sequelize.TEXT, allowNull: false },
-    //   //   st_brigadi: { type: Sequelize.CHAR, allowNull: false },
-    //   //   avto: { type: Sequelize.INTEGER, allowNull: false },
-    //   //   vipolneno: { type: Sequelize.TINYINT, allowNull: false },
-    //   //   Prichina_nevipol: { type: Sequelize.TEXT, allowNull: false },
-    //   //   data_rabot: { type: Sequelize.DATEONLY, allowNull: false },
-    //   //   comment: { type: Sequelize.TEXT, allowNull: true },
-    //   //   id_gn: { type: Sequelize.TINYINT, allowNull: false },
-    //   //   OPASN: { type: Sequelize.TINYINT, allowNull: false },
-    //   //   utv_avto: { type: Sequelize.TINYINT, allowNull: false },
-    //   //   utv_opasn: { type: Sequelize.TINYINT, allowNull: false },
-    // });
+    // console.log(chalk.green("contractingOrganization--------------", podrOrg));
+
+    const workPlan = await ModelPlanRabot.Plan.create({
+      id_sl: req.body.id_sl,
+      id_object: req.body.data.objectForWork.value,
+      id_vid_rabot: req.body.data.typeOfWork.value,
+      id_podr_org: podrOrg,
+      sposob: req.body.data.methodOfWork.name,
+      Brigada: newBrigadaStr,
+      st_brigadi: req.body.data.brigadier.value,
+      avto: auto,
+      vipolneno: 0,
+      Prichina_nevipol: "",
+      data_rabot: req.body.data.dateOfWork,
+      comment: req.body.data.comment,
+      id_gn: 0,
+      OPASN: 0,
+      // req.body.data.isDanger
+      utv_avto: 0,
+      utv_opasn: 0,
+    });
     console.log(chalk.red("-----------------------------------"));
     console.log(chalk.green("id_sl--------------", req.body.id_sl));
     console.log(
@@ -171,13 +178,25 @@ router.post("/plan", async (req, res) => {
     console.log(
       chalk.green("sposob--------------", req.body.data.methodOfWork.name)
     );
-    console.log(chalk.green("Brigada--------------", req.body.data.brigada));
+    console.log(chalk.green("Brigada--------------", newBrigadaStr));
     console.log(
       chalk.green("st_brigadi--------------", req.body.data.brigadier.value)
     );
+    console.log(chalk.green("avto--------------", auto));
+    console.log(chalk.green("vipolneno--------------", 0));
+    console.log(chalk.green("Prichina_nevipol--------------", ""));
+    console.log(
+      chalk.green("data_rabot--------------", req.body.data.dateOfWork)
+    );
+    console.log(chalk.green("comment--------------", req.body.data.comment));
+    console.log(chalk.green("id_gn--------------", 0));
+    console.log(chalk.green("OPASN--------------", 0));
+    console.log(chalk.green("utv_avto--------------", 0));
+    console.log(chalk.green("utv_opasn--------------", 0));
+
     console.log(chalk.red("-----------------------------------"));
     // console.log(chalk.green("ORG--------------", req.body.id_sl));
-    res.status(200).send({ podrOrg });
+    res.status(200).send({ workPlan });
     //.send(organization)
   } catch (error) {
     res

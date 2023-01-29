@@ -86,7 +86,6 @@ const ModalAdd = ({
     }));
   };
   const handleRadio = ({ target }) => {
-    // console.log("target.name ", data[target.name]["name"]);
     if (data[target.name]["name"] === "po") {
       setData((prevState) => ({
         ...prevState,
@@ -173,28 +172,114 @@ const ModalAdd = ({
     e.preventDefault();
     // const isValid = validate();
     // if (!isValid) return;
-    setData(initialState);
-    console.log(data);
-  };
+    const id_sl = localStorage.getItem("id_sl");
+    axios
+      .post("http://localhost:5000/api/plan/plan", { data, id_sl })
+      .then((plan) => {
+        console.log("post------------", plan.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
 
+    // axios
+    //   .post("http://localhost:5000/api/plan/work", target)
+    //   .then((work) => {
+    //     // console.log("post----------------------", work.data);
+    //     // console.log("post----------------------", work.data.id);
+    //     setData((prevState) => ({
+    //       ...prevState,
+    //       [target.name]: { label: work.data.name, value: work.data.id },
+    //     }));
+    //     // добавляю значение чтоб сразу появилось в списке
+    //     works.push({
+    //       comment: "",
+    //       id: work.data.id,
+    //       id_sl: localStorage.getItem("id_sl"),
+    //       name: work.data.name,
+    //     });
+    //   })
+    //   .catch((e) => {
+    //     console.log(e);
+    //   });
+
+    console.log(data);
+    setData(initialState);
+    onClose();
+  };
+  const onCloseButton = () => {
+    setData(initialState);
+    onClose();
+  };
   const onCreateOption = (target) => {
-    console.log("Creatable select name: ", target);
-    if ((target.name = "typeOfWork")) {
+    if (target.name === "typeOfWork") {
+      console.log("Creatable select name: ", target);
       target.id_sl = localStorage.getItem("id_sl");
       axios
         .post("http://localhost:5000/api/plan/work", target)
         .then((work) => {
-          console.log("post----------------------", work.data);
-          console.log("post----------------------", work.data.id);
+          // console.log("post----------------------", work.data);
+          // console.log("post----------------------", work.data.id);
           setData((prevState) => ({
             ...prevState,
             [target.name]: { label: work.data.name, value: work.data.id },
           }));
-          optionsTypeOfWorksArray.push({
-            label: work.data.name,
-            value: work.data.id,
+          // добавляю значение чтоб сразу появилось в списке
+          works.push({
+            comment: "",
+            id: work.data.id,
+            id_sl: localStorage.getItem("id_sl"),
+            name: work.data.name,
           });
-          console.log("optionsTypeOfWorksArray", optionsTypeOfWorksArray);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    } else if (target.name === "objectForWork") {
+      console.log("Creatable select name: ", target);
+      target.id_sl = localStorage.getItem("id_sl");
+
+      axios
+        .post("http://localhost:5000/api/plan/object", target)
+        .then((object) => {
+          console.log("post----------------------", object.data);
+          console.log("post----------------------", object.data.id);
+          setData((prevState) => ({
+            ...prevState,
+            [target.name]: { label: object.data.name, value: object.data.id },
+          }));
+          // добавляю значение чтоб сразу появилось в списке
+          objects.push({
+            comment: localStorage.getItem("id_sl"),
+            id: object.data.id,
+            name: object.data.name,
+          });
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    } else if (target.name === "contractingOrganization") {
+      console.log("Creatable select name: ", target);
+      target.id_sl = localStorage.getItem("id_sl");
+
+      axios
+        .post("http://localhost:5000/api/plan/contractingOrganization", target)
+        .then((organization) => {
+          console.log("post----------------------", organization.data);
+          console.log("post----------------------", organization.data.id);
+          setData((prevState) => ({
+            ...prevState,
+            [target.name]: {
+              label: organization.data.name,
+              value: organization.data.id,
+            },
+          }));
+          // добавляю значение чтоб сразу появилось в списке
+          contractingOrganization.push({
+            comment: localStorage.getItem("id_sl"),
+            id: organization.data.id,
+            name: organization.data.name,
+          });
         })
         .catch((e) => {
           console.log(e);
@@ -212,7 +297,9 @@ const ModalAdd = ({
         size="lg"
       >
         <Modal.Header className="bg-info" closeButton>
-          <Modal.Title className="fs-5">Добавляем работу...</Modal.Title>
+          <Modal.Title className="fs-5">
+            {!edit ? "Добавляем работу..." : "Редактируем работу..."}
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleSubmit}>
@@ -272,6 +359,7 @@ const ModalAdd = ({
                   onChange={handleChange}
                   error={errors.objectForWork}
                   value={data.objectForWork}
+                  onCreateOption={onCreateOption}
                 />
               </Form.Group>
             </Row>{" "}
@@ -334,6 +422,7 @@ const ModalAdd = ({
                         : undefined
                     }
                     value={data.contractingOrganization}
+                    onCreateOption={onCreateOption}
                   />
                 </Form.Group>
               )}
@@ -400,7 +489,7 @@ const ModalAdd = ({
                   className="btn btn-secondary"
                   // disabled={!isValid}
                   type="button"
-                  onClick={onClose}
+                  onClick={onCloseButton}
                 >
                   Отмена
                 </button>

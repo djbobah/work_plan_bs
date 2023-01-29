@@ -52,7 +52,7 @@ const ModalAuto = ({
       >
         <Modal.Header className="bg-primary" closeButton>
           <Modal.Title className="fs-5 text-dark">
-            Добавляем автомобиль...
+            {!edit ? "Добавляем автомобиль..." : "Редактируем автомобиль..."}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>

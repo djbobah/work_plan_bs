@@ -230,6 +230,7 @@ const WorkPlan = () => {
               brigada={brigada}
               onDelete={handleRowDelete}
               contractingOrganization={contractingOrganization}
+              onEdit={edit}
             />
           )
         ) : (

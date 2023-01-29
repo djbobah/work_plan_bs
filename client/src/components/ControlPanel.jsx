@@ -11,6 +11,7 @@ import Toast from "./Toast.jsx";
 
 const ControlPanel = ({
   works,
+  setWorks,
   objects,
   auto,
   contractingOrganization,

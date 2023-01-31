@@ -144,8 +144,11 @@ router.post("/plan", async (req, res) => {
       return el.value;
     });
     const newBrigadaStr = newBrigadaArr.join(";");
-
-    console.log("st_brigadi", typeof req.body.data.brigadier.value);
+    const st_brigadi =
+      req.body.data.brigadier.value === undefined
+        ? ""
+        : String(req.body.data.brigadier.value);
+    // console.log("st_brigadi", typeof req.body.data.brigadier.value);
 
     // console.log(chalk.green("contractingOrganization--------------", podrOrg));
 
@@ -156,47 +159,46 @@ router.post("/plan", async (req, res) => {
       id_podr_org: podrOrg,
       sposob: req.body.data.methodOfWork.name,
       Brigada: newBrigadaStr,
-      st_brigadi: String(req.body.data.brigadier.value),
+      st_brigadi: st_brigadi,
       avto: auto,
       vipolneno: 0,
       Prichina_nevipol: "",
       data_rabot: req.body.data.dateOfWork,
       comment: req.body.data.comment,
       id_gn: 0,
-      OPASN: 0,
-      // req.body.data.isDanger
+      OPASN: req.body.data.isDanger,
       utv_avto: 0,
       utv_opasn: 0,
     });
-    console.log(chalk.red("-----------------------------------"));
-    console.log(chalk.green("id_sl--------------", req.body.id_sl));
-    console.log(
-      chalk.green("id_object--------------", req.body.data.objectForWork.value)
-    );
-    console.log(
-      chalk.green("id_vid_rabot--------------", req.body.data.typeOfWork.value)
-    );
-    console.log(chalk.green("id_podr_org--------------", podrOrg));
-    console.log(
-      chalk.green("sposob--------------", req.body.data.methodOfWork.name)
-    );
-    console.log(chalk.green("Brigada--------------", newBrigadaStr));
-    console.log(
-      chalk.green("st_brigadi--------------", req.body.data.brigadier.value)
-    );
-    console.log(chalk.green("avto--------------", auto));
-    console.log(chalk.green("vipolneno--------------", 0));
-    console.log(chalk.green("Prichina_nevipol--------------", ""));
-    console.log(
-      chalk.green("data_rabot--------------", req.body.data.dateOfWork)
-    );
-    console.log(chalk.green("comment--------------", req.body.data.comment));
-    console.log(chalk.green("id_gn--------------", 0));
-    console.log(chalk.green("OPASN--------------", 0));
-    console.log(chalk.green("utv_avto--------------", 0));
-    console.log(chalk.green("utv_opasn--------------", 0));
+    // console.log(chalk.red("-----------------------------------"));
+    // console.log(chalk.green("id_sl--------------", req.body.id_sl));
+    // console.log(
+    //   chalk.green("id_object--------------", req.body.data.objectForWork.value)
+    // );
+    // console.log(
+    //   chalk.green("id_vid_rabot--------------", req.body.data.typeOfWork.value)
+    // );
+    // console.log(chalk.green("id_podr_org--------------", podrOrg));
+    // console.log(
+    //   chalk.green("sposob--------------", req.body.data.methodOfWork.name)
+    // );
+    // console.log(chalk.green("Brigada--------------", newBrigadaStr));
+    // console.log(
+    //   chalk.green("st_brigadi--------------", req.body.data.brigadier.value)
+    // );
+    // console.log(chalk.green("avto--------------", auto));
+    // console.log(chalk.green("vipolneno--------------", 0));
+    // console.log(chalk.green("Prichina_nevipol--------------", ""));
+    // console.log(
+    //   chalk.green("data_rabot--------------", req.body.data.dateOfWork)
+    // );
+    // console.log(chalk.green("comment--------------", req.body.data.comment));
+    // console.log(chalk.green("id_gn--------------", 0));
+    // console.log(chalk.green("OPASN--------------", 0));
+    // console.log(chalk.green("utv_avto--------------", 0));
+    // console.log(chalk.green("utv_opasn--------------", 0));
 
-    console.log(chalk.red("-----------------------------------"));
+    // console.log(chalk.red("-----------------------------------"));
     // console.log(chalk.green("ORG--------------", req.body.id_sl));
     res.status(200).send("write");
     //.send(organization)

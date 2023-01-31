@@ -38,7 +38,7 @@ const WorkPlan = () => {
       .catch((e) => {
         console.log(e);
       });
-  }, [DateFrom, DateEnd]);
+  }, [DateFrom, DateEnd, showModalAdd]);
   useEffect(() => {
     console.log("rerender VID RABOT");
     // получаем данные о виде работ из БД
@@ -132,7 +132,7 @@ const WorkPlan = () => {
     { title: "Комментарий", path: "comment", id: 9, width: 0 },
     {
       title: "Согласование работ повышенной опасности",
-      path: "opasn",
+      path: "OPASN",
       id: 10,
       width: 100,
     },

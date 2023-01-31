@@ -65,7 +65,9 @@ const TableRowsPlan = ({
       return fioList.trim().slice(0, -1);
     }
     if (column === "avto") {
-      return auto.filter((auto) => auto.id === Number(row[column]))[0].name;
+      if (row[column] !== 1)
+        return auto.filter((auto) => auto.id === Number(row[column]))[0].name;
+      else return "не используется";
     }
     if (column === "id_gn") {
       if (gn) {
@@ -74,20 +76,25 @@ const TableRowsPlan = ({
         return avtoNumber[0].marka + " " + avtoNumber[0].nomer;
       }
     }
-    if (column === "opasn") {
-      if (row[column] === "0") {
+    if (column === "comment") {
+      // if (row[column] === 0) {
+      return row[column];
+    }
+    if (column === "OPASN") {
+      if (row[column] === 0) {
         return "согласование не требуется";
-      } else if (row["utv_opasn"] === "0") {
+      } else if (row["utv_opasn"] === 0) {
         return "на согласовании";
       }
     }
     if (column === "vipolneno") {
-      if (row[column] === "0") {
+      if (row[column] === 0) {
         return "не выполнено";
       } else {
         return "выполнено";
       }
     }
+
     if (column === "delete") {
       return (
         <div className="d-flex">

@@ -145,6 +145,8 @@ router.post("/plan", async (req, res) => {
     });
     const newBrigadaStr = newBrigadaArr.join(";");
 
+    console.log("st_brigadi", typeof req.body.data.brigadier.value);
+
     // console.log(chalk.green("contractingOrganization--------------", podrOrg));
 
     const workPlan = await ModelPlanRabot.Plan.create({
@@ -154,7 +156,7 @@ router.post("/plan", async (req, res) => {
       id_podr_org: podrOrg,
       sposob: req.body.data.methodOfWork.name,
       Brigada: newBrigadaStr,
-      st_brigadi: req.body.data.brigadier.value,
+      st_brigadi: String(req.body.data.brigadier.value),
       avto: auto,
       vipolneno: 0,
       Prichina_nevipol: "",
@@ -196,7 +198,7 @@ router.post("/plan", async (req, res) => {
 
     console.log(chalk.red("-----------------------------------"));
     // console.log(chalk.green("ORG--------------", req.body.id_sl));
-    res.status(200).send({ workPlan });
+    res.status(200).send("write");
     //.send(organization)
   } catch (error) {
     res

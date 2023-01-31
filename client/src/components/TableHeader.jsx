@@ -10,7 +10,10 @@ const TableHeader = ({ columns }) => {
         {columns.map((column) => (
           //   column.width>0?<th className="border"  width={`${column.width}px`} key={column.id}>{ column.title}</th>
           //   :
-          <th className="border bg-secondary p-1 text-center" key={column.id}>
+          <th
+            className="border bg-secondary p-1 text-center sticky-top"
+            key={column.id}
+          >
             {column.title}
           </th>
         ))}

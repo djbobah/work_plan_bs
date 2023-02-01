@@ -128,7 +128,7 @@ const TableRowsPlan = ({
       }
     }
     if (column === "vipolneno") {
-      renderDone(row[column], row.id);
+      return renderDone(row[column], row.id);
       // if (row[column] === 0) {
 
       //   return (

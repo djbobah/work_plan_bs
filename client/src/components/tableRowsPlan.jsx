@@ -15,6 +15,7 @@ const TableRowsPlan = ({
   gn,
   brigada,
   onDelete,
+  onDoneClick,
 }) => {
   let number = 0;
   const renderContent = (column, row) => {
@@ -89,9 +90,25 @@ const TableRowsPlan = ({
     }
     if (column === "vipolneno") {
       if (row[column] === 0) {
-        return "не выполнено";
+        return (
+          <div>
+            <span className="badge text-bg-danger p-2 text-uppercase">
+              Не выполнено
+            </span>
+            <button
+              className="btn btn-sm btn-primary mt-2"
+              onClick={() => onDoneClick(row.id)}
+            >
+              Выполнить
+            </button>
+          </div>
+        );
       } else {
-        return "выполнено";
+        return (
+          <span className="badge text-bg-success p-2 text-uppercase">
+            Выполнено
+          </span>
+        );
       }
     }
 

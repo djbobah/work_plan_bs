@@ -58,8 +58,11 @@ export function getTommorow(currentDay) {
     if (month === 12) {
       month = "01";
       year = String(Number(year) + 1);
-    } else if (month < 10) {
+    } else if (month < 9) {
       month = "0" + (month + 1);
+    } else if (month >= 9) {
+      console.log("month", month);
+      month = month + 1;
     }
   }
   // console.log("--------------------------------");

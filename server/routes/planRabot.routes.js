@@ -59,22 +59,49 @@ router.get("/plan", async (req, res) => {
   try {
     // console.log(req.query.id_sl);
     // console.log(chalk.blue("--------------------"));
-    // console.log(chalk.blue(req.query.dateEnd));
-    await ModelPlanRabot.Plan.findAll({
-      where: {
-        data_rabot: {
-          [Op.gte]: req.query.dateFrom,
-          [Op.lte]: req.query.dateEnd,
+    console.log(chalk.blue(req.query.state));
+    const state = req.query.state;
+    if (state === "Все" || state === "") {
+      await ModelPlanRabot.Plan.findAll({
+        where: {
+          data_rabot: {
+            [Op.gte]: req.query.dateFrom,
+            [Op.lte]: req.query.dateEnd,
+          },
+          id_sl: { [Op.eq]: req.query.id_sl },
         },
-        id_sl: { [Op.eq]: req.query.id_sl },
-      },
-      raw: true,
-    })
-      .then((plan) => {
-        // console.log(chalk.red(plan));
-        res.status(200).send(plan);
+        raw: true,
       })
-      .catch((err) => console.log(err));
+        .then((plan) => {
+          // console.log(chalk.red(plan));
+          res.status(200).send(plan);
+        })
+        .catch((err) => console.log(err));
+    } else {
+      let stateFlag;
+      if (state === "Выполнено") {
+        stateFlag = 1;
+      } else if (state === "Не выполнено") {
+        stateFlag = 0;
+      }
+
+      await ModelPlanRabot.Plan.findAll({
+        where: {
+          data_rabot: {
+            [Op.gte]: req.query.dateFrom,
+            [Op.lte]: req.query.dateEnd,
+          },
+          id_sl: { [Op.eq]: req.query.id_sl },
+          vipolneno: { [Op.eq]: stateFlag },
+        },
+        raw: true,
+      })
+        .then((plan) => {
+          // console.log(chalk.red(plan));
+          res.status(200).send(plan);
+        })
+        .catch((err) => console.log(err));
+    }
   } catch (error) {
     res
       .status(500)
@@ -202,6 +229,27 @@ router.post("/plan", async (req, res) => {
     // console.log(chalk.green("ORG--------------", req.body.id_sl));
     res.status(200).send("write");
     //.send(organization)
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "На сервере произошла ошибкаю Попробуйте позже..." });
+  }
+});
+
+router.patch("/donestring", async (req, res) => {
+  try {
+    console.log(chalk.green("doneString", req.body.id));
+    const gn = await ModelPlanRabot.Plan.update(
+      { vipolneno: 1 },
+      { where: { id: req.body.id } }
+    ).then((result) => console.log("updated"));
+    // // console.log("gn's auto-generated ID:", gn.id);
+
+    console.log("------------------------------");
+    console.log("doneString", req.body.id);
+    console.log("------------------------------");
+    // console.log(req.body.data.typeAuto.value);
+    res.status(200);
   } catch (error) {
     res
       .status(500)

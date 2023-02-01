@@ -20,6 +20,8 @@ const WorkPlan = () => {
   const [contractingOrganization, setContractingOrganization] = useState();
   const [showModalAdd, setShowModalAdd] = useState(false);
   const [edit, setEdit] = useState(false);
+  const [update, setUpdate] = useState(false);
+
   useEffect(() => {
     // получаем данные о планах работ из БД
 
@@ -30,6 +32,7 @@ const WorkPlan = () => {
           id_sl: localStorage.getItem("id_sl"),
           dateFrom: DateFrom,
           dateEnd: DateEnd,
+          state: state,
         },
       })
       .then((plan) => {
@@ -38,7 +41,7 @@ const WorkPlan = () => {
       .catch((e) => {
         console.log(e);
       });
-  }, [DateFrom, DateEnd, showModalAdd]);
+  }, [DateFrom, DateEnd, showModalAdd, state, update]);
   useEffect(() => {
     console.log("rerender VID RABOT");
     // получаем данные о виде работ из БД
@@ -165,6 +168,23 @@ const WorkPlan = () => {
     setPlans(plans.filter((row) => row.id !== id));
   };
 
+  const handleDoneClick = (id) => {
+    console.log("sring of plans done/ id:", id);
+    axios
+      .patch("http://localhost:5000/api/plan/donestring", { id })
+      .then((i) => {
+        console.log("put----------------------", i.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+
+    //возникла проблема с ререндером 5 раз перерисовывает и все
+    setUpdate(!update);
+
+    // setState(state);
+    // setState("Выполнено");
+  };
   //console.log("WorkPlan", works);
 
   const handleClickAddShow = () => {
@@ -229,6 +249,7 @@ const WorkPlan = () => {
               gn={gn}
               brigada={brigada}
               onDelete={handleRowDelete}
+              onDoneClick={handleDoneClick}
               contractingOrganization={contractingOrganization}
               onEdit={edit}
             />

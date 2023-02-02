@@ -6,7 +6,7 @@ import { shortFio } from "../utils/fioUtils";
 import deletePng from "../static/img/delete.png";
 // import editPng from "../static/img/edit.png";
 import copyPng from "../static/img/copy-two-paper-sheets-interface-symbol_icon-icons.com_73283.svg";
-import Done from "./done";
+import Done from "./Done";
 import { getToday } from "../utils/DateTimeFunctions";
 
 const TableRowsPlan = ({

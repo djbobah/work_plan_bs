@@ -165,6 +165,14 @@ const WorkPlan = () => {
 
   const handleRowDelete = (id) => {
     setPlans(plans.filter((row) => row.id !== id));
+    axios
+      .patch("http://localhost:5000/api/plan/deleteString", { id })
+      .then((i) => {
+        console.log("put----------------------", i.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   };
 
   //console.log("WorkPlan", works);

@@ -2,10 +2,11 @@ import React from "react";
 
 import { convertDate } from "../utils/DateTimeFunctions";
 import { shortFio } from "../utils/fioUtils";
-import axios from "axios";
+
 import deletePng from "../static/img/delete.png";
 // import editPng from "../static/img/edit.png";
 import copyPng from "../static/img/copy-two-paper-sheets-interface-symbol_icon-icons.com_73283.svg";
+import Done from "./done";
 
 const TableRowsPlan = ({
   columns,
@@ -17,45 +18,6 @@ const TableRowsPlan = ({
   brigada,
   onDelete,
 }) => {
-  const handleDoneClick = (id) => {
-    console.log("sring of plans done/ id:", id);
-    axios
-      .patch("http://localhost:5000/api/plan/donestring", { id })
-      .then((i) => {
-        console.log("put----------------------", i.data);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-    //возникла проблема с ререндером 5 раз перерисовывает и все
-    // setUpdate(!update);
-  };
-
-  const renderDone = (done, id) => {
-    console.log("done", done);
-    if (done === 0) {
-      return (
-        <div>
-          <span className="badge text-bg-danger p-2 text-uppercase">
-            Не выполнено
-          </span>
-          <button
-            className="btn btn-sm btn-primary mt-2"
-            onClick={() => handleDoneClick(id)}
-          >
-            Выполнить
-          </button>
-        </div>
-      );
-    } else {
-      return (
-        <span className="badge text-bg-success p-2 text-uppercase">
-          Выполнено
-        </span>
-      );
-    }
-  };
-
   let number = 0;
   const renderContent = (column, row) => {
     // let number = 0;
@@ -128,29 +90,7 @@ const TableRowsPlan = ({
       }
     }
     if (column === "vipolneno") {
-      return renderDone(row[column], row.id);
-      // if (row[column] === 0) {
-
-      //   return (
-      //     <div>
-      //       <span className="badge text-bg-danger p-2 text-uppercase">
-      //         Не выполнено
-      //       </span>
-      //       <button
-      //         className="btn btn-sm btn-primary mt-2"
-      //         onClick={() => handleDoneClick(row.id)}
-      //       >
-      //         Выполнить
-      //       </button>
-      //     </div>
-      //   );
-      // } else {
-      //   return (
-      //     <span className="badge text-bg-success p-2 text-uppercase">
-      //       Выполнено
-      //     </span>
-      //   );
-      // }
+      return <Done done={row[column]} id={row.id} />;
     }
 
     if (column === "delete") {

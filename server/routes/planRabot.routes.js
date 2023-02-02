@@ -243,12 +243,6 @@ router.patch("/donestring", async (req, res) => {
       { vipolneno: 1 },
       { where: { id: req.body.id } }
     ).then((result) => console.log("updated"));
-    // // console.log("gn's auto-generated ID:", gn.id);
-
-    console.log("------------------------------");
-    console.log("doneString", req.body.id);
-    console.log("------------------------------");
-    // console.log(req.body.data.typeAuto.value);
     res.status(200);
   } catch (error) {
     res

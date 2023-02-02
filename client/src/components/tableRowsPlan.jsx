@@ -7,6 +7,7 @@ import deletePng from "../static/img/delete.png";
 // import editPng from "../static/img/edit.png";
 import copyPng from "../static/img/copy-two-paper-sheets-interface-symbol_icon-icons.com_73283.svg";
 import Done from "./done";
+import { getToday } from "../utils/DateTimeFunctions";
 
 const TableRowsPlan = ({
   columns,
@@ -19,6 +20,7 @@ const TableRowsPlan = ({
   onDelete,
 }) => {
   let number = 0;
+  let currentDay;
   const renderContent = (column, row) => {
     // let number = 0;
     if (column === "number") {
@@ -26,6 +28,10 @@ const TableRowsPlan = ({
       return number;
     }
     if (column === "data_rabot") {
+      currentDay = row[column];
+      console.log("today", getToday());
+      console.log("currentDay", currentDay);
+      console.log(getToday() < currentDay);
       return convertDate(row[column]);
     }
     if (column === "id_vid_rabot") {
@@ -121,12 +127,14 @@ const TableRowsPlan = ({
           >
             <img src={copyPng} width="20px" alt="Добавить копированием" />
           </button>
-          <button
-            className="btn btn-light border border-secondary rounded m-1 p-1"
-            onClick={() => onDelete(row.id)}
-          >
-            <img src={deletePng} width="20px" alt="Удалить строку плана" />
-          </button>
+          {currentDay >= getToday() && (
+            <button
+              className="btn btn-light border border-secondary rounded m-1 p-1"
+              onClick={() => onDelete(row.id)}
+            >
+              <img src={deletePng} width="20px" alt="Удалить строку плана" />
+            </button>
+          )}
         </div>
       );
     }

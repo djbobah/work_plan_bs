@@ -254,18 +254,13 @@ router.patch("/donestring", async (req, res) => {
 router.delete("/:rowId", async (req, res) => {
   try {
     const { rowId } = req.params;
-    console.log(chalk.green("delete", rowId));
-    const removedRow = await ModelPlanRabot.Plan.destroy({
+    // console.log(chalk.green("delete", rowId));
+    await ModelPlanRabot.Plan.destroy({
       where: {
         id: rowId,
       },
     });
 
-    // await removedRow.remove();
-    // const gn = await ModelPlanRabot.Plan.update(
-    //   { vipolneno: 1 },
-    //   { where: { id: req.body.id } }
-    // ).then((result) => console.log("updated"));
     res.status(200);
   } catch (error) {
     res

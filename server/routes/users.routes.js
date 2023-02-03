@@ -32,5 +32,25 @@ router.get("/user", async (req, res) => {
       .json({ message: "На сервере произошла ошибкаю Попробуйте позже..." });
   }
 });
+router.get("/department", async (req, res) => {
+  // console.log(chalk.red(req.query.id_sl));
+  try {
+    await ModelUsers.Sluzhba.findAll({
+      order: [
+        // Will escape title and validate DESC against a list of valid direction parameters
+        ["Name", "ASC"],
+      ],
+      raw: true,
+    })
+      .then((department) => {
+        res.status(200).send(department);
+      })
+      .catch((err) => console.log(err));
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "На сервере произошла ошибкаю Попробуйте позже..." });
+  }
+});
 
 module.exports = router;

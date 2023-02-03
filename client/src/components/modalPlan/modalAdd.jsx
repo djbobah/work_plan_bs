@@ -12,7 +12,7 @@ import {
 } from "react-bootstrap";
 import { convertDate, getTommorow } from "../../utils/DateTimeFunctions";
 import CreatableSelectModal from "./creatableSelectModal";
-import SelectModal from "./selectModal";
+import SelectModal from "./SelectModal";
 import MultiSelectModal from "./multiSelectModal";
 import axios from "axios";
 

@@ -165,14 +165,14 @@ const ModalAdd = ({
     setErrors(errors);
     return Object.keys(errors).length === 0;
   };
-  // const isValid = Object.keys(errors).length === 0;
-  const isValid = true;
+  const isValid = Object.keys(errors).length === 0;
+  //const isValid = true;
 
   // const isValid = false;
   const handleSubmit = (e) => {
     e.preventDefault();
-    // const isValid = validate();
-    // if (!isValid) return;
+    const isValid = validate();
+    if (!isValid) return;
     const id_sl = localStorage.getItem("id_sl");
     axios
       .post("http://localhost:5000/api/plan/plan", { data, id_sl })
@@ -182,27 +182,6 @@ const ModalAdd = ({
       .catch((e) => {
         console.log(e);
       });
-
-    // axios
-    //   .post("http://localhost:5000/api/plan/work", target)
-    //   .then((work) => {
-    //     // console.log("post----------------------", work.data);
-    //     // console.log("post----------------------", work.data.id);
-    //     setData((prevState) => ({
-    //       ...prevState,
-    //       [target.name]: { label: work.data.name, value: work.data.id },
-    //     }));
-    //     // добавляю значение чтоб сразу появилось в списке
-    //     works.push({
-    //       comment: "",
-    //       id: work.data.id,
-    //       id_sl: localStorage.getItem("id_sl"),
-    //       name: work.data.name,
-    //     });
-    //   })
-    //   .catch((e) => {
-    //     console.log(e);
-    //   });
 
     console.log(data);
     setData(initialState);

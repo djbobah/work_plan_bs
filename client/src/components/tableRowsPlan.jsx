@@ -127,7 +127,7 @@ const TableRowsPlan = ({
           >
             <img src={copyPng} width="20px" alt="Добавить копированием" />
           </button>
-          {currentDay >= getToday() && (
+          {currentDay > getToday() && (
             <button
               className="btn btn-light border border-secondary rounded m-1 p-1"
               onClick={() => onDelete(row.id)}

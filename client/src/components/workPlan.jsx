@@ -165,8 +165,9 @@ const WorkPlan = () => {
 
   const handleRowDelete = (id) => {
     setPlans(plans.filter((row) => row.id !== id));
+    console.log("id", id);
     axios
-      .patch("http://localhost:5000/api/plan/deleteString", { id })
+      .delete(`http://localhost:5000/api/plan/${id}`)
       .then((i) => {
         console.log("put----------------------", i.data);
       })

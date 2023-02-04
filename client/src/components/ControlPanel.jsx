@@ -29,37 +29,9 @@ const ControlPanel = ({
   onChangeState,
   edit,
   onEdit,
+  checkButtons,
+  onCheck,
 }) => {
-  const [checkButtons, setCheckButtons] = useState([
-    { title: "Все подразделения", name: "AllUnits", id: 1, checked: false },
-    {
-      title: "Только с транспортом",
-      name: "OnlyWithAuto",
-      id: 2,
-      checked: false,
-    },
-    {
-      title: "Только с опасными работами",
-      name: "OnlyWithDangerWork",
-      id: 3,
-      checked: false,
-    },
-  ]);
-
-  const handleCheckClick = (checkId) => {
-    let newCheckButtons = checkButtons.map((checkButton) =>
-      checkButton.id === checkId
-        ? {
-            title: checkButton.title,
-            name: checkButton.name,
-            id: checkButton.id,
-            checked: !checkButton.checked,
-          }
-        : checkButton
-    );
-    setCheckButtons(newCheckButtons);
-  };
-
   return (
     <div
       className={`navbar navbar-expand-lg  justify-content-between fs-6   ${styles.nav}`}
@@ -125,7 +97,7 @@ const ControlPanel = ({
             id={checkButton.id}
             key={checkButton.id}
             check={checkButton.checked}
-            onCheck={handleCheckClick}
+            onCheck={onCheck}
           />
         ))}
       </div>

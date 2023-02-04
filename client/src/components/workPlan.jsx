@@ -20,7 +20,37 @@ const WorkPlan = () => {
   const [contractingOrganization, setContractingOrganization] = useState();
   const [showModalAdd, setShowModalAdd] = useState(false);
   const [edit, setEdit] = useState(false);
+  const [checkButtons, setCheckButtons] = useState([
+    { title: "Все подразделения", name: "AllUnits", id: 1, checked: false },
+    {
+      title: "Только с транспортом",
+      name: "OnlyWithAuto",
+      id: 2,
+      checked: false,
+    },
+    {
+      title: "Только с опасными работами",
+      name: "OnlyWithDangerWork",
+      id: 3,
+      checked: false,
+    },
+  ]);
 
+  console.log("checkButtons", checkButtons);
+
+  const handleCheckClick = (checkId) => {
+    let newCheckButtons = checkButtons.map((checkButton) =>
+      checkButton.id === checkId
+        ? {
+            title: checkButton.title,
+            name: checkButton.name,
+            id: checkButton.id,
+            checked: !checkButton.checked,
+          }
+        : checkButton
+    );
+    setCheckButtons(newCheckButtons);
+  };
   useEffect(() => {
     // получаем данные о планах работ из БД
 
@@ -214,6 +244,8 @@ const WorkPlan = () => {
             onChangeState={handleStateChange}
             edit={edit}
             onAdd={handleAdd}
+            checkButtons={checkButtons}
+            onCheck={handleCheckClick}
             // onEdit={handleChangeEdit}
           />
         )}
@@ -242,6 +274,7 @@ const WorkPlan = () => {
               onDelete={handleRowDelete}
               contractingOrganization={contractingOrganization}
               onEdit={edit}
+              // checkButtons={checkButtons}
             />
           )
         ) : (

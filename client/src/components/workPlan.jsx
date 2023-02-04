@@ -95,7 +95,7 @@ const WorkPlan = () => {
         },
       })
       .then((user) => {
-        // console.log("gn", gn.data);
+        console.log("user", user.data);
         setBrigada(user.data);
       })
       .catch((e) => {

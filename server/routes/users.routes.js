@@ -15,6 +15,7 @@ router.get("/user", async (req, res) => {
     await ModelUsers.User.findAll({
       where: {
         id_sl: { [Op.eq]: `${req.query.id_sl}` },
+        noplan: 0,
       },
       order: [
         // Will escape title and validate DESC against a list of valid direction parameters

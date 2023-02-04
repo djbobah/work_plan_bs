@@ -24,7 +24,7 @@ const WorkPlan = () => {
   useEffect(() => {
     // получаем данные о планах работ из БД
 
-    console.log("rerender PLAN");
+    // console.log("rerender PLAN");
     axios
       .get("http://localhost:5000/api/plan/plan", {
         params: {
@@ -42,7 +42,7 @@ const WorkPlan = () => {
       });
   }, [DateFrom, DateEnd, showModalAdd, state]);
   useEffect(() => {
-    console.log("rerender VID RABOT");
+    // console.log("rerender VID RABOT");
     // получаем данные о виде работ из БД
     axios
       .get("http://localhost:5000/api/plan/vid", {
@@ -58,7 +58,7 @@ const WorkPlan = () => {
       });
   }, []);
   useEffect(() => {
-    console.log("rerender OTHER");
+    // console.log("rerender OTHER");
     // получаем данные об объектах  из БД
     axios
       .get("http://localhost:5000/api/plan/object")
@@ -95,7 +95,7 @@ const WorkPlan = () => {
         },
       })
       .then((user) => {
-        console.log("user", user.data);
+        // console.log("user", user.data);
         setBrigada(user.data);
       })
       .catch((e) => {

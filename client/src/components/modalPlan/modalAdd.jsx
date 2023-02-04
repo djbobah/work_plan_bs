@@ -94,7 +94,7 @@ const ModalAdd = ({
       }));
       //   console.log("po");
     } else {
-      console.log("ss");
+      // console.log("ss");
       setData((prevState) => ({
         ...prevState,
         [target.name]: { name: target.value, checked: target.checked },
@@ -111,7 +111,7 @@ const ModalAdd = ({
       ...prevState,
       [target.name]: target.value,
     }));
-    console.log(target);
+    // console.log(target);
   };
 
   const validatorConfig = {
@@ -177,13 +177,13 @@ const ModalAdd = ({
     axios
       .post("http://localhost:5000/api/plan/plan", { data, id_sl })
       .then((plan) => {
-        console.log("post------------", plan.data);
+        // console.log("post------------", plan.data);
       })
       .catch((e) => {
         console.log(e);
       });
 
-    console.log(data);
+    // console.log(data);
     setData(initialState);
     onClose();
   };

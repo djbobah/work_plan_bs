@@ -17,10 +17,12 @@ const TableRowsPlan = ({
   auto,
   gn,
   brigada,
+  contractingOrganization,
   onDelete,
 }) => {
   let number = 0;
   let currentDay;
+
   const renderContent = (column, row) => {
     // let number = 0;
     if (column === "number") {
@@ -29,9 +31,9 @@ const TableRowsPlan = ({
     }
     if (column === "data_rabot") {
       currentDay = row[column];
-      console.log("today", getToday());
-      console.log("currentDay", currentDay);
-      console.log(getToday() < currentDay);
+      // console.log("today", getToday());
+      // console.log("currentDay", currentDay);
+      // console.log(getToday() < currentDay);
       return convertDate(row[column]);
     }
     if (column === "id_vid_rabot") {
@@ -39,6 +41,22 @@ const TableRowsPlan = ({
         return works.filter((work) => work.id === Number(row[column]))[0]?.name;
       }
     }
+
+    // const id_podr_org = row["id_podr_org"];
+    const podrOrgName = contractingOrganization.filter(
+      (org) => org.id === row["id_podr_org"]
+    )[0]?.name;
+
+    // if (column === "id_podr_org") {
+    //   // if (works) {
+    //   id_podr_org = contractingOrganization.filter(
+    //     (org) => org.id === Number(row[column])
+    //   )[0]?.name;
+
+    console.log("podrOrgName", podrOrgName);
+    //   // }
+    // }
+
     if (column === "sposob") {
       if (row[column] === "ss") {
         return "собственными силами";
@@ -70,7 +88,13 @@ const TableRowsPlan = ({
             }
           }
         });
-      return fioList.trim().slice(0, -1);
+
+      return (
+        <>
+          <div className="text-bg-secondary rounded">{podrOrgName}</div>
+          <div>{fioList.trim().slice(0, -1)}</div>
+        </>
+      );
     }
     if (column === "avto") {
       if (row[column] !== 1)

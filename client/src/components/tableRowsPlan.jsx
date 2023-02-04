@@ -53,7 +53,7 @@ const TableRowsPlan = ({
     //     (org) => org.id === Number(row[column])
     //   )[0]?.name;
 
-    console.log("podrOrgName", podrOrgName);
+    // console.log("podrOrgName", podrOrgName);
     //   // }
     // }
 

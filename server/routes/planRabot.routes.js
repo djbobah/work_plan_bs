@@ -65,8 +65,11 @@ router.get("/plan", async (req, res) => {
     // console.log(req.query.id_sl);
     // console.log(chalk.blue("--------------------"));
     console.log(chalk.blue(req.query.state));
+    console.log(chalk.blue("opasn------------", req.query.opasn));
+    console.log(chalk.blue("auto------------", req.query.auto));
     const state = req.query.state;
     const conditionWhere =
+      // if(req.query.id_sl === "0")
       req.query.id_sl === "0"
         ? {
             data_rabot: {
@@ -81,6 +84,17 @@ router.get("/plan", async (req, res) => {
             },
             id_sl: { [Op.eq]: req.query.id_sl },
           };
+    if (req.query.opasn === "true") {
+      conditionWhere.opasn = 1;
+    } else {
+      delete conditionWhere.opasn;
+    }
+    if (req.query.auto === "true") {
+      conditionWhere.avto = { [Op.gt]: 1 };
+    } else {
+      delete conditionWhere.avto;
+    }
+    console.log(chalk.blue("conditionWhere------------", conditionWhere));
 
     if (state === "Все" || state === "") {
       await ModelPlanRabot.Plan.findAll({

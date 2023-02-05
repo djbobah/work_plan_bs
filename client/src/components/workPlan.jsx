@@ -19,7 +19,6 @@ const WorkPlan = () => {
   const [gn, setGn] = useState();
   const [brigada, setBrigada] = useState();
   const [department, setDepartment] = useState();
-
   const [contractingOrganization, setContractingOrganization] = useState();
   const [showModalAdd, setShowModalAdd] = useState(false);
   const [edit, setEdit] = useState(false);
@@ -72,7 +71,6 @@ const WorkPlan = () => {
   // }, [checkButtons]);
   useEffect(() => {
     // получаем данные о пользователях из БД
-
     axios
       .get("http://localhost:5000/api/users/user", {
         params: {
@@ -88,12 +86,13 @@ const WorkPlan = () => {
       });
 
     // получаем данные о планах работ из БД
-
     // console.log("rerender PLAN");
     axios
       .get("http://localhost:5000/api/plan/plan", {
         params: {
           id_sl: id_sl,
+          opasn: checkButtons[2].checked,
+          auto: checkButtons[1].checked,
           dateFrom: DateFrom,
           dateEnd: DateEnd,
           state: state,
@@ -101,13 +100,14 @@ const WorkPlan = () => {
       })
       .then((plan) => {
         setPlans(plan.data);
+        // console.log("conditionWhere-------------", plan.conditionWhere);
       })
       .catch((e) => {
         console.log(e);
       });
 
     // console.log("rerender VID RABOT");
-  }, [DateFrom, DateEnd, showModalAdd, state, id_sl]);
+  }, [DateFrom, DateEnd, showModalAdd, state, checkButtons]);
 
   useEffect(() => {
     // получаем данные о виде работ из БД

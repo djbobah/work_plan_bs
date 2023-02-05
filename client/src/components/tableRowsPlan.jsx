@@ -112,7 +112,7 @@ const TableRowsPlan = ({
       if (row[column] === 0) {
         return "согласование не требуется";
       } else if (row["utv_opasn"] === 0) {
-        return "на согласовании";
+        return <div className="bg-warning rounded">на согласовании</div>;
       }
     }
     if (column === "vipolneno") {
@@ -174,8 +174,8 @@ const TableRowsPlan = ({
       return (
         <>
           {" "}
-          <tr>
-            <td colSpan={columns.length} align={"center"}>
+          <tr key={row.id + row.id_sl + row.id}>
+            <td colSpan={columns.length} align={"center"} className="bg-info">
               {departmentName}
             </td>
           </tr>

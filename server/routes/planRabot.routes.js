@@ -85,6 +85,10 @@ router.get("/plan", async (req, res) => {
     if (state === "Все" || state === "") {
       await ModelPlanRabot.Plan.findAll({
         where: conditionWhere,
+        order: [
+          // Will escape title and validate DESC against a list of valid direction parameters
+          ["id_sl", "ASC"],
+        ],
         raw: true,
       })
         .then((plan) => {

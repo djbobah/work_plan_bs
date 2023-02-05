@@ -94,7 +94,7 @@ const TableRowsPlan = ({
     }
     if (column === "avto") {
       if (row[column] !== 1)
-        return auto.filter((auto) => auto.id === Number(row[column]))[0].name;
+        return auto.filter((auto) => auto.id === Number(row[column]))[0]?.name;
       else return "не используется";
     }
     if (column === "id_gn") {
@@ -122,25 +122,27 @@ const TableRowsPlan = ({
     if (column === "delete") {
       return (
         <div className="d-flex">
-          <button
-            className="btn btn-light border border-secondary rounded m-1 p-1 "
-            onClick={() => onDelete(row.id)}
-          >
-            <svg
-              width="20"
-              height="20"
-              color="primary"
-              fill="bg-secondary"
-              className="bi bi-pencil-square "
-              viewBox="0 0 16 16"
+          {currentDay > getToday() && (
+            <button
+              className="btn btn-light border border-secondary rounded m-1 p-1 "
+              onClick={() => onDelete(row.id)}
             >
-              <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
-              <path
-                fillRule="evenodd"
-                d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"
-              />
-            </svg>
-          </button>
+              <svg
+                width="20"
+                height="20"
+                color="primary"
+                fill="bg-secondary"
+                className="bi bi-pencil-square "
+                viewBox="0 0 16 16"
+              >
+                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                <path
+                  fillRule="evenodd"
+                  d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"
+                />
+              </svg>
+            </button>
+          )}
           <button
             className="btn  btn-light border border-secondary rounded  m-1 p-1"
             onClick={() => onDelete(row.id)}

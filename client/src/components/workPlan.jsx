@@ -5,6 +5,7 @@ import { getToday, getTommorow } from "../utils/DateTimeFunctions";
 // import api from "../api";
 import axios from "axios";
 import styles from "./workPlan.module.css";
+import { columnsPlans } from "../utils/columnsPlans";
 
 const WorkPlan = () => {
   const [DateFrom, setDateFrom] = useState(getToday().toString());
@@ -17,6 +18,8 @@ const WorkPlan = () => {
   const [auto, setAuto] = useState();
   const [gn, setGn] = useState();
   const [brigada, setBrigada] = useState();
+  const [department, setDepartment] = useState();
+
   const [contractingOrganization, setContractingOrganization] = useState();
   const [showModalAdd, setShowModalAdd] = useState(false);
   const [edit, setEdit] = useState(false);
@@ -36,7 +39,7 @@ const WorkPlan = () => {
     },
   ]);
 
-  console.log("checkButtons", checkButtons);
+  // console.log("checkButtons", checkButtons);
 
   const handleCheckClick = (checkId) => {
     let newCheckButtons = checkButtons.map((checkButton) =>
@@ -52,13 +55,45 @@ const WorkPlan = () => {
     setCheckButtons(newCheckButtons);
   };
   useEffect(() => {
+    // получаем данные о виде работ из БД
+    axios
+      .get("http://localhost:5000/api/users/department")
+      .then((department) => {
+        setDepartment(department.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, []);
+  // useEffect(() => {
+  let id_sl = checkButtons[0].checked ? 0 : localStorage.getItem("id_sl");
+  // console.log("id_sl-------------------", id_sl);
+
+  // }, [checkButtons]);
+  useEffect(() => {
+    // получаем данные о пользователях из БД
+
+    axios
+      .get("http://localhost:5000/api/users/user", {
+        params: {
+          id_sl: id_sl,
+        },
+      })
+      .then((user) => {
+        // console.log("user", user.data);
+        setBrigada(user.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+
     // получаем данные о планах работ из БД
 
     // console.log("rerender PLAN");
     axios
       .get("http://localhost:5000/api/plan/plan", {
         params: {
-          id_sl: localStorage.getItem("id_sl"),
+          id_sl: id_sl,
           dateFrom: DateFrom,
           dateEnd: DateEnd,
           state: state,
@@ -70,14 +105,16 @@ const WorkPlan = () => {
       .catch((e) => {
         console.log(e);
       });
-  }, [DateFrom, DateEnd, showModalAdd, state]);
-  useEffect(() => {
+
     // console.log("rerender VID RABOT");
+  }, [DateFrom, DateEnd, showModalAdd, state, id_sl]);
+
+  useEffect(() => {
     // получаем данные о виде работ из БД
     axios
       .get("http://localhost:5000/api/plan/vid", {
         params: {
-          id_sl: localStorage.getItem("id_sl"),
+          id_sl: id_sl,
         },
       })
       .then((vid) => {
@@ -86,7 +123,7 @@ const WorkPlan = () => {
       .catch((e) => {
         console.log(e);
       });
-  }, []);
+  }, [id_sl]);
   useEffect(() => {
     // console.log("rerender OTHER");
     // получаем данные об объектах  из БД
@@ -117,20 +154,6 @@ const WorkPlan = () => {
         console.log(e);
       });
 
-    // получаем данные о пользователях из БД
-    axios
-      .get("http://localhost:5000/api/users/user", {
-        params: {
-          id_sl: localStorage.getItem("id_sl"),
-        },
-      })
-      .then((user) => {
-        // console.log("user", user.data);
-        setBrigada(user.data);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
     // получаем данные о подрядных организациях из БД
     axios
       .get("http://localhost:5000/api/plan/podr")
@@ -142,35 +165,7 @@ const WorkPlan = () => {
       });
   }, []);
 
-  const columns = [
-    { title: "№ п/п", path: "number", id: 1, width: 30 },
-    { title: "Дата", path: "data_rabot", id: 2, width: 20 },
-    { title: "Планируемые работы", path: "id_vid_rabot", id: 3, width: 200 },
-    { title: "Способ проведения работ", path: "sposob", id: 4, width: 50 },
-    { title: "Объект", path: "id_object", id: 5, width: 200 },
-    {
-      title: "Состав бригады / наименование подрядной организации",
-      path: "Brigada",
-      id: 6,
-      width: 100,
-    },
-    { title: "Тип транспорта", path: "avto", id: 7, width: 0 },
-    {
-      title: "Cогласованный автомобиль Марка - Гос.№",
-      path: "id_gn",
-      id: 8,
-      width: 0,
-    },
-    { title: "Комментарий", path: "comment", id: 9, width: 0 },
-    {
-      title: "Согласование работ повышенной опасности",
-      path: "OPASN",
-      id: 10,
-      width: 100,
-    },
-    { title: "Отметка о выполнении", path: "vipolneno", id: 11, width: 0 },
-    { title: "", path: "delete", id: 12, width: 0 },
-  ];
+  const columns = columnsPlans(id_sl);
 
   const handleDateFromChange = (e) => {
     setDateFrom(e.target.value);
@@ -258,27 +253,30 @@ const WorkPlan = () => {
         objects &&
         plans &&
         plans.length > 0 ? (
-          works &&
-          auto &&
-          objects &&
-          gn &&
-          brigada && (
-            <Table
-              columns={columns}
-              rows={plans}
-              works={works}
-              objects={objects}
-              auto={auto}
-              gn={gn}
-              brigada={brigada}
-              onDelete={handleRowDelete}
-              contractingOrganization={contractingOrganization}
-              onEdit={edit}
-              // checkButtons={checkButtons}
-            />
-          )
+          // works &&
+          // auto &&
+          // objects &&
+          // gn &&
+          // brigada &&
+          <Table
+            columns={columns}
+            rows={plans}
+            works={works}
+            objects={objects}
+            auto={auto}
+            gn={gn}
+            brigada={brigada}
+            department={department}
+            onDelete={handleRowDelete}
+            contractingOrganization={contractingOrganization}
+            onEdit={edit}
+            checkButtons={checkButtons}
+          />
         ) : (
-          <h1>Загрузка...</h1>
+          <h1>
+            При выбранных параметрах нет данных для отображения или на данный
+            день нет планов...
+          </h1>
         )}
       </div>
     </>

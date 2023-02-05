@@ -26,10 +26,15 @@ router.get("/object", async (req, res) => {
 });
 router.get("/vid", async (req, res) => {
   try {
+    const conditionWhere =
+      req.query.id_sl === "0"
+        ? {}
+        : {
+            id_sl: { [Op.eq]: req.query.id_sl },
+          };
+
     await ModelPlanRabot.VidRabot.findAll({
-      where: {
-        id_sl: { [Op.eq]: req.query.id_sl },
-      },
+      where: conditionWhere,
       raw: true,
     })
       .then((vid) => {
@@ -61,15 +66,25 @@ router.get("/plan", async (req, res) => {
     // console.log(chalk.blue("--------------------"));
     console.log(chalk.blue(req.query.state));
     const state = req.query.state;
+    const conditionWhere =
+      req.query.id_sl === "0"
+        ? {
+            data_rabot: {
+              [Op.gte]: req.query.dateFrom,
+              [Op.lte]: req.query.dateEnd,
+            },
+          }
+        : {
+            data_rabot: {
+              [Op.gte]: req.query.dateFrom,
+              [Op.lte]: req.query.dateEnd,
+            },
+            id_sl: { [Op.eq]: req.query.id_sl },
+          };
+
     if (state === "Все" || state === "") {
       await ModelPlanRabot.Plan.findAll({
-        where: {
-          data_rabot: {
-            [Op.gte]: req.query.dateFrom,
-            [Op.lte]: req.query.dateEnd,
-          },
-          id_sl: { [Op.eq]: req.query.id_sl },
-        },
+        where: conditionWhere,
         raw: true,
       })
         .then((plan) => {

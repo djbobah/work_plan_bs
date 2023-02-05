@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { convertDate } from "../utils/DateTimeFunctions";
 import { shortFio } from "../utils/fioUtils";
@@ -17,9 +17,12 @@ const TableRowsPlan = ({
   auto,
   gn,
   brigada,
+  department,
   contractingOrganization,
   onDelete,
+  checkButtons,
 }) => {
+  // const [department, setDepartment] = useState();
   let number = 0;
   let currentDay;
 
@@ -47,16 +50,6 @@ const TableRowsPlan = ({
       (org) => org.id === row["id_podr_org"]
     )[0]?.name;
 
-    // if (column === "id_podr_org") {
-    //   // if (works) {
-    //   id_podr_org = contractingOrganization.filter(
-    //     (org) => org.id === Number(row[column])
-    //   )[0]?.name;
-
-    // console.log("podrOrgName", podrOrgName);
-    //   // }
-    // }
-
     if (column === "sposob") {
       if (row[column] === "ss") {
         return "собственными силами";
@@ -69,21 +62,24 @@ const TableRowsPlan = ({
     if (column === "Brigada") {
       // console.log("row[column]", row[column]);
       const idArr = row[column].split(";");
-
+      // console.log("idArr---------------", idArr);
       let fioList = "";
       // console.log("brigada", brigada);
       brigada &&
+        // idArr.length > 1 &&
         idArr.map((id) => {
           if (id !== "") {
             if (id === row["st_brigadi"]) {
               fioList +=
                 shortFio(
-                  brigada?.filter((brigada) => brigada.id === Number(id))[0].fio
+                  brigada?.filter((brigada) => brigada.id === Number(id))[0]
+                    ?.fio
                 ) + "(ст.), ";
             } else {
               fioList +=
                 shortFio(
-                  brigada.filter((brigada) => brigada.id === Number(id))[0].fio
+                  brigada?.filter((brigada) => brigada.id === Number(id))[0]
+                    ?.fio
                 ) + ", ";
             }
           }
@@ -164,10 +160,25 @@ const TableRowsPlan = ({
     }
     // return row[column];
   };
-  return (
-    <tbody>
-      {rows &&
-        rows.map((row) => (
+  // console.log("checkButtons", checkButtons[0].checked);
+  // console.log("rows", rows);
+  let department_ = 0;
+
+  const renderAllDepartment = (row) => {
+    if (row.id_sl !== department_) {
+      department_ = row.id_sl;
+      const departmentName = department.filter(
+        (dep) => dep.id_sl === row.id_sl
+      )[0].name;
+      // console.log(departmentName);
+      return (
+        <>
+          {" "}
+          <tr>
+            <td colSpan={columns.length} align={"center"}>
+              {departmentName}
+            </td>
+          </tr>
           <tr key={row.id + row.id_sl}>
             {columns.map((column) => (
               <td className="border text-center" key={column.id}>
@@ -175,7 +186,37 @@ const TableRowsPlan = ({
               </td>
             ))}
           </tr>
+        </>
+      );
+    }
+
+    return (
+      <tr key={row.id + row.id_sl}>
+        {columns.map((column) => (
+          <td className="border text-center" key={column.id}>
+            {renderContent(column.path, row)}
+          </td>
         ))}
+      </tr>
+    );
+  };
+
+  return (
+    <tbody>
+      {rows &&
+        rows.map((row) =>
+          !checkButtons[0].checked ? (
+            <tr key={row.id + row.id_sl}>
+              {columns.map((column) => (
+                <td className="border text-center" key={column.id}>
+                  {renderContent(column.path, row)}
+                </td>
+              ))}
+            </tr>
+          ) : (
+            <>{renderAllDepartment(row)}</>
+          )
+        )}
     </tbody>
   );
 };

@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 
-import { convertDate } from "../utils/DateTimeFunctions";
 import { shortFio } from "../utils/fioUtils";
 
 import deletePng from "../static/img/delete.png";
 // import editPng from "../static/img/edit.png";
 import copyPng from "../static/img/copy-two-paper-sheets-interface-symbol_icon-icons.com_73283.svg";
 import Done from "./Done";
-import { getToday } from "../utils/DateTimeFunctions";
+import { getToday, convertDate } from "../utils/DateTimeFunctions";
 
 const TableRowsPlan = ({
   columns,
@@ -19,6 +18,7 @@ const TableRowsPlan = ({
   brigada,
   department,
   contractingOrganization,
+  dangerWork,
   onDelete,
   checkButtons,
 }) => {
@@ -30,7 +30,12 @@ const TableRowsPlan = ({
     // let number = 0;
     if (column === "number") {
       number++;
-      return number;
+      return (
+        <>
+          <div>{number}</div>
+          <div className="text-light">{row.id}</div>
+        </>
+      );
     }
     if (column === "data_rabot") {
       currentDay = row[column];
@@ -112,7 +117,18 @@ const TableRowsPlan = ({
       if (row[column] === 0) {
         return "согласование не требуется";
       } else if (row["utv_opasn"] === 0) {
-        return <div className="bg-warning rounded">на согласовании</div>;
+        return <div className="bg-warning rounded">На согласовании</div>;
+      } else {
+        const filteredDangerWork = dangerWork.filter(
+          (work) => row.id === work.id_rab
+        );
+        return (
+          <div className="bg-success text-white rounded">
+            {`Cогласовано ${convertDate(filteredDangerWork[0].date_utv)} ${
+              filteredDangerWork[0].time_utv
+            } ${filteredDangerWork[0].user}`}
+          </div>
+        );
       }
     }
     if (column === "vipolneno") {

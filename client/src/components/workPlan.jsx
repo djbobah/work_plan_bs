@@ -20,6 +20,7 @@ const WorkPlan = () => {
   const [brigada, setBrigada] = useState();
   const [department, setDepartment] = useState();
   const [contractingOrganization, setContractingOrganization] = useState();
+  const [dangerWork, setDangerWork] = useState();
   const [showModalAdd, setShowModalAdd] = useState(false);
   const [edit, setEdit] = useState(false);
   const [checkButtons, setCheckButtons] = useState([
@@ -163,8 +164,18 @@ const WorkPlan = () => {
       .catch((e) => {
         console.log(e);
       });
-  }, []);
 
+    // получаем данные о опасных работах из БД
+    axios
+      .get("http://localhost:5000/api/danger/work")
+      .then((work) => {
+        setDangerWork(work.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, []);
+  // console.log("dangerWork---------------------", dangerWork);
   const columns = columnsPlans(id_sl);
 
   const handleDateFromChange = (e) => {
@@ -267,6 +278,7 @@ const WorkPlan = () => {
             gn={gn}
             brigada={brigada}
             department={department}
+            dangerWork={dangerWork}
             onDelete={handleRowDelete}
             contractingOrganization={contractingOrganization}
             onEdit={edit}

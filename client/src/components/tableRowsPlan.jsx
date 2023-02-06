@@ -122,11 +122,16 @@ const TableRowsPlan = ({
         const filteredDangerWork = dangerWork.filter(
           (work) => row.id === work.id_rab
         );
+        const filteredUser = brigada.filter(
+          (user) => filteredDangerWork[0].user === user.email
+        );
+        console.log("filteredUser----------", filteredUser);
+
         return (
           <div className="bg-success text-white rounded">
             {`Cогласовано ${convertDate(filteredDangerWork[0].date_utv)} ${
               filteredDangerWork[0].time_utv
-            } ${filteredDangerWork[0].user}`}
+            } ${shortFio(filteredUser[0].fio)}`}
           </div>
         );
       }

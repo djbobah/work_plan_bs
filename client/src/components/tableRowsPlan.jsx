@@ -131,7 +131,7 @@ const TableRowsPlan = ({
           <div className="bg-success text-white rounded">
             {`Cогласовано ${convertDate(filteredDangerWork[0].date_utv)} ${
               filteredDangerWork[0].time_utv
-            } ${shortFio(filteredUser[0].fio)}`}
+            } ${shortFio(filteredUser[0]?.fio)}`}
           </div>
         );
       }

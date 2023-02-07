@@ -21,6 +21,7 @@ const TableRowsPlan = ({
   dangerWork,
   onDelete,
   checkButtons,
+  onApprove,
 }) => {
   // const [department, setDepartment] = useState();
   let number = 0;
@@ -117,6 +118,16 @@ const TableRowsPlan = ({
       if (row[column] === 0) {
         return "согласование не требуется";
       } else if (row["utv_opasn"] === 0) {
+        if (localStorage.getItem("id_sl") === "16-а00188") {
+          return (
+            <button
+              className="btn btn-warning"
+              onClick={() => onApprove(row.id)}
+            >
+              Согласовать
+            </button>
+          );
+        }
         return <div className="bg-warning rounded">На согласовании</div>;
       } else {
         const filteredDangerWork = dangerWork.filter(
@@ -129,7 +140,8 @@ const TableRowsPlan = ({
 
         return (
           <div className="bg-success text-white rounded">
-            {`Cогласовано ${convertDate(filteredDangerWork[0].date_utv)} ${
+            <span className="fw-bold">Cогласовано</span>
+            {` ${convertDate(filteredDangerWork[0].date_utv)} ${
               filteredDangerWork[0].time_utv
             } ${shortFio(filteredUser[0]?.fio)}`}
           </div>

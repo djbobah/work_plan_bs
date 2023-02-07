@@ -18,6 +18,23 @@ export function getToday() {
   //return day
 }
 
+export function getTime() {
+  const currentDay = new Date();
+  let currentHour = currentDay.getHours();
+  let currentMinute = currentDay.getMinutes();
+  let currentSecond = currentDay.getSeconds();
+  if (currentHour < 10) {
+    currentHour = "0" + currentHour;
+  }
+  if (currentMinute < 10) {
+    currentMinute = "0" + currentMinute;
+  }
+  if (currentSecond < 10) {
+    currentSecond = "0" + currentSecond;
+  }
+  return `${currentHour}:${currentMinute}:${currentSecond}`;
+}
+
 function getLastDayOfMonth(year, month) {
   let date = new Date(year, month, 0);
   return date.getDate();

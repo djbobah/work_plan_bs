@@ -245,8 +245,8 @@ const ModalAdd = ({
       axios
         .post("http://localhost:5000/api/plan/contractingOrganization", target)
         .then((organization) => {
-          console.log("post----------------------", organization.data);
-          console.log("post----------------------", organization.data.id);
+          // console.log("post----------------------", organization.data);
+          // console.log("post----------------------", organization.data.id);
           setData((prevState) => ({
             ...prevState,
             [target.name]: {

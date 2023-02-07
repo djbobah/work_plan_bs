@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ControlPanel from "./ControlPanel";
 import Table from "./Table";
-import { getToday, getTommorow } from "../utils/DateTimeFunctions";
+import { getToday, getTommorow, getTime } from "../utils/DateTimeFunctions";
 // import api from "../api";
 import axios from "axios";
 import styles from "./workPlan.module.css";
@@ -23,6 +23,7 @@ const WorkPlan = () => {
   const [dangerWork, setDangerWork] = useState();
   const [showModalAdd, setShowModalAdd] = useState(false);
   const [edit, setEdit] = useState(false);
+  const [approveDangerWork, setApproveDangerWork] = useState(true);
   const [checkButtons, setCheckButtons] = useState([
     { title: "Все подразделения", name: "AllUnits", id: 1, checked: false },
     {
@@ -108,7 +109,7 @@ const WorkPlan = () => {
       });
 
     // console.log("rerender VID RABOT");
-  }, [DateFrom, DateEnd, showModalAdd, state, checkButtons]);
+  }, [DateFrom, DateEnd, showModalAdd, state, checkButtons, approveDangerWork]);
 
   useEffect(() => {
     // получаем данные о виде работ из БД
@@ -212,6 +213,31 @@ const WorkPlan = () => {
       });
   };
 
+  const handleClickApprove = (id) => {
+    console.log(" approve work with id: ", id);
+
+    const user = "pds.kamensk";
+    const remote_addr = "10.27.27.116";
+    const date_utv = getToday();
+    const time_utv = getTime();
+
+    axios
+      .post("http://localhost:5000/api/danger/work", {
+        id,
+        user,
+        remote_addr,
+        date_utv,
+        time_utv,
+      })
+      .then((work) => {
+        console.log("post------------", work.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+    // setApproveDangerWork(!approveDangerWork);
+  };
+
   //console.log("WorkPlan", works);
 
   const handleClickAddShow = () => {
@@ -283,6 +309,7 @@ const WorkPlan = () => {
             contractingOrganization={contractingOrganization}
             onEdit={edit}
             checkButtons={checkButtons}
+            onApprove={handleClickApprove}
           />
         ) : (
           <h1>

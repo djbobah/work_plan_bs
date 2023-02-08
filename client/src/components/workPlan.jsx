@@ -213,30 +213,30 @@ const WorkPlan = () => {
       });
   };
 
-  const handleClickApprove = (id) => {
-    console.log(" approve work with id: ", id);
+  // const handleClickApprove = (id) => {
+  //   console.log(" approve work with id: ", id);
 
-    const user = "pds.kamensk";
-    const remote_addr = "10.27.27.116";
-    const date_utv = getToday();
-    const time_utv = getTime();
+  //   const user = "pds.kamensk";
+  //   const remote_addr = "10.27.27.116";
+  //   const date_utv = getToday();
+  //   const time_utv = getTime();
 
-    axios
-      .post("http://localhost:5000/api/danger/work", {
-        id,
-        user,
-        remote_addr,
-        date_utv,
-        time_utv,
-      })
-      .then((work) => {
-        console.log("post------------", work.data);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-    // setApproveDangerWork(!approveDangerWork);
-  };
+  //   axios
+  //     .post("http://localhost:5000/api/danger/work", {
+  //       id,
+  //       user,
+  //       remote_addr,
+  //       date_utv,
+  //       time_utv,
+  //     })
+  //     .then((work) => {
+  //       console.log("post------------", work.data);
+  //     })
+  //     .catch((e) => {
+  //       console.log(e);
+  //     });
+  //   // setApproveDangerWork(!approveDangerWork);
+  // };
 
   //console.log("WorkPlan", works);
 
@@ -309,7 +309,7 @@ const WorkPlan = () => {
             contractingOrganization={contractingOrganization}
             onEdit={edit}
             checkButtons={checkButtons}
-            onApprove={handleClickApprove}
+            // onApprove={handleClickApprove}
           />
         ) : (
           <h1>

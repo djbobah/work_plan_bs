@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import { shortFio } from "../utils/fioUtils";
 
@@ -7,6 +7,7 @@ import deletePng from "../static/img/delete.png";
 import copyPng from "../static/img/copy-two-paper-sheets-interface-symbol_icon-icons.com_73283.svg";
 import Done from "./Done";
 import { getToday, convertDate } from "../utils/DateTimeFunctions";
+import DangerWork from "./DangerWork";
 
 const TableRowsPlan = ({
   columns,
@@ -72,7 +73,6 @@ const TableRowsPlan = ({
       let fioList = "";
       // console.log("brigada", brigada);
       brigada &&
-        // idArr.length > 1 &&
         idArr.map((id) => {
           if (id !== "") {
             if (id === row["st_brigadi"]) {
@@ -114,42 +114,39 @@ const TableRowsPlan = ({
       // if (row[column] === 0) {
       return row[column];
     }
+
     if (column === "OPASN") {
-      if (row[column] === 0) {
-        return "согласование не требуется";
-      } else if (row["utv_opasn"] === 0) {
-        if (localStorage.getItem("id_sl") === "16-а00188") {
-          return (
-            <button
-              className="btn btn-warning"
-              onClick={() => onApprove(row.id)}
-            >
-              Согласовать
-            </button>
-          );
-        }
-        return <div className="bg-warning rounded">На согласовании</div>;
-      } else {
-        // console.log("dangerWork---", dangerWork, "----row.id", row.id);
-
-        const filteredDangerWork = dangerWork.filter(
-          (work) => row.id === work.id_rab
-        );
-        // console.log("filteredDangerWork---", filteredDangerWork);
-        const filteredUser = brigada.filter(
-          (user) => filteredDangerWork[0].user === user.email
-        );
-        // console.log("filteredUser----------", filteredUser);
-
-        return (
-          <div className="bg-success text-white rounded">
-            <span className="fw-bold">Cогласовано</span>
-            {` ${convertDate(filteredDangerWork[0].date_utv)} ${
-              filteredDangerWork[0].time_utv
-            } ${shortFio(filteredUser[0]?.fio)}`}
-          </div>
-        );
-      }
+      <DangerWork row={row} dangerWork={dangerWork} brigada={brigada} />;
+      // if (row[column] === 0) {
+      //   return "согласование не требуется";
+      // } else if (row["utv_opasn"] === 0) {
+      //   if (localStorage.getItem("id_sl") === "16-а00188") {
+      //     return (
+      //       <button
+      //         className="btn btn-warning"
+      //         onClick={() => onApprove(row.id)}
+      //       >
+      //         Согласовать
+      //       </button>
+      //     );
+      //   }
+      //   return <div className="bg-warning rounded">На согласовании</div>;
+      // } else {
+      //   const filteredDangerWork = dangerWork.filter(
+      //     (work) => row.id === work.id_rab
+      //   );
+      //   const filteredUser = brigada.filter(
+      //     (user) => filteredDangerWork[0].user === user.email
+      //   );
+      //   return (
+      //     <div className="bg-success text-white rounded">
+      //       <span className="fw-bold">Cогласовано</span>
+      //       {` ${convertDate(filteredDangerWork[0].date_utv)} ${
+      //         filteredDangerWork[0].time_utv
+      //       } ${shortFio(filteredUser[0]?.fio)}`}
+      //     </div>
+      //   );
+      // }
     }
     if (column === "vipolneno") {
       return <Done done={row[column]} id={row.id} />;

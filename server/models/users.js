@@ -8,7 +8,7 @@ const modelUsers = () => {
     config.get("connectPlanRabot.user"),
     config.get("connectPlanRabot.password"),
     {
-      dialect: "mysql",
+      dialect: "mariadb",
       host: config.get("connectPlanRabot.host"),
       define: {
         timestamps: false,

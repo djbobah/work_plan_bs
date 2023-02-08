@@ -289,6 +289,7 @@ const WorkPlan = () => {
         brigada &&
         objects &&
         plans &&
+        dangerWork &&
         plans.length > 0 ? (
           // works &&
           // auto &&

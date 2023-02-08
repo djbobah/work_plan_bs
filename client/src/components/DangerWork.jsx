@@ -4,6 +4,12 @@ import { getToday, convertDate, getTime } from "../utils/DateTimeFunctions";
 import axios from "axios";
 
 const DangerWork = ({ row, dangerWork, brigada }) => {
+  // console.log("row", row);
+  // console.log("dangerWork", dangerWork);
+  // console.log("brigada", brigada);
+  const [approveWork, setApproveWork] = useState(row["utv_opasn"]);
+  const [work, setWork] = useState(undefined);
+
   const handleClickApprove = (id) => {
     console.log(" approve work with id: ", id);
 
@@ -22,16 +28,30 @@ const DangerWork = ({ row, dangerWork, brigada }) => {
       })
       .then((work) => {
         console.log("post------------", work.data);
+        // setWork(work.data);
       })
       .catch((e) => {
         console.log(e);
       });
+
+    setApproveWork(1);
+
+    const filteredUser = brigada?.filter((user_) => user === user_.email);
+    return (
+      <div className="bg-success text-white rounded">
+        <span className="fw-bold">Cогласовано</span>
+        {` ${convertDate(date_utv)} ${work.data.time_utv} ${shortFio(
+          filteredUser[0]?.fio
+        )}`}
+      </div>
+    );
+
     // setApproveDangerWork(!approveDangerWork);
   };
 
   if (row["OPASN"] === 0) {
     return "согласование не требуется";
-  } else if (row["utv_opasn"] === 0) {
+  } else if (approveWork === 0) {
     if (localStorage.getItem("id_sl") === "16-а00188") {
       return (
         <button
@@ -44,10 +64,14 @@ const DangerWork = ({ row, dangerWork, brigada }) => {
     }
     return <div className="bg-warning rounded">На согласовании</div>;
   } else {
+    console.log("work------------===", work);
+    // if (work === undefined) {
     const filteredDangerWork = dangerWork.filter(
       (work) => row.id === work.id_rab
     );
-    const filteredUser = brigada.filter(
+
+    // console.log("dangerWork---", dangerWork);
+    const filteredUser = brigada?.filter(
       (user) => filteredDangerWork[0].user === user.email
     );
     return (
@@ -58,6 +82,18 @@ const DangerWork = ({ row, dangerWork, brigada }) => {
         } ${shortFio(filteredUser[0]?.fio)}`}
       </div>
     );
+    // }
+    // else {
+    //   const filteredUser = brigada?.filter((user) => work.user === user.email);
+    //   return (
+    //     <div className="bg-success text-white rounded">
+    //       <span className="fw-bold">Cогласовано</span>
+    //       {` ${convertDate(work.date_utv)} ${work.time_utv} ${shortFio(
+    //         filteredUser[0]?.fio
+    //       )}`}
+    //     </div>
+    //   );
+    // }
   }
 };
 

@@ -130,13 +130,16 @@ const TableRowsPlan = ({
         }
         return <div className="bg-warning rounded">На согласовании</div>;
       } else {
+        // console.log("dangerWork---", dangerWork, "----row.id", row.id);
+
         const filteredDangerWork = dangerWork.filter(
           (work) => row.id === work.id_rab
         );
+        // console.log("filteredDangerWork---", filteredDangerWork);
         const filteredUser = brigada.filter(
           (user) => filteredDangerWork[0].user === user.email
         );
-        console.log("filteredUser----------", filteredUser);
+        // console.log("filteredUser----------", filteredUser);
 
         return (
           <div className="bg-success text-white rounded">

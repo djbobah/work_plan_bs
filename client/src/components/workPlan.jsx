@@ -222,6 +222,7 @@ const WorkPlan = () => {
     console.log("edited work id: ", id);
     setEdit(id);
     setShowModalAdd(true);
+    //здесь нужно передавать данные
   };
   const handleAdd = () => {
     setEdit(false);

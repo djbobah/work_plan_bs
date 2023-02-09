@@ -102,14 +102,27 @@ const ControlPanel = ({
         ))}
       </div>
       <div className="d-flex p-2 justify-content-between">
-        <div className="border rounded p-1 me-2" onClick={onShow} role="button">
+        <div
+          className="border rounded p-1 me-2"
+          onClick={onShow}
+          role="button"
+          title="Добавить строку плана..."
+        >
           <img width={24} src={AddImage} alt="Запланировать работу..." />
         </div>
-
-        <div className="border rounded p-1 me-2" role="button">
+        <div
+          className="border rounded p-1 me-2"
+          role="button"
+          title="Распечатать работы..."
+        >
           <img width={24} src={PrinterImage} alt="Распечатать работы..." />
         </div>
-        <div className="border rounded p-1 me-2" role="button">
+
+        <div
+          className="border rounded p-1 me-2"
+          role="button"
+          title="Выгрузить работы в Excel..."
+        >
           <img width={24} src={ExcelImage} alt="Выгрузить работы в Excel..." />
         </div>
       </div>

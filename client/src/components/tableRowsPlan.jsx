@@ -130,6 +130,7 @@ const TableRowsPlan = ({
             <button
               className="btn btn-light border border-secondary rounded m-1 p-1 "
               onClick={() => onDelete(row.id)}
+              title="Редактировать строку..."
             >
               <svg
                 width="20"
@@ -150,6 +151,7 @@ const TableRowsPlan = ({
           <button
             className="btn  btn-light border border-secondary rounded  m-1 p-1"
             onClick={() => onDelete(row.id)}
+            title="Копировать строку..."
           >
             <img src={copyPng} width="20px" alt="Добавить копированием" />
           </button>
@@ -157,6 +159,7 @@ const TableRowsPlan = ({
             <button
               className="btn btn-light border border-secondary rounded m-1 p-1"
               onClick={() => onDelete(row.id)}
+              title="Удалить строку..."
             >
               <img src={deletePng} width="20px" alt="Удалить строку плана" />
             </button>

@@ -80,7 +80,7 @@ const DangerWork = ({ row, dangerWork, brigada }) => {
     } else {
       const filteredUser = brigada?.filter((user) => work.user === user.email);
       return (
-        <div className="bg-success text-white rounded">
+        <div className="bg-success text-white rounded p-2">
           <span className="fw-bold">Cогласовано</span>
           {` ${convertDate(work.date_utv)} ${work.time_utv} ${shortFio(
             filteredUser[0]?.fio

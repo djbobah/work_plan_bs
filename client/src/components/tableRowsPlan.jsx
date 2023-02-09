@@ -22,7 +22,7 @@ const TableRowsPlan = ({
   dangerWork,
   onDelete,
   checkButtons,
-  onApprove,
+  onEdit,
 }) => {
   // const [department, setDepartment] = useState();
   let number = 0;
@@ -129,7 +129,7 @@ const TableRowsPlan = ({
           {currentDay > getToday() && (
             <button
               className="btn btn-light border border-secondary rounded m-1 p-1 "
-              onClick={() => onDelete(row.id)}
+              onClick={() => onEdit(row.id)}
               title="Редактировать строку..."
             >
               <svg

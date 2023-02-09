@@ -211,41 +211,16 @@ const WorkPlan = () => {
       });
   };
 
-  // const handleClickApprove = (id) => {
-  //   console.log(" approve work with id: ", id);
-
-  //   const user = "pds.kamensk";
-  //   const remote_addr = "10.27.27.116";
-  //   const date_utv = getToday();
-  //   const time_utv = getTime();
-
-  //   axios
-  //     .post("http://localhost:5000/api/danger/work", {
-  //       id,
-  //       user,
-  //       remote_addr,
-  //       date_utv,
-  //       time_utv,
-  //     })
-  //     .then((work) => {
-  //       console.log("post------------", work.data);
-  //     })
-  //     .catch((e) => {
-  //       console.log(e);
-  //     });
-  //   // setApproveDangerWork(!approveDangerWork);
-  // };
-
-  //console.log("WorkPlan", works);
-
   const handleClickAddShow = () => {
     setShowModalAdd(true);
   };
   const handleClickAddClose = () => {
     setShowModalAdd(false);
   };
-  const handleChangeEdit = () => {
+  const handleChangeEdit = (id) => {
+    console.log("edited work id: ", id);
     setEdit(true);
+    setShowModalAdd(true);
   };
   const handleAdd = () => {
     setEdit(false);
@@ -306,15 +281,12 @@ const WorkPlan = () => {
             dangerWork={dangerWork}
             onDelete={handleRowDelete}
             contractingOrganization={contractingOrganization}
-            onEdit={edit}
+            onEdit={handleChangeEdit}
             checkButtons={checkButtons}
             // onApprove={handleClickApprove}
           />
         ) : (
-          <h1>
-            При выбранных параметрах нет данных для отображения или на данный
-            день нет планов...
-          </h1>
+          <h1>нет данных для отображения или на данный день нет планов...</h1>
         )}
       </div>
     </>

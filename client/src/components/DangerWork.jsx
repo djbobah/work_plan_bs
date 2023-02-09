@@ -17,7 +17,15 @@ const DangerWork = ({ row, dangerWork, brigada }) => {
     const remote_addr = "10.27.27.116";
     const date_utv = getToday();
     const time_utv = getTime();
-
+    //рендерим компонент до записи, чтоб не выдавало ошибку, т.к. рендер происходит до записи в базу
+    setWork({
+      comment: "",
+      date_utv: date_utv,
+      id_rab: id,
+      remote_addr: "10.27.27.116",
+      time_utv: time_utv,
+      user: "pds.kamensk",
+    });
     axios
       .post("http://localhost:5000/api/danger/work", {
         id,
@@ -28,25 +36,12 @@ const DangerWork = ({ row, dangerWork, brigada }) => {
       })
       .then((work) => {
         console.log("post------------", work.data);
-        // setWork(work.data);
       })
       .catch((e) => {
         console.log(e);
       });
 
     setApproveWork(1);
-
-    const filteredUser = brigada?.filter((user_) => user === user_.email);
-    return (
-      <div className="bg-success text-white rounded">
-        <span className="fw-bold">Cогласовано</span>
-        {` ${convertDate(date_utv)} ${work.data.time_utv} ${shortFio(
-          filteredUser[0]?.fio
-        )}`}
-      </div>
-    );
-
-    // setApproveDangerWork(!approveDangerWork);
   };
 
   if (row["OPASN"] === 0) {
@@ -65,35 +60,34 @@ const DangerWork = ({ row, dangerWork, brigada }) => {
     return <div className="bg-warning rounded">На согласовании</div>;
   } else {
     console.log("work------------===", work);
-    // if (work === undefined) {
-    const filteredDangerWork = dangerWork.filter(
-      (work) => row.id === work.id_rab
-    );
+    if (work === undefined) {
+      const filteredDangerWork = dangerWork.filter(
+        (work) => row.id === work.id_rab
+      );
 
-    // console.log("dangerWork---", dangerWork);
-    const filteredUser = brigada?.filter(
-      (user) => filteredDangerWork[0].user === user.email
-    );
-    return (
-      <div className="bg-success text-white rounded">
-        <span className="fw-bold">Cогласовано</span>
-        {` ${convertDate(filteredDangerWork[0].date_utv)} ${
-          filteredDangerWork[0].time_utv
-        } ${shortFio(filteredUser[0]?.fio)}`}
-      </div>
-    );
-    // }
-    // else {
-    //   const filteredUser = brigada?.filter((user) => work.user === user.email);
-    //   return (
-    //     <div className="bg-success text-white rounded">
-    //       <span className="fw-bold">Cогласовано</span>
-    //       {` ${convertDate(work.date_utv)} ${work.time_utv} ${shortFio(
-    //         filteredUser[0]?.fio
-    //       )}`}
-    //     </div>
-    //   );
-    // }
+      // console.log("dangerWork---", dangerWork);
+      const filteredUser = brigada?.filter(
+        (user) => filteredDangerWork[0].user === user.email
+      );
+      return (
+        <div className="bg-success text-white rounded">
+          <span className="fw-bold">Cогласовано</span>
+          {` ${convertDate(filteredDangerWork[0].date_utv)} ${
+            filteredDangerWork[0].time_utv
+          } ${shortFio(filteredUser[0]?.fio)}`}
+        </div>
+      );
+    } else {
+      const filteredUser = brigada?.filter((user) => work.user === user.email);
+      return (
+        <div className="bg-success text-white rounded">
+          <span className="fw-bold">Cогласовано</span>
+          {` ${convertDate(work.date_utv)} ${work.time_utv} ${shortFio(
+            filteredUser[0]?.fio
+          )}`}
+        </div>
+      );
+    }
   }
 };
 

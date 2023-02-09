@@ -34,6 +34,7 @@ const ModalAdd = ({
   onShow,
   onClose,
   title,
+  plans,
   works,
   objects,
   auto,
@@ -45,6 +46,45 @@ const ModalAdd = ({
   const [data, setData] = useState(initialState);
   const [errors, setErrors] = useState({});
   const [optionsBrigadier, setOptionsBrigadier] = useState([]);
+
+  if (edit) {
+    console.log("edit----------", edit);
+    // console.log(plans);
+    const editedWork = plans.filter((work) => work.id === edit)[0];
+    console.log("editedWork---------", editedWork);
+    setData({
+      dateOfWork: getTommorow(),
+      typeOfWork: "",
+      isDanger: false,
+      objectForWork: "",
+      auto: null,
+      methodOfWork: { name: "ss", checked: true },
+      contractingOrganization: "",
+      brigada: [],
+      brigadier: "",
+      comment: "",
+    });
+
+    // Brigada: "";
+    // OPASN: 0;
+    // Prichina_nevipol: "";
+    // avto: 1;
+    // comment: "";
+    // data_rabot: "2023-02-10";
+    // id: 33902;
+    // id_gn: 0;
+    // id_object: 1;
+    // id_podr_org: 0;
+    // id_sl: "16-а00135";
+    // id_vid_rabot: 34;
+    // sposob: "ss";
+    // st_brigadi: "";
+    // utv_avto: 0;
+    // utv_opasn: 0;
+    // vipolneno: 0;
+  } else {
+    // setData(initialState);
+  }
 
   // let optionsBrigadier = [];
   let optionsTypeOfWorksArray = works.map((work) => ({
@@ -278,7 +318,7 @@ const ModalAdd = ({
       >
         <Modal.Header className="bg-info" closeButton>
           <Modal.Title className="fs-5">
-            {!edit ? "Добавляем работу..." : "Редактируем работу..."}
+            {edit === 0 ? "Добавляем работу..." : "Редактируем работу..."}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>

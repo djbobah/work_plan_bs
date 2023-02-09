@@ -22,7 +22,7 @@ const WorkPlan = () => {
   const [contractingOrganization, setContractingOrganization] = useState();
   const [dangerWork, setDangerWork] = useState();
   const [showModalAdd, setShowModalAdd] = useState(false);
-  const [edit, setEdit] = useState(false);
+  const [edit, setEdit] = useState(0);
   const [approveDangerWork, setApproveDangerWork] = useState(true);
   const [checkButtons, setCheckButtons] = useState([
     { title: "Все подразделения", name: "AllUnits", id: 1, checked: false },
@@ -212,6 +212,7 @@ const WorkPlan = () => {
   };
 
   const handleClickAddShow = () => {
+    setEdit(0);
     setShowModalAdd(true);
   };
   const handleClickAddClose = () => {
@@ -219,7 +220,7 @@ const WorkPlan = () => {
   };
   const handleChangeEdit = (id) => {
     console.log("edited work id: ", id);
-    setEdit(true);
+    setEdit(id);
     setShowModalAdd(true);
   };
   const handleAdd = () => {
@@ -228,9 +229,10 @@ const WorkPlan = () => {
   return (
     <>
       <div className={styles["work-plan"]}>
-        {works && contractingOrganization && auto && (
+        {works && contractingOrganization && auto && plans && brigada && (
           <ControlPanel
             title="Панель действий"
+            plans={plans}
             works={works}
             objects={objects}
             auto={auto}

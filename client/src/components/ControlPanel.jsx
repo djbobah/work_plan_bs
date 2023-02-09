@@ -10,6 +10,7 @@ import Toast from "./Toast.jsx";
 // import Toast from "./components/Toast.jsx";
 
 const ControlPanel = ({
+  plans,
   works,
   setWorks,
   objects,
@@ -137,6 +138,7 @@ const ControlPanel = ({
         auto={auto}
         contractingOrganization={contractingOrganization}
         brigada={brigada}
+        plans={plans}
       />
     </div>
   );

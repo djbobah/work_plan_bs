@@ -107,7 +107,15 @@ const WorkPlan = () => {
       .catch((e) => {
         console.log(e);
       });
-
+    // получаем данные о опасных работах из БД
+    axios
+      .get("http://localhost:5000/api/danger/work")
+      .then((work) => {
+        setDangerWork(work.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
     // console.log("rerender VID RABOT");
   }, [DateFrom, DateEnd, showModalAdd, state, checkButtons, approveDangerWork]);
 
@@ -161,16 +169,6 @@ const WorkPlan = () => {
       .get("http://localhost:5000/api/plan/podr")
       .then((podr) => {
         setContractingOrganization(podr.data);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-
-    // получаем данные о опасных работах из БД
-    axios
-      .get("http://localhost:5000/api/danger/work")
-      .then((work) => {
-        setDangerWork(work.data);
       })
       .catch((e) => {
         console.log(e);

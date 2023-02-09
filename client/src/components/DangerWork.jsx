@@ -59,7 +59,7 @@ const DangerWork = ({ row, dangerWork, brigada }) => {
     }
     return <div className="bg-warning rounded">На согласовании</div>;
   } else {
-    console.log("work------------===", work);
+    // console.log("work------------===", work);
     if (work === undefined) {
       const filteredDangerWork = dangerWork.filter(
         (work) => row.id === work.id_rab
@@ -70,7 +70,7 @@ const DangerWork = ({ row, dangerWork, brigada }) => {
         (user) => filteredDangerWork[0].user === user.email
       );
       return (
-        <div className="bg-success text-white rounded">
+        <div className="bg-success text-white rounded p-2">
           <span className="fw-bold">Cогласовано</span>
           {` ${convertDate(filteredDangerWork[0].date_utv)} ${
             filteredDangerWork[0].time_utv

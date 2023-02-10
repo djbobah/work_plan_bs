@@ -39,7 +39,7 @@ const WorkPlan = () => {
   const [dangerWork, setDangerWork] = useState();
   const [showModalAdd, setShowModalAdd] = useState(false);
   const [edit, setEdit] = useState(0);
-  const [approveDangerWork, setApproveDangerWork] = useState(true);
+  // const [approveDangerWork, setApproveDangerWork] = useState(true);
   const [checkButtons, setCheckButtons] = useState([
     { title: "Все подразделения", name: "AllUnits", id: 1, checked: false },
     {
@@ -133,7 +133,7 @@ const WorkPlan = () => {
         console.log(e);
       });
     // console.log("rerender VID RABOT");
-  }, [DateFrom, DateEnd, showModalAdd, state, checkButtons, approveDangerWork]);
+  }, [DateFrom, DateEnd, showModalAdd, state, checkButtons]);
 
   useEffect(() => {
     // получаем данные о виде работ из БД
@@ -240,7 +240,77 @@ const WorkPlan = () => {
     console.log("edited work id: ", id);
     setEdit(id);
     setShowModalAdd(true);
+
+    const filteredPlan = plans.filter((plan) => plan.id === id)[0];
+    const filteredTypeOfWork = works.filter(
+      (type) => type.id === filteredPlan.id_vid_rabot
+    )[0];
+    const filteredObject = objects.filter(
+      (object) => object.id === filteredPlan.id_object
+    )[0];
+    // let dataAuto = null;
+    // console.log(filteredPlan.avto);
+    // console.log("plans", plans);
+
+    // auto.map(item=>{})
+    const filteredAuto = auto.filter(
+      (item) => item.id === filteredPlan.avto
+    )[0];
+    console.log("filteredAuto", filteredAuto);
+    // console.log(filteredAuto);
+    // if (typeof filteredPlan.avto === "undefined") {
+    //   dataAuto = null;
+    // } else {
+    //   const filteredAuto = auto.filter(
+    //     (item) => auto.id === filteredPlan.avto
+    //   )[0];
+    //   dataAuto = {
+    //     label: filteredAuto.name,
+    //     value: filteredAuto.id,
+    //   };
+    // }
+
     //здесь нужно передавать данные
+    setData({
+      dateOfWork: filteredPlan.data_rabot,
+      typeOfWork: {
+        label: filteredObject.name,
+        value: filteredObject.id,
+      },
+      isDanger: 1,
+      objectForWork: {
+        label: filteredTypeOfWork.name,
+        value: filteredTypeOfWork.id,
+      },
+      auto: {
+        label: filteredAuto.name,
+        value: filteredAuto.id,
+      },
+
+      methodOfWork: { name: "ss", checked: true },
+      contractingOrganization: "",
+      brigada: [],
+      brigadier: "",
+      comment: "",
+    });
+
+    // Brigada: "";
+    // OPASN: 0;
+    // Prichina_nevipol: "";
+    // avto: 1;
+    // comment: "";
+    // data_rabot: "2023-02-10";
+    // id: 33902;
+    // id_gn: 0;
+    // id_object: 1;
+    // id_podr_org: 0;
+    // id_sl: "16-а00135";
+    // id_vid_rabot: 34;
+    // sposob: "ss";
+    // st_brigadi: "";
+    // utv_avto: 0;
+    // utv_opasn: 0;
+    // vipolneno: 0;
   };
   const handleAdd = () => {
     setEdit(false);

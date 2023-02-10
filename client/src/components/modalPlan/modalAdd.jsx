@@ -41,7 +41,7 @@ const ModalAdd = ({
   const [optionsBrigadier, setOptionsBrigadier] = useState([]);
 
   if (edit) {
-    console.log("edit----------", edit);
+    // console.log("edit----------", edit);
     // console.log(plans);
     // const editedWork = plans.filter((work) => work.id === edit)[0];
     // console.log("editedWork---------", editedWork);
@@ -57,7 +57,6 @@ const ModalAdd = ({
     //   brigadier: "",
     //   comment: "",
     // });
-
     // Brigada: "";
     // OPASN: 0;
     // Prichina_nevipol: "";
@@ -154,8 +153,6 @@ const ModalAdd = ({
       axios
         .post("http://localhost:5000/api/plan/work", target)
         .then((work) => {
-          // console.log("post----------------------", work.data);
-          // console.log("post----------------------", work.data.id);
           setData((prevState) => ({
             ...prevState,
             [target.name]: { label: work.data.name, value: work.data.id },
@@ -201,8 +198,6 @@ const ModalAdd = ({
       axios
         .post("http://localhost:5000/api/plan/contractingOrganization", target)
         .then((organization) => {
-          // console.log("post----------------------", organization.data);
-          // console.log("post----------------------", organization.data.id);
           setData((prevState) => ({
             ...prevState,
             [target.name]: {
@@ -281,6 +276,7 @@ const ModalAdd = ({
                   name="isDanger"
                   onChange={handleCheck}
                   value={data.isDanger}
+                  checked={data.isDanger}
                 />
               </Form.Group>
             </Row>

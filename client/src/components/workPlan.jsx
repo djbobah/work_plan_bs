@@ -278,8 +278,6 @@ const WorkPlan = () => {
       const arrBrigada = filteredPlan.Brigada.split(";");
 
       arrBrigada.map((item) => {
-        // console.log("item ", item);
-        // console.log("brigada ", brigada);
         const filteredItem = brigada.filter(
           (member) => Number(member.id) === Number(item)
         )[0];
@@ -290,8 +288,6 @@ const WorkPlan = () => {
         });
       });
     }
-    // console.log("dataBrigada", dataBrigada);
-
     const filteredBrigadier = brigada.filter(
       (item) => item.id === Number(filteredPlan.st_brigadi)
     )[0];
@@ -303,9 +299,6 @@ const WorkPlan = () => {
             value: filteredBrigadier.id,
           };
 
-    console.log("Brigada ", filteredPlan.Brigada);
-
-    console.log("st_brigadi--- ", filteredBrigadier);
     //здесь нужно передавать данные
     setData({
       dateOfWork: filteredPlan.data_rabot,
@@ -323,24 +316,6 @@ const WorkPlan = () => {
       brigadier: dataBrigadier,
       comment: filteredPlan.comment,
     });
-
-    // Brigada: "";
-    // OPASN: 0;
-    // Prichina_nevipol: "";
-    // avto: 1;
-    // comment: "";
-    // data_rabot: "2023-02-10";
-    // id: 33902;
-    // id_gn: 0;
-    // id_object: 1;
-    // id_podr_org: 0;
-    // id_sl: "16-а00135";
-    // id_vid_rabot: 34;
-    // sposob: "ss";
-    // st_brigadi: "";
-    // utv_avto: 0;
-    // utv_opasn: 0;
-    // vipolneno: 0;
   };
   const handleAdd = () => {
     setEdit(false);

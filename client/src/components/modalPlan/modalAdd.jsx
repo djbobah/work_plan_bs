@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { validator } from "../../utils/validator";
+// import { validator } from "../../utils/validator";
 // import CreatableSelect from "react-select/creatable";
 import {
+  data,
   Modal,
   Button,
   InputGroup,
@@ -16,20 +17,11 @@ import SelectModal from "./SelectModal";
 import MultiSelectModal from "./multiSelectModal";
 import axios from "axios";
 
-const initialState = {
-  dateOfWork: getTommorow(),
-  typeOfWork: "",
-  isDanger: false,
-  objectForWork: "",
-  auto: null,
-  methodOfWork: { name: "ss", checked: true },
-  contractingOrganization: "",
-  brigada: [],
-  brigadier: "",
-  comment: "",
-};
-
 const ModalAdd = ({
+  data,
+  setData,
+  errors,
+  isValid,
   show,
   onShow,
   onClose,
@@ -42,28 +34,29 @@ const ModalAdd = ({
   brigada,
   edit,
   onEdit,
+  onSubmit,
 }) => {
-  const [data, setData] = useState(initialState);
-  const [errors, setErrors] = useState({});
+  // const [data, setData] = useState(initialState);
+  // const [errors, setErrors] = useState({});
   const [optionsBrigadier, setOptionsBrigadier] = useState([]);
 
   if (edit) {
     console.log("edit----------", edit);
     // console.log(plans);
-    const editedWork = plans.filter((work) => work.id === edit)[0];
-    console.log("editedWork---------", editedWork);
-    setData({
-      dateOfWork: getTommorow(),
-      typeOfWork: "",
-      isDanger: false,
-      objectForWork: "",
-      auto: null,
-      methodOfWork: { name: "ss", checked: true },
-      contractingOrganization: "",
-      brigada: [],
-      brigadier: "",
-      comment: "",
-    });
+    // const editedWork = plans.filter((work) => work.id === edit)[0];
+    // console.log("editedWork---------", editedWork);
+    // setData({
+    //   dateOfWork: getTommorow(),
+    //   typeOfWork: "",
+    //   isDanger: false,
+    //   objectForWork: "",
+    //   auto: null,
+    //   methodOfWork: { name: "ss", checked: true },
+    //   contractingOrganization: "",
+    //   brigada: [],
+    //   brigadier: "",
+    //   comment: "",
+    // });
 
     // Brigada: "";
     // OPASN: 0;
@@ -154,83 +147,6 @@ const ModalAdd = ({
     // console.log(target);
   };
 
-  const validatorConfig = {
-    dateOfWork: {
-      isCorrectDate: {
-        message: "Дата не может быть меньше ",
-      },
-    },
-    typeOfWork: {
-      isRequired: { message: "Работа обязательна для заполнения" },
-    },
-    objectForWork: {
-      isRequired: {
-        message: "Место проведения работ обязательно для заполнения",
-      },
-    },
-    auto: {
-      // isCorrectDateAuto: {
-      //   message: "Вы не можете заказать автомобиль на указанную дату ",
-      // },
-      isCorrectTimeAuto: {
-        message:
-          "Сегодня вы уже не можете заказать автомобиль. Ограничение по времени пн-чт до 15:00, пт до 14:00",
-      },
-    },
-
-    contractingOrganization: {
-      isRequiredPo: {
-        message: "Наименование организации обязательно для заполнения",
-      },
-    },
-    brigadier: {
-      isRequiredBrigadier: {
-        message: "Необходимо обязательно указать старшего бригады",
-      },
-    },
-  };
-  useEffect(() => {
-    validate();
-  }, [data]);
-
-  // useEffect(() => {
-  //   optionsBrigadier = data.brigada;
-  //   console.log("data.brigada", data.brigada);
-  //   console.log("optionsBrigadier", optionsBrigadier);
-  // }, [data.brigada]);
-
-  const validate = () => {
-    const errors = validator(data, validatorConfig);
-    // console.log("errors", errors);
-    setErrors(errors);
-    return Object.keys(errors).length === 0;
-  };
-  const isValid = Object.keys(errors).length === 0;
-  //const isValid = true;
-
-  // const isValid = false;
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const isValid = validate();
-    if (!isValid) return;
-    const id_sl = localStorage.getItem("id_sl");
-    axios
-      .post("http://localhost:5000/api/plan/plan", { data, id_sl })
-      .then((plan) => {
-        // console.log("post------------", plan.data);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-
-    // console.log(data);
-    setData(initialState);
-    onClose();
-  };
-  const onCloseButton = () => {
-    setData(initialState);
-    onClose();
-  };
   const onCreateOption = (target) => {
     if (target.name === "typeOfWork") {
       console.log("Creatable select name: ", target);
@@ -322,7 +238,7 @@ const ModalAdd = ({
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form onSubmit={handleSubmit}>
+          <Form onSubmit={onSubmit}>
             <Form.Group
               as={Row}
               className="mb-3"
@@ -509,7 +425,7 @@ const ModalAdd = ({
                   className="btn btn-secondary"
                   // disabled={!isValid}
                   type="button"
-                  onClick={onCloseButton}
+                  onClick={onClose}
                 >
                   Отмена
                 </button>

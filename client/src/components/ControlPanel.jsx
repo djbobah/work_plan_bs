@@ -10,7 +10,10 @@ import Toast from "./Toast.jsx";
 // import Toast from "./components/Toast.jsx";
 
 const ControlPanel = ({
-  plans,
+  data,
+  setData,
+  errors,
+  isValid,
   works,
   setWorks,
   objects,
@@ -19,6 +22,7 @@ const ControlPanel = ({
   brigada,
   onShow,
   onClose,
+  onSubmit,
   show,
   dateFrom,
   onDateFromChange,
@@ -128,6 +132,10 @@ const ControlPanel = ({
         </div>
       </div>
       <ModalAdd
+        data={data}
+        setData={setData}
+        errors={errors}
+        isValid={isValid}
         edit={edit}
         onEdit={onEdit}
         show={show}
@@ -138,7 +146,8 @@ const ControlPanel = ({
         auto={auto}
         contractingOrganization={contractingOrganization}
         brigada={brigada}
-        plans={plans}
+        onSubmit={onSubmit}
+        // plans={plans}
       />
     </div>
   );

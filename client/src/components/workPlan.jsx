@@ -6,8 +6,24 @@ import { getToday, getTommorow, getTime } from "../utils/DateTimeFunctions";
 import axios from "axios";
 import styles from "./workPlan.module.css";
 import { columnsPlans } from "../utils/columnsPlans";
+import { validator } from "../utils/validator";
+
+const initialData = {
+  dateOfWork: getTommorow(),
+  typeOfWork: "",
+  isDanger: false,
+  objectForWork: "",
+  auto: null,
+  methodOfWork: { name: "ss", checked: true },
+  contractingOrganization: "",
+  brigada: [],
+  brigadier: "",
+  comment: "",
+};
 
 const WorkPlan = () => {
+  const [data, setData] = useState(initialData);
+  const [errors, setErrors] = useState({});
   const [DateFrom, setDateFrom] = useState(getToday().toString());
   const [DateEnd, setDateEnd] = useState(getTommorow(DateFrom));
   const [toastShow, setToastShow] = useState(false);
@@ -213,9 +229,11 @@ const WorkPlan = () => {
 
   const handleClickAddShow = () => {
     setEdit(0);
+    setData(initialData);
     setShowModalAdd(true);
   };
   const handleClickAddClose = () => {
+    setData(initialData);
     setShowModalAdd(false);
   };
   const handleChangeEdit = (id) => {
@@ -227,13 +245,85 @@ const WorkPlan = () => {
   const handleAdd = () => {
     setEdit(false);
   };
+
+  const validatorConfig = {
+    dateOfWork: {
+      isCorrectDate: {
+        message: "Дата не может быть меньше ",
+      },
+    },
+    typeOfWork: {
+      isRequired: { message: "Работа обязательна для заполнения" },
+    },
+    objectForWork: {
+      isRequired: {
+        message: "Место проведения работ обязательно для заполнения",
+      },
+    },
+    auto: {
+      // isCorrectDateAuto: {
+      //   message: "Вы не можете заказать автомобиль на указанную дату ",
+      // },
+      isCorrectTimeAuto: {
+        message:
+          "Сегодня вы уже не можете заказать автомобиль. Ограничение по времени пн-чт до 15:00, пт до 14:00",
+      },
+    },
+
+    contractingOrganization: {
+      isRequiredPo: {
+        message: "Наименование организации обязательно для заполнения",
+      },
+    },
+    brigadier: {
+      isRequiredBrigadier: {
+        message: "Необходимо обязательно указать старшего бригады",
+      },
+    },
+  };
+  useEffect(() => {
+    validate();
+  }, [data]);
+
+  const validate = () => {
+    const errors = validator(data, validatorConfig);
+    // console.log("errors", errors);
+    setErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  const isValid = Object.keys(errors).length === 0;
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const isValid = validate();
+    if (!isValid) return;
+    const id_sl = localStorage.getItem("id_sl");
+    axios
+      .post("http://localhost:5000/api/plan/plan", { data, id_sl })
+      .then((plan) => {
+        // console.log("post------------", plan.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+
+    // console.log(data);
+    setData(data);
+    handleClickAddClose();
+  };
+
   return (
     <>
       <div className={styles["work-plan"]}>
         {works && contractingOrganization && auto && plans && brigada && (
           <ControlPanel
             title="Панель действий"
-            plans={plans}
+            // plans={plans}
+            data={data}
+            setData={setData}
+            errors={errors}
+            isValid={isValid}
             works={works}
             objects={objects}
             auto={auto}
@@ -254,6 +344,7 @@ const WorkPlan = () => {
             onAdd={handleAdd}
             checkButtons={checkButtons}
             onCheck={handleCheckClick}
+            onSubmit={handleSubmit}
             // onEdit={handleChangeEdit}
           />
         )}

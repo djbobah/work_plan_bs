@@ -1,7 +1,7 @@
 import React from "react";
 import Select from "react-select";
 
-const MultiSelectModal = ({ options, onChange, name, label }) => {
+const MultiSelectModal = ({ options, onChange, name, label, value }) => {
   // console.log("options", options);
 
   // if (!Array.isArray(options) && typeof options === "object") {
@@ -36,6 +36,7 @@ const MultiSelectModal = ({ options, onChange, name, label }) => {
       classNamePrefix="select"
       onChange={handleChange}
       name={name}
+      value={value}
     />
   );
 };

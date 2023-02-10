@@ -1,7 +1,7 @@
 import React from "react";
 import Select from "react-select";
 
-const SelectModal = ({ name, options, onChange, label, error }) => {
+const SelectModal = ({ name, options, onChange, label, error, value }) => {
   const handleChange = (value) => {
     onChange({ name: name, value });
   };
@@ -20,7 +20,7 @@ const SelectModal = ({ name, options, onChange, label, error }) => {
         // defaultOption=" Choose..."
         options={options}
         onChange={handleChange}
-        // value={works}
+        value={value}
       />{" "}
       {<div className="invalid-feedback">{error}</div>}
       {/* {<div className="">{error}</div>} */}

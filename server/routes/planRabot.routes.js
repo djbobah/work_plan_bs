@@ -100,6 +100,7 @@ router.get("/plan", async (req, res) => {
       await ModelPlanRabot.Plan.findAll({
         where: conditionWhere,
         order: [
+          ["data_rabot", "ASC"],
           // Will escape title and validate DESC against a list of valid direction parameters
           ["id_sl", "ASC"],
         ],
@@ -127,6 +128,11 @@ router.get("/plan", async (req, res) => {
           id_sl: { [Op.eq]: req.query.id_sl },
           vipolneno: { [Op.eq]: stateFlag },
         },
+        order: [
+          ["data_rabot", "ASC"],
+          // Will escape title and validate DESC against a list of valid direction parameters
+          ["id_sl", "ASC"],
+        ],
         raw: true,
       })
         .then((plan) => {

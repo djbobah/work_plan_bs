@@ -248,50 +248,80 @@ const WorkPlan = () => {
     const filteredObject = objects.filter(
       (object) => object.id === filteredPlan.id_object
     )[0];
-    // let dataAuto = null;
-    // console.log(filteredPlan.avto);
-    // console.log("plans", plans);
 
-    // auto.map(item=>{})
     const filteredAuto = auto.filter(
       (item) => item.id === filteredPlan.avto
     )[0];
-    console.log("filteredAuto", filteredAuto);
-    // console.log(filteredAuto);
-    // if (typeof filteredPlan.avto === "undefined") {
-    //   dataAuto = null;
-    // } else {
-    //   const filteredAuto = auto.filter(
-    //     (item) => auto.id === filteredPlan.avto
-    //   )[0];
-    //   dataAuto = {
-    //     label: filteredAuto.name,
-    //     value: filteredAuto.id,
-    //   };
-    // }
 
+    const dataAuto =
+      filteredAuto.id === 1
+        ? null
+        : {
+            label: filteredAuto.name,
+            value: filteredAuto.id,
+          };
+
+    const filteredContractingOrganization = contractingOrganization.filter(
+      (item) => item.id === filteredPlan.id_podr_org
+    )[0];
+
+    const dataContractingOrganization =
+      filteredPlan.id_podr_org === 0
+        ? 0
+        : {
+            label: filteredContractingOrganization.name,
+            value: filteredContractingOrganization.id_podr_org,
+          };
+
+    let dataBrigada = [];
+    if (filteredPlan.Brigada !== "") {
+      const arrBrigada = filteredPlan.Brigada.split(";");
+
+      arrBrigada.map((item) => {
+        // console.log("item ", item);
+        // console.log("brigada ", brigada);
+        const filteredItem = brigada.filter(
+          (member) => Number(member.id) === Number(item)
+        )[0];
+
+        dataBrigada.push({
+          label: filteredItem.fio,
+          value: filteredItem.id,
+        });
+      });
+    }
+    // console.log("dataBrigada", dataBrigada);
+
+    const filteredBrigadier = brigada.filter(
+      (item) => item.id === Number(filteredPlan.st_brigadi)
+    )[0];
+    const dataBrigadier =
+      filteredPlan.st_brigadi === ""
+        ? ""
+        : {
+            label: filteredBrigadier.fio,
+            value: filteredBrigadier.id,
+          };
+
+    console.log("Brigada ", filteredPlan.Brigada);
+
+    console.log("st_brigadi--- ", filteredBrigadier);
     //здесь нужно передавать данные
     setData({
       dateOfWork: filteredPlan.data_rabot,
       typeOfWork: {
-        label: filteredObject.name,
-        value: filteredObject.id,
-      },
-      isDanger: 1,
-      objectForWork: {
         label: filteredTypeOfWork.name,
         value: filteredTypeOfWork.id,
       },
-      auto: {
-        label: filteredAuto.name,
-        value: filteredAuto.id,
-      },
+      isDanger: 1,
+      objectForWork: { label: filteredObject.name, value: filteredObject.id },
+      auto: dataAuto,
 
-      methodOfWork: { name: "ss", checked: true },
-      contractingOrganization: "",
-      brigada: [],
-      brigadier: "",
-      comment: "",
+      methodOfWork: { name: filteredPlan.sposob, checked: true },
+      contractingOrganization: dataContractingOrganization,
+      brigada: dataBrigada,
+      brigadier: dataBrigadier,
+      comment: filteredPlan.comment,
     });
 
     // Brigada: "";

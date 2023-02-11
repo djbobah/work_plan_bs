@@ -39,6 +39,7 @@ const WorkPlan = () => {
   const [dangerWork, setDangerWork] = useState();
   const [showModalAdd, setShowModalAdd] = useState(false);
   const [edit, setEdit] = useState(0);
+  const [copy, setCopy] = useState(0);
   // const [approveDangerWork, setApproveDangerWork] = useState(true);
   const [checkButtons, setCheckButtons] = useState([
     { title: "Все подразделения", name: "AllUnits", id: 1, checked: false },
@@ -229,6 +230,7 @@ const WorkPlan = () => {
 
   const handleClickAddShow = () => {
     setEdit(0);
+    setCopy(0);
     setData(initialData);
     setShowModalAdd(true);
   };
@@ -238,7 +240,11 @@ const WorkPlan = () => {
   };
   const handleChangeEdit = (id) => {
     console.log("edited work id: ", id);
-    setEdit(id);
+
+    //выбираем режим - копирование или редактироване
+    console.log("copy= ", copy);
+    copy === 0 ? setEdit(id) : setEdit(0);
+
     setShowModalAdd(true);
 
     const filteredPlan = plans.filter((plan) => plan.id === id)[0];
@@ -298,11 +304,12 @@ const WorkPlan = () => {
             label: filteredBrigadier.fio,
             value: filteredBrigadier.id,
           };
+    const dateOfWork = copy === 0 ? filteredPlan.data_rabot : getTommorow();
 
     //здесь нужно передавать данные
     setData({
       id: id,
-      dateOfWork: filteredPlan.data_rabot,
+      dateOfWork: dateOfWork,
       typeOfWork: {
         label: filteredTypeOfWork.name,
         value: filteredTypeOfWork.id,
@@ -318,8 +325,16 @@ const WorkPlan = () => {
       comment: filteredPlan.comment,
     });
   };
+
+  const handleCopy = (id) => {
+    console.log("copy string id ", id);
+    setCopy(id);
+    setEdit(0);
+    handleChangeEdit(id);
+  };
   const handleAdd = () => {
     setEdit(0);
+    setCopy(0);
   };
 
   const validatorConfig = {
@@ -398,6 +413,7 @@ const WorkPlan = () => {
     }
     console.log(data);
     setEdit(0);
+    setCopy(0);
     setData(initialData);
     handleClickAddClose();
   };
@@ -465,6 +481,7 @@ const WorkPlan = () => {
             onDelete={handleRowDelete}
             contractingOrganization={contractingOrganization}
             onEdit={handleChangeEdit}
+            onCopy={handleCopy}
             checkButtons={checkButtons}
             // onApprove={handleClickApprove}
           />

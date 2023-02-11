@@ -23,6 +23,7 @@ const TableRowsPlan = ({
   onDelete,
   checkButtons,
   onEdit,
+  onCopy,
 }) => {
   // const [department, setDepartment] = useState();
   let number = 0;
@@ -150,7 +151,7 @@ const TableRowsPlan = ({
           )}
           <button
             className="btn  btn-light border border-secondary rounded  m-1 p-1"
-            onClick={() => onDelete(row.id)}
+            onClick={() => onCopy(row.id)}
             title="Копировать строку..."
           >
             <img src={copyPng} width="20px" alt="Добавить копированием..." />

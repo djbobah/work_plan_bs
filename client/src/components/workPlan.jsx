@@ -229,8 +229,8 @@ const WorkPlan = () => {
   };
 
   const handleClickAddShow = () => {
-    setEdit(0);
-    setCopy(0);
+    //  setEdit(0);
+    // setCopy(0);
     setData(initialData);
     setShowModalAdd(true);
   };
@@ -327,9 +327,19 @@ const WorkPlan = () => {
   };
 
   const handleCopy = (id) => {
-    console.log("copy string id ", id);
+    // console.log("copy string id ", id);
     setCopy(id);
+
+    console.log("handle copy ", copy);
     setEdit(0);
+    handleChangeEdit(id);
+  };
+  const handleEdit = (id) => {
+    console.log("edit string id ", id);
+    setCopy(0);
+
+    //  console.log("handle copy ", copy);
+    setEdit(id);
     handleChangeEdit(id);
   };
   const handleAdd = () => {
@@ -480,7 +490,7 @@ const WorkPlan = () => {
             dangerWork={dangerWork}
             onDelete={handleRowDelete}
             contractingOrganization={contractingOrganization}
-            onEdit={handleChangeEdit}
+            onEdit={handleEdit}
             onCopy={handleCopy}
             checkButtons={checkButtons}
             // onApprove={handleClickApprove}

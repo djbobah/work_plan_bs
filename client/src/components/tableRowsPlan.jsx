@@ -153,7 +153,7 @@ const TableRowsPlan = ({
             onClick={() => onDelete(row.id)}
             title="Копировать строку..."
           >
-            <img src={copyPng} width="20px" alt="Добавить копированием" />
+            <img src={copyPng} width="20px" alt="Добавить копированием..." />
           </button>
           {currentDay > getToday() && (
             <button

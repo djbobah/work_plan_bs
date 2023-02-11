@@ -301,12 +301,13 @@ const WorkPlan = () => {
 
     //здесь нужно передавать данные
     setData({
+      id: id,
       dateOfWork: filteredPlan.data_rabot,
       typeOfWork: {
         label: filteredTypeOfWork.name,
         value: filteredTypeOfWork.id,
       },
-      isDanger: 1,
+      isDanger: filteredPlan.OPASN,
       objectForWork: { label: filteredObject.name, value: filteredObject.id },
       auto: dataAuto,
 
@@ -318,7 +319,7 @@ const WorkPlan = () => {
     });
   };
   const handleAdd = () => {
-    setEdit(false);
+    setEdit(0);
   };
 
   const validatorConfig = {
@@ -368,23 +369,36 @@ const WorkPlan = () => {
   };
 
   const isValid = Object.keys(errors).length === 0;
-
+  // console.log("edit-", edit);
   const handleSubmit = (e) => {
     e.preventDefault();
     const isValid = validate();
     if (!isValid) return;
     const id_sl = localStorage.getItem("id_sl");
-    axios
-      .post("http://localhost:5000/api/plan/plan", { data, id_sl })
-      .then((plan) => {
-        // console.log("post------------", plan.data);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
 
-    // console.log(data);
-    setData(data);
+    // add;
+    if (edit !== 0) {
+      axios
+        .patch("http://localhost:5000/api/plan/plan", { data, id_sl })
+        .then((plan) => {
+          // console.log("post------------", plan.data);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    } else {
+      axios
+        .post("http://localhost:5000/api/plan/plan", { data, id_sl })
+        .then((plan) => {
+          // console.log("post------------", plan.data);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
+    console.log(data);
+    setEdit(0);
+    setData(initialData);
     handleClickAddClose();
   };
 

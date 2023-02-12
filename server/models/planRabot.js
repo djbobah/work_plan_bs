@@ -95,8 +95,9 @@ const modelPlanRabot = () => {
       console.log(chalk.green("DB !PLAN RABOT! connection sucessful."));
     })
     .catch((err) => console.log(err));
+  //sequelize.close();
 
-  return { Object, PodrOrg, VidRabot, Plan };
+  return { sequelize, Object, PodrOrg, VidRabot, Plan };
 };
 
 module.exports = modelPlanRabot;

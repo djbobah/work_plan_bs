@@ -34,7 +34,7 @@ const NavBar = () => {
         </div>
         <div>
           {localStorage.getItem("id_sl") === "16-а00135" ? (
-            <button className="btn btn-secondary">
+            <button className="btn btn-secondary border">
               {" "}
               <Link
                 className="dropdown-item"

@@ -7,6 +7,7 @@ import ExcelImage from "../static/img/Microsoft_Office_-_Excel.png";
 import ModalAdd from "./modalPlan/modalAdd";
 import styles from "./ControlPanel.module.css";
 import Toast from "./Toast.jsx";
+import PrintToPdf from "./printToPdf";
 // import Toast from "./components/Toast.jsx";
 
 const ControlPanel = ({
@@ -131,6 +132,7 @@ const ControlPanel = ({
           <img width={24} src={ExcelImage} alt="Выгрузить работы в Excel..." />
         </div>
       </div>
+
       <ModalAdd
         data={data}
         setData={setData}
@@ -149,6 +151,7 @@ const ControlPanel = ({
         onSubmit={onSubmit}
         // plans={plans}
       />
+      <PrintToPdf />
     </div>
   );
 };

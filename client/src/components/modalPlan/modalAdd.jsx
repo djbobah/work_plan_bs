@@ -188,7 +188,9 @@ const ModalAdd = ({
       >
         <Modal.Header className="bg-info" closeButton>
           <Modal.Title className="fs-5">
-            {edit === 0 ? "Добавляем работу..." : "Редактируем работу..."}
+            {edit === 0
+              ? "Добавляем работу..."
+              : `Редактируем работу id ${edit}...`}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>

@@ -32,11 +32,27 @@ const NavBar = () => {
         <div className={styles["nav-body"]}>
           {localStorage.getItem("name_sl")}
         </div>
-        <div className={styles.actions}>
-          <div className="collapse navbar-collapse" id="navbarSupportedContent">
+        <div>
+          {localStorage.getItem("id_sl") === "16-а00135" ? (
+            <button className="btn btn-secondary">
+              {" "}
+              <Link
+                className="dropdown-item"
+                to="/auto"
+                // onClick={toggleMenuIsOpen}
+              >
+                Управление
+                <br /> базой
+                <br />
+                автомобилей
+              </Link>
+            </button>
+          ) : (
+            ""
+          )}
+          {/* <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav mr-auto mb-2 mb-lg-0 ">
               <li className="nav-item dropdown  ">
-                {/* ${menuIsOpen ? "show" : ""} */}
                 <Link
                   className={`nav-link dropdown-toggle fs-6 ${styles.actions}`}
                   to="#"
@@ -87,7 +103,7 @@ const NavBar = () => {
                 </ul>
               </li>
             </ul>
-          </div>
+          </div> */}
         </div>
       </div>
     </nav>

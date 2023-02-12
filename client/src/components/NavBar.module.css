@@ -34,7 +34,13 @@
 }
 
 .actions {
-  color: white !important;
+  border: 2px;
+  width: 150px;
+  /* overflow: auto; */
+  border-color: white;
+  margin: 0 auto;
+  align: center;
+  /* color: white !important; */
   /* padding-right: 20px; */
   /* display: flex; */
   font-size: 20px;

@@ -39,7 +39,7 @@ const WorkPlan = () => {
   const [dangerWork, setDangerWork] = useState();
   const [showModalAdd, setShowModalAdd] = useState(false);
   const [edit, setEdit] = useState(0);
-  const [copy, setCopy] = useState(0);
+  // const [copy, setCopy] = useState(0);
   // const [approveDangerWork, setApproveDangerWork] = useState(true);
   const [checkButtons, setCheckButtons] = useState([
     { title: "Все подразделения", name: "AllUnits", id: 1, checked: false },
@@ -238,12 +238,12 @@ const WorkPlan = () => {
     setData(initialData);
     setShowModalAdd(false);
   };
-  const handleChangeEdit = (id) => {
+  const handleChangeEdit = (id, method) => {
     console.log("edited work id: ", id);
 
     //выбираем режим - копирование или редактироване
-    console.log("copy= ", copy);
-    copy === 0 ? setEdit(id) : setEdit(0);
+    console.log("method = ", method);
+    method === "edit" ? setEdit(id) : setEdit(0);
 
     setShowModalAdd(true);
 
@@ -304,12 +304,13 @@ const WorkPlan = () => {
             label: filteredBrigadier.fio,
             value: filteredBrigadier.id,
           };
-    const dateOfWork = copy === 0 ? filteredPlan.data_rabot : getTommorow();
+    // const dateOfWork =
+    //   method === "copy" ? filteredPlan.data_rabot : getTommorow();
 
     //здесь нужно передавать данные
     setData({
       id: id,
-      dateOfWork: dateOfWork,
+      dateOfWork: filteredPlan.data_rabot,
       typeOfWork: {
         label: filteredTypeOfWork.name,
         value: filteredTypeOfWork.id,
@@ -324,28 +325,30 @@ const WorkPlan = () => {
       brigadier: dataBrigadier,
       comment: filteredPlan.comment,
     });
+
+    console.log(method, data);
   };
 
-  const handleCopy = (id) => {
-    // console.log("copy string id ", id);
-    setCopy(id);
+  // const handleCopy = (id) => {
+  //   // console.log("copy string id ", id);
+  //   // setEdit(0);
+  //   // setCopy(id);
 
-    console.log("handle copy ", copy);
-    setEdit(0);
-    handleChangeEdit(id);
-  };
-  const handleEdit = (id) => {
-    console.log("edit string id ", id);
-    setCopy(0);
+  //   // console.log("handle copy ", copy);
 
-    //  console.log("handle copy ", copy);
-    setEdit(id);
-    handleChangeEdit(id);
-  };
-  const handleAdd = () => {
-    setEdit(0);
-    setCopy(0);
-  };
+  //   handleChangeEdit(id);
+  // };
+  // const handleEdit = (id) => {
+  //   console.log("edit string id ", id);
+  //   // setCopy(0);
+  //   //  console.log("handle copy ", copy);
+  //   setEdit(id);
+  //   handleChangeEdit(id);
+  // };
+  // const handleAdd = () => {
+  //   setEdit(0);
+  //   // setCopy(0);
+  // };
 
   const validatorConfig = {
     dateOfWork: {
@@ -394,15 +397,17 @@ const WorkPlan = () => {
   };
 
   const isValid = Object.keys(errors).length === 0;
-  // console.log("edit-", edit);
+  //
   const handleSubmit = (e) => {
     e.preventDefault();
     const isValid = validate();
     if (!isValid) return;
     const id_sl = localStorage.getItem("id_sl");
-
+    console.log("submit edit-", edit);
+    console.log("data", data);
     // add;
     if (edit !== 0) {
+      console.log("EDIT---");
       axios
         .patch("http://localhost:5000/api/plan/plan", { data, id_sl })
         .then((plan) => {
@@ -412,6 +417,7 @@ const WorkPlan = () => {
           console.log(e);
         });
     } else {
+      console.log("ADD---");
       axios
         .post("http://localhost:5000/api/plan/plan", { data, id_sl })
         .then((plan) => {
@@ -423,7 +429,7 @@ const WorkPlan = () => {
     }
     console.log(data);
     setEdit(0);
-    setCopy(0);
+    // setCopy(0);
     setData(initialData);
     handleClickAddClose();
   };
@@ -456,7 +462,7 @@ const WorkPlan = () => {
             state={state}
             onChangeState={handleStateChange}
             edit={edit}
-            onAdd={handleAdd}
+            // onAdd={handleAdd}
             checkButtons={checkButtons}
             onCheck={handleCheckClick}
             onSubmit={handleSubmit}
@@ -490,8 +496,8 @@ const WorkPlan = () => {
             dangerWork={dangerWork}
             onDelete={handleRowDelete}
             contractingOrganization={contractingOrganization}
-            onEdit={handleEdit}
-            onCopy={handleCopy}
+            onEdit={handleChangeEdit}
+            // onCopy={handleCopy}
             checkButtons={checkButtons}
             // onApprove={handleClickApprove}
           />

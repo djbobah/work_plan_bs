@@ -33,7 +33,7 @@ const ControlPanel = ({
   state,
   onChangeState,
   edit,
-  onEdit,
+  // onEdit,
   checkButtons,
   onCheck,
 }) => {
@@ -137,7 +137,7 @@ const ControlPanel = ({
         errors={errors}
         isValid={isValid}
         edit={edit}
-        onEdit={onEdit}
+        // onEdit={onEdit}
         show={show}
         onShow={onShow}
         onClose={onClose}

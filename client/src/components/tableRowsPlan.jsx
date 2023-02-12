@@ -23,7 +23,7 @@ const TableRowsPlan = ({
   onDelete,
   checkButtons,
   onEdit,
-  onCopy,
+  // onCopy,
 }) => {
   // const [department, setDepartment] = useState();
   let number = 0;
@@ -130,7 +130,7 @@ const TableRowsPlan = ({
           {currentDay > getToday() && (
             <button
               className="btn btn-light border border-secondary rounded m-1 p-1 "
-              onClick={() => onEdit(row.id)}
+              onClick={() => onEdit(row.id, "edit")}
               title="Редактировать строку..."
             >
               <svg
@@ -151,7 +151,7 @@ const TableRowsPlan = ({
           )}
           <button
             className="btn  btn-light border border-secondary rounded  m-1 p-1"
-            onClick={() => onCopy(row.id)}
+            onClick={() => onEdit(row.id, "copy")}
             title="Копировать строку..."
           >
             <img src={copyPng} width="20px" alt="Добавить копированием..." />

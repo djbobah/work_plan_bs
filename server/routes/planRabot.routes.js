@@ -201,6 +201,7 @@ router.post("/contractingOrganization", async (req, res) => {
 
 router.post("/plan", async (req, res) => {
   try {
+    console.log(chalk.green("data_rabot:", req.body.data.dateOfWork));
     const podrOrg =
       typeof req.body.data.contractingOrganization != "object"
         ? "0"

@@ -33,7 +33,7 @@ const ModalAdd = ({
   contractingOrganization,
   brigada,
   edit,
-  onEdit,
+  // onEdit,
   onSubmit,
 }) => {
   const [optionsBrigadier, setOptionsBrigadier] = useState([]);

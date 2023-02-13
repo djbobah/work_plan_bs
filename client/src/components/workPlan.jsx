@@ -276,7 +276,7 @@ const WorkPlan = () => {
         ? 0
         : {
             label: filteredContractingOrganization.name,
-            value: filteredContractingOrganization.id_podr_org,
+            value: filteredContractingOrganization.id,
           };
 
     let dataBrigada = [];

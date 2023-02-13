@@ -112,14 +112,14 @@ const TableRowsPlan = ({
 
     const filteredAuto = auto.filter((item) => item.id === row[column])[0];
     console.log("filteredAuto", filteredAuto);
-    setDataAuto(
-      filteredAuto?.id === undefined
-        ? null
-        : {
-            label: filteredAuto.name,
-            value: filteredAuto.id,
-          }
-    );
+    // setDataAuto(
+    //   filteredAuto?.id === undefined
+    //     ? null
+    //     : {
+    //         label: filteredAuto.name,
+    //         value: filteredAuto.id,
+    //       }
+    // );
     if (column === "avto") {
       if (id_sl === "16-а00135") {
         return (

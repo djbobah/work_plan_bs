@@ -12,7 +12,7 @@ const PrintToPdf = () => {
 
   return (
     <div>
-      <TableRowsPlan ref={componentRef} />
+      <div ref={componentRef}>hello</div>
       <button onClick={handlePrint}>Print this out!</button>
     </div>
   );

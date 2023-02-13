@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import NavCheckButton from "./NavCheckButton";
 // import { getToday, getTommorow } from "../utils/DateTimeFunctions";
 import AddImage from "../static/img/add.png";
@@ -8,6 +8,7 @@ import ModalAdd from "./modalPlan/modalAdd";
 import styles from "./ControlPanel.module.css";
 import Toast from "./Toast.jsx";
 import PrintToPdf from "./printToPdf";
+import { useReactToPrint } from "react-to-print";
 // import Toast from "./components/Toast.jsx";
 
 const ControlPanel = ({
@@ -120,6 +121,7 @@ const ControlPanel = ({
           className="border rounded p-1 me-2"
           role="button"
           title="Распечатать работы..."
+          // onClick={handlePrintToPdf}
         >
           <img width={24} src={PrinterImage} alt="Распечатать работы..." />
         </div>
@@ -151,7 +153,6 @@ const ControlPanel = ({
         onSubmit={onSubmit}
         // plans={plans}
       />
-      <PrintToPdf />
     </div>
   );
 };

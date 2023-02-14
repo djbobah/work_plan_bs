@@ -315,6 +315,21 @@ router.patch("/auto", async (req, res) => {
       .json({ message: "На сервере произошла ошибкаю Попробуйте позже..." });
   }
 });
+router.patch("/gn", async (req, res) => {
+  try {
+    console.log(chalk.green("gn", req.body.target.value));
+    console.log(chalk.green("idRow", req.body.idRow));
+    const gn = await ModelPlanRabot.Plan.update(
+      { id_gn: req.body.target.value },
+      { where: { id: req.body.idRow } }
+    ).then((result) => console.log("updated"));
+    res.status(200);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "На сервере произошла ошибкаю Попробуйте позже..." });
+  }
+});
 
 router.delete("/:rowId", async (req, res) => {
   try {

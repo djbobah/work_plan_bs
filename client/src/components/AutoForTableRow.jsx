@@ -32,7 +32,7 @@ const AutoForTableRow = ({ auto, idAuto, idRow }) => {
   );
 
   const filteredAuto = auto.filter((item) => item.id === idAuto)[0];
-  console.log("filteredAuto", filteredAuto);
+  // console.log("filteredAuto", filteredAuto);
   useEffect(() => {
     setDataAuto(
       filteredAuto?.id === undefined
@@ -50,7 +50,7 @@ const AutoForTableRow = ({ auto, idAuto, idRow }) => {
       name="auto"
       // isClearable
       placeholder="Выберите автомобиль..."
-      // defaultOption=" Choose..."
+      //defaultOption=" Choose..."
       options={optionsAuto}
       onChange={handleChangeAuto}
       value={dataAuto}

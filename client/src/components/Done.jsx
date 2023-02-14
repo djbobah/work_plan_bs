@@ -20,7 +20,7 @@ const Done = ({ done, id }) => {
   if (doneState === 0) {
     return (
       <div>
-        <span className="badge text-bg-danger p-2 text-uppercase">
+        <span className=" text-danger fw-bold text-uppercase">
           Не выполнено
         </span>
         <button

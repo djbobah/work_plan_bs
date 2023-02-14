@@ -9,6 +9,7 @@ import Done from "./Done";
 import { getToday, convertDate } from "../utils/DateTimeFunctions";
 import DangerWork from "./DangerWork";
 import AutoForTableRow from "./AutoForTableRow";
+import GnForTableRows from "./gnForTableRows";
 
 const TableRowsPlan = ({
   columns,
@@ -26,6 +27,7 @@ const TableRowsPlan = ({
   onEdit,
   // onCopy,
 }) => {
+  // const [idAutoState, setIdAutoState] = useState(0);
   // const [department, setDepartment] = useState();
   let number = 0;
   let currentDay;
@@ -103,7 +105,9 @@ const TableRowsPlan = ({
     }
 
     if (column === "avto") {
+      //для автотранспортного цеха
       if (id_sl === "16-а00135") {
+        // setIdAutoState(row[column]);
         return (
           <AutoForTableRow auto={auto} idAuto={row[column]} idRow={row.id} />
         );
@@ -116,9 +120,22 @@ const TableRowsPlan = ({
     }
     if (column === "id_gn") {
       if (gn) {
-        const avtoNumber = gn.filter((gn) => gn.id === Number(row[column]));
-        // console.log("avtoNumber", avtoNumber);
-        return avtoNumber[0].marka + " " + avtoNumber[0].nomer;
+        if (id_sl === "16-а00135") {
+          console.log("GN", gn);
+          console.log("auto id", row["avto"]);
+          return (
+            <GnForTableRows
+              autoId={row["avto"]}
+              gn={gn}
+              idGn={row[column]}
+              idRow={row.id}
+            />
+          );
+        } else {
+          const avtoNumber = gn.filter((gn) => gn.id === Number(row[column]));
+
+          return avtoNumber[0].marka + " " + avtoNumber[0].nomer;
+        }
       }
     }
     if (column === "comment") {

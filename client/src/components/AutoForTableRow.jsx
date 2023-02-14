@@ -1,31 +1,58 @@
-import React, { useState } from "react";
-import SelectModal from "./modalPlan/SelectModal";
+import React, { useState, useCallback, useMemo, useEffect } from "react";
+// import SelectModal from "./modalPlan/SelectModal";
+import Select from "react-select";
+import axios from "axios";
 
 const AutoForTableRow = ({ auto, idAuto, idRow }) => {
   const [dataAuto, setDataAuto] = useState({});
-  const optionsAuto = auto.map((car) => ({
-    label: car.name,
-    value: car.id,
-  }));
-  const handleChangeAuto = (id) => {
-    console.log("change auto id ", id);
+
+  const handleChangeAuto = (target) => {
+    setDataAuto({
+      label: target.label,
+      value: target.value,
+    });
+    console.log("change auto id ", target);
+    axios
+      .patch("http://localhost:5000/api/plan/auto", { target, idRow })
+      .then((plan) => {
+        // console.log("post------------", plan.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   };
+
+  const optionsAuto = useMemo(
+    () =>
+      auto?.map((car) => ({
+        label: car.name,
+        value: car.id,
+      })),
+    [auto]
+  );
+
   const filteredAuto = auto.filter((item) => item.id === idAuto)[0];
   console.log("filteredAuto", filteredAuto);
-  setDataAuto(
-    filteredAuto?.id === undefined
-      ? null
-      : {
-          label: filteredAuto.name,
-          value: filteredAuto.id,
-        }
-  );
+  useEffect(() => {
+    setDataAuto(
+      filteredAuto?.id === undefined
+        ? null
+        : {
+            label: filteredAuto.name,
+            value: filteredAuto.id,
+          }
+    );
+  }, [filteredAuto]);
+
+  // const MemoizedSelectModal = React.memo(SelectModal);
   return (
-    <SelectModal
+    <Select
       name="auto"
-      label="Выберите автомобиль..."
+      // isClearable
+      placeholder="Выберите автомобиль..."
+      // defaultOption=" Choose..."
       options={optionsAuto}
-      onChange={() => handleChangeAuto(idRow)}
+      onChange={handleChangeAuto}
       value={dataAuto}
     />
   );

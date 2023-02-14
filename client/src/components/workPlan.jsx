@@ -497,6 +497,7 @@ const WorkPlan = () => {
             onDelete={handleRowDelete}
             contractingOrganization={contractingOrganization}
             onEdit={handleChangeEdit}
+            // optionsAuto={optionsAuto}
             // onCopy={handleCopy}
             checkButtons={checkButtons}
             // onApprove={handleClickApprove}

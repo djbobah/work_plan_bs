@@ -300,6 +300,22 @@ router.patch("/donestring", async (req, res) => {
   }
 });
 
+router.patch("/auto", async (req, res) => {
+  try {
+    console.log(chalk.green("auto", req.body.target.value));
+    console.log(chalk.green("idRow", req.body.idRow));
+    const gn = await ModelPlanRabot.Plan.update(
+      { avto: req.body.target.value },
+      { where: { id: req.body.idRow } }
+    ).then((result) => console.log("updated"));
+    res.status(200);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "На сервере произошла ошибкаю Попробуйте позже..." });
+  }
+});
+
 router.delete("/:rowId", async (req, res) => {
   try {
     const { rowId } = req.params;

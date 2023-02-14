@@ -107,32 +107,6 @@ const TableRowsPlan = ({
         return (
           <AutoForTableRow auto={auto} idAuto={row[column]} idRow={row.id} />
         );
-        // const optionsAuto = auto.map((car) => ({
-        //   label: car.name,
-        //   value: car.id,
-        // }));
-        // const handleChangeAuto = (id) => {
-        //   console.log("change auto id ", id);
-        // };
-        // const filteredAuto = auto.filter((item) => item.id === row[column])[0];
-        // console.log("filteredAuto", filteredAuto);
-        // // setDataAuto(
-        // //   filteredAuto?.id === undefined
-        // //     ? null
-        // //     : {
-        // //         label: filteredAuto.name,
-        // //         value: filteredAuto.id,
-        // //       }
-        // // );
-        // return (
-        //   <SelectModal
-        //     name="auto"
-        //     label="Выберите автомобиль..."
-        //     options={optionsAuto}
-        //     onChange={() => handleChangeAuto(row.id)}
-        //     value={dataAuto}
-        //   />
-        // );
       } else {
         if (row[column] !== 1)
           return auto.filter((auto) => auto.id === Number(row[column]))[0]

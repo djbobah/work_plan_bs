@@ -8,7 +8,7 @@ import copyPng from "../static/img/copy-two-paper-sheets-interface-symbol_icon-i
 import Done from "./Done";
 import { getToday, convertDate } from "../utils/DateTimeFunctions";
 import DangerWork from "./DangerWork";
-import SelectModal from "./modalPlan/SelectModal";
+import AutoForTableRow from "./AutoForTableRow";
 
 const TableRowsPlan = ({
   columns,
@@ -26,7 +26,6 @@ const TableRowsPlan = ({
   onEdit,
   // onCopy,
 }) => {
-  const [dataAuto, setDataAuto] = useState({});
   // const [department, setDepartment] = useState();
   let number = 0;
   let currentDay;
@@ -102,35 +101,38 @@ const TableRowsPlan = ({
         </>
       );
     }
-    const optionsAuto = auto.map((car) => ({
-      label: car.name,
-      value: car.id,
-    }));
-    const handleChangeAuto = (id) => {
-      console.log("change auto id ", id);
-    };
 
-    const filteredAuto = auto.filter((item) => item.id === row[column])[0];
-    console.log("filteredAuto", filteredAuto);
-    // setDataAuto(
-    //   filteredAuto?.id === undefined
-    //     ? null
-    //     : {
-    //         label: filteredAuto.name,
-    //         value: filteredAuto.id,
-    //       }
-    // );
     if (column === "avto") {
       if (id_sl === "16-а00135") {
         return (
-          <SelectModal
-            name="auto"
-            label="Выберите автомобиль..."
-            options={optionsAuto}
-            onChange={() => handleChangeAuto(row.id)}
-            value={dataAuto}
-          />
+          <AutoForTableRow auto={auto} idAuto={row[column]} idRow={row.id} />
         );
+        // const optionsAuto = auto.map((car) => ({
+        //   label: car.name,
+        //   value: car.id,
+        // }));
+        // const handleChangeAuto = (id) => {
+        //   console.log("change auto id ", id);
+        // };
+        // const filteredAuto = auto.filter((item) => item.id === row[column])[0];
+        // console.log("filteredAuto", filteredAuto);
+        // // setDataAuto(
+        // //   filteredAuto?.id === undefined
+        // //     ? null
+        // //     : {
+        // //         label: filteredAuto.name,
+        // //         value: filteredAuto.id,
+        // //       }
+        // // );
+        // return (
+        //   <SelectModal
+        //     name="auto"
+        //     label="Выберите автомобиль..."
+        //     options={optionsAuto}
+        //     onChange={() => handleChangeAuto(row.id)}
+        //     value={dataAuto}
+        //   />
+        // );
       } else {
         if (row[column] !== 1)
           return auto.filter((auto) => auto.id === Number(row[column]))[0]

@@ -20,7 +20,16 @@ const GnForTableRows = ({ autoId, gn, idGn, idRow }) => {
       });
   };
 
-  const filteredGn = gn.filter((item) => item.type === autoId);
+  let filteredGn = gn.filter((item) => item.type === autoId);
+  console.log("filteredGn", filteredGn);
+  filteredGn.unshift({
+    archive: "",
+    comment: "",
+    id: 1,
+    marka: " Нет",
+    nomer: "возможности",
+    type: 1,
+  });
   const optionsGn = useMemo(
     () =>
       filteredGn?.map((car) => ({

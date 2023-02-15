@@ -36,7 +36,10 @@ const AutoForTableRow = ({ auto, idAuto, idRow }) => {
   useEffect(() => {
     setDataAuto(
       filteredAuto?.id === undefined
-        ? null
+        ? {
+            label: "не используется",
+            value: 1,
+          }
         : {
             label: filteredAuto.name,
             value: filteredAuto.id,
@@ -48,7 +51,7 @@ const AutoForTableRow = ({ auto, idAuto, idRow }) => {
   return (
     <Select
       name="auto"
-      // isClearable
+      //isClearable
       placeholder="Выберите автомобиль..."
       //defaultOption=" Choose..."
       options={optionsAuto}

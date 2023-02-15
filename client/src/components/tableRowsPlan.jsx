@@ -121,7 +121,7 @@ const TableRowsPlan = ({
     if (column === "id_gn") {
       if (gn) {
         if (id_sl === "16-а00135") {
-          console.log("GN", gn);
+          // console.log("GN", gn);
           console.log("auto id", row["avto"]);
           return (
             <GnForTableRows

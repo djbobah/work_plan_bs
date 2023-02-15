@@ -31,10 +31,10 @@ const GnForTableRows = ({ autoId, gn, idGn, idRow }) => {
   );
   // console.log("filteredGn", filteredGn);
 
-  const filteredIdGn = filteredGn.filter((item) => item.id === idGn);
-  console.log("filteredIdGn", filteredIdGn);
+  const filteredIdGn = filteredGn.filter((item) => item.id === idGn)[0];
+  // console.log("filteredIdGn", filteredIdGn);
   useEffect(() => {
-    console.log("filteredIdGn use Effect", filteredIdGn);
+    // console.log("filteredIdGn use Effect", filteredIdGn);
 
     setDataGn(
       filteredIdGn?.id === undefined

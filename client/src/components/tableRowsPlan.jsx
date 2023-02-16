@@ -218,7 +218,7 @@ const TableRowsPlan = ({
           </tr>
           <tr key={row.id + row.id_sl}>
             {columns.map((column) => (
-              <td className="border text-center" key={column.id}>
+              <td className="border text-center align-middle " key={column.id}>
                 {renderContent(column.path, row)}
               </td>
             ))}
@@ -230,7 +230,7 @@ const TableRowsPlan = ({
     return (
       <tr key={row.id + row.id_sl}>
         {columns.map((column) => (
-          <td className="border text-center" key={column.id}>
+          <td className="border text-center align-middle" key={column.id}>
             {renderContent(column.path, row)}
           </td>
         ))}

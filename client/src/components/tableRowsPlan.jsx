@@ -25,6 +25,7 @@ const TableRowsPlan = ({
   onDelete,
   checkButtons,
   onEdit,
+  onEditAuto,
   // onCopy,
 }) => {
   // const [idAutoState, setIdAutoState] = useState(0);
@@ -106,36 +107,34 @@ const TableRowsPlan = ({
 
     if (column === "avto") {
       //для автотранспортного цеха
-      if (id_sl === "16-а00135") {
-        // setIdAutoState(row[column]);
-        return (
-          <AutoForTableRow auto={auto} idAuto={row[column]} idRow={row.id} />
-        );
-      } else {
-        if (row[column] !== 1)
-          return auto.filter((auto) => auto.id === Number(row[column]))[0]
-            ?.name;
-        else return "не используется";
-      }
+      // if (id_sl === "16-а00135") {
+      //   // setIdAutoState(row[column]);
+      //   return (
+      //     <AutoForTableRow auto={auto} idAuto={row[column]} idRow={row.id} />
+      //   );
+      // } else {
+      if (row[column] !== 1)
+        return auto.filter((auto) => auto.id === Number(row[column]))[0]?.name;
+      else return "не используется";
+      // }
     }
     if (column === "id_gn") {
       if (gn) {
-        if (id_sl === "16-а00135") {
-          // console.log("GN", gn);
-          console.log("auto id", row["avto"]);
-          return (
-            <GnForTableRows
-              autoId={row["avto"]}
-              gn={gn}
-              idGn={row[column]}
-              idRow={row.id}
-            />
-          );
-        } else {
-          const avtoNumber = gn.filter((gn) => gn.id === Number(row[column]));
+        // if (id_sl === "16-а00135") {
+        //   // console.log("GN", gn);
+        //   console.log("auto id", row["avto"]);
+        //   return (
+        //     <GnForTableRows
+        //       autoId={row["avto"]}
+        //       gn={gn}
+        //       idGn={row[column]}
+        //       idRow={row.id}
+        //     />
+        //   );
+        // } else {
+        const avtoNumber = gn.filter((gn) => gn.id === Number(row[column]));
 
-          return avtoNumber[0].marka + " " + avtoNumber[0].nomer;
-        }
+        return avtoNumber[0].marka + " " + avtoNumber[0].nomer;
       }
     }
     if (column === "comment") {
@@ -150,7 +149,32 @@ const TableRowsPlan = ({
     if (column === "vipolneno") {
       return <Done done={row[column]} id={row.id} />;
     }
-
+    if (column === "add_auto") {
+      return (
+        <div className="d-flex">
+          {" "}
+          {currentDay >= getToday() && id_sl === "16-а00135" && (
+            <button
+              className="btn btn-light border border-secondary rounded m-1 p-1 "
+              onClick={() => onEditAuto(row.id)}
+              title="Добавить автомобиль..."
+            >
+              <svg
+                fill="bg-secondary"
+                color="primary"
+                width="30"
+                height="30"
+                viewBox="-1 0 19 19"
+                xmlns="http://www.w3.org/2000/svg"
+                className="cf-icon-svg"
+              >
+                <path d="M16.417 9.583A7.917 7.917 0 1 1 8.5 1.666a7.917 7.917 0 0 1 7.917 7.917zm-3.948-1.455-.758-1.955a.816.816 0 0 0-.726-.498H6.054a.816.816 0 0 0-.727.498L4.57 8.128a1.43 1.43 0 0 0-1.052 1.375v2.046a.318.318 0 0 0 .317.317h.496v1.147a.238.238 0 0 0 .238.237h.892a.238.238 0 0 0 .237-.237v-1.147h5.644v1.147a.238.238 0 0 0 .237.237h.892a.238.238 0 0 0 .238-.237v-1.147h.496a.318.318 0 0 0 .317-.317V9.503a1.43 1.43 0 0 0-1.052-1.375zm-7.445.582a.792.792 0 1 0 .792.792.792.792 0 0 0-.792-.792zm5.96-2.402a.192.192 0 0 1 .137.094l.65 1.676H5.267l.65-1.676a.192.192 0 0 1 .136-.094h4.93zm1.04 2.402a.792.792 0 1 0 .792.792.792.792 0 0 0-.791-.792z" />
+              </svg>
+            </button>
+          )}
+        </div>
+      );
+    }
     if (column === "delete") {
       return (
         <div className="d-flex">
@@ -245,7 +269,7 @@ const TableRowsPlan = ({
           !checkButtons[0].checked ? (
             <tr key={row.id + row.id_sl}>
               {columns.map((column) => (
-                <td className="border text-center" key={column.id}>
+                <td className="border text-center" key={column.id + column.id}>
                   {renderContent(column.path, row)}
                 </td>
               ))}

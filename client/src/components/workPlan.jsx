@@ -7,6 +7,7 @@ import axios from "axios";
 import styles from "./workPlan.module.css";
 import { columnsPlans } from "../utils/columnsPlans";
 import { validator } from "../utils/validator";
+import ModalAddAuto from "./modalPlan/modalAddAuto";
 
 const initialData = {
   dateOfWork: getTommorow(),
@@ -38,6 +39,7 @@ const WorkPlan = () => {
   const [contractingOrganization, setContractingOrganization] = useState();
   const [dangerWork, setDangerWork] = useState();
   const [showModalAdd, setShowModalAdd] = useState(false);
+  const [showModalAddAuto, setShowModalAddAuto] = useState(false);
   const [edit, setEdit] = useState(0);
   // const [copy, setCopy] = useState(0);
   // const [approveDangerWork, setApproveDangerWork] = useState(true);
@@ -85,6 +87,7 @@ const WorkPlan = () => {
   }, []);
   // useEffect(() => {
   let id_sl = checkButtons[0].checked ? 0 : localStorage.getItem("id_sl");
+  let id_slButton = localStorage.getItem("id_sl");
   // console.log("id_sl-------------------", id_sl);
 
   // }, [checkButtons]);
@@ -192,7 +195,7 @@ const WorkPlan = () => {
       });
   }, []);
   // console.log("dangerWork---------------------", dangerWork);
-  const columns = columnsPlans(id_sl);
+  const columns = columnsPlans(id_slButton, id_sl);
 
   const handleDateFromChange = (e) => {
     setDateFrom(e.target.value);
@@ -326,9 +329,16 @@ const WorkPlan = () => {
       comment: filteredPlan.comment,
     });
 
-    console.log(method, data);
+    // console.log(method, data);
   };
+  const handleClickEditAuto = (id) => {
+    setShowModalAddAuto(true);
 
+    console.log("id row", id);
+  };
+  const handleCloseModalAddAuto = () => {
+    setShowModalAddAuto(false);
+  };
   // const handleCopy = (id) => {
   //   // console.log("copy string id ", id);
   //   // setEdit(0);
@@ -395,6 +405,7 @@ const WorkPlan = () => {
     setErrors(errors);
     return Object.keys(errors).length === 0;
   };
+  // const [showModalAdd, setShowModalAdd] = useState(false);
 
   const isValid = Object.keys(errors).length === 0;
   //
@@ -497,6 +508,7 @@ const WorkPlan = () => {
             onDelete={handleRowDelete}
             contractingOrganization={contractingOrganization}
             onEdit={handleChangeEdit}
+            onEditAuto={handleClickEditAuto}
             // optionsAuto={optionsAuto}
             // onCopy={handleCopy}
             checkButtons={checkButtons}
@@ -505,6 +517,24 @@ const WorkPlan = () => {
         ) : (
           <h1>нет данных для отображения или на данный день нет планов...</h1>
         )}
+
+        <ModalAddAuto
+          data={data}
+          // setData={setData}
+          // errors={errors}
+          // isValid={isValid}
+          // edit={edit}
+          // onEdit={onEdit}
+          show={showModalAddAuto}
+          // onShow={onShow}
+          onClose={handleCloseModalAddAuto}
+          // works={works}
+          // objects={objects}
+          // auto={auto}
+          // contractingOrganization={contractingOrganization}
+          // brigada={brigada}
+          // onSubmit={onSubmit}
+        />
       </div>
     </>
   );

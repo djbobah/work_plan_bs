@@ -19,15 +19,33 @@ import axios from "axios";
 
 const ModalAddAuto = ({
   data,
-
+  department,
+  objects,
+  works,
   show,
   onClose,
 
   // onEdit,
   onSubmit,
 }) => {
+  const [changeTypeAuto, setChangeTypeAuto] = useState(false);
   // const [optionsBrigadier, setOptionsBrigadier] = useState([]);
-  // console.log("data", data);
+  console.log("data", data);
+  // console.log("id_sl", data.id_sl);
+
+  const filteredDepartment = department?.filter(
+    (dept) => dept.id_sl === data.id_sl
+  )[0];
+
+  const filteredObject = objects?.filter(
+    (obj) => obj.id === data.objectForWork.value
+  )[0];
+
+  const filteredWork = works?.filter(
+    (work) => work.id === data.typeOfWork.value
+  )[0];
+
+  // console.log("filteredWork", filteredWork.name);
   // let optionsTypeOfWorksArray = works.map((work) => ({
   //   label: work.name,
   //   value: work.id,
@@ -174,15 +192,82 @@ const ModalAddAuto = ({
         onHide={onClose}
         backdrop="static"
         keyboard={false}
-        size="lg"
+        //   size="lg"
+        size="md"
       >
         <Modal.Header className="bg-info" closeButton>
           <Modal.Title className="fs-5">
-            "Добавляем информацию об автомобиле..."
+            Добавляем информацию об автомобиле...
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={onSubmit}>
+            <Row className="mb-2">
+              <Col>
+                <Form.Label className="text-muted">Подразделение:</Form.Label>
+              </Col>
+              <Col className="text-end">
+                <Form.Text className="text-primary fs-6  ">
+                  {filteredDepartment?.name}
+                </Form.Text>
+              </Col>
+            </Row>
+            <Row className="mb-2">
+              <Col>
+                <Form.Label className="text-muted">
+                  Дата планируемой работы:
+                </Form.Label>
+              </Col>
+              <Col className="text-end">
+                <Form.Text className="text-primary fs-6 ">
+                  {convertDate(data.dateOfWork)}
+                </Form.Text>
+              </Col>
+            </Row>
+            <Row className="mb-2">
+              <Col>
+                <Form.Label className="text-muted">
+                  Место проведения работ:
+                </Form.Label>
+              </Col>
+              <Col className="text-end">
+                <Form.Text className="text-primary fs-6 ">
+                  {filteredObject?.name}
+                </Form.Text>
+              </Col>
+            </Row>{" "}
+            <Row className="mb-2">
+              <Col>
+                <Form.Label className="text-muted">
+                  Планируемые работы:
+                </Form.Label>
+              </Col>
+              <Col className="text-end">
+                <Form.Text className="text-primary fs-6 ">
+                  {filteredWork?.name}
+                </Form.Text>
+              </Col>
+            </Row>
+            <hr />
+            <Row>
+              <Col>
+                <Form.Label className="text-muted">
+                  Заявленный тип транспорта:
+                </Form.Label>
+              </Col>
+              <Col className="text-end">
+                <Form.Text className="text-primary fs-6 text-end">
+                  {filteredWork?.name}
+                  <button
+                    className="btn btn-secondary "
+                    type="button"
+                    onClick={() => setChangeTypeAuto(!changeTypeAuto)}
+                  >
+                    1
+                  </button>
+                </Form.Text>
+              </Col>
+            </Row>
             <hr />
             <Row>
               <Form.Group as={Col}>

@@ -41,6 +41,7 @@ const WorkPlan = () => {
   const [showModalAdd, setShowModalAdd] = useState(false);
   const [showModalAddAuto, setShowModalAddAuto] = useState(false);
   const [edit, setEdit] = useState(0);
+
   // const [copy, setCopy] = useState(0);
   // const [approveDangerWork, setApproveDangerWork] = useState(true);
   const [checkButtons, setCheckButtons] = useState([
@@ -241,6 +242,7 @@ const WorkPlan = () => {
     setData(initialData);
     setShowModalAdd(false);
   };
+
   const handleChangeEdit = (id, method) => {
     console.log("edited work id: ", id);
 
@@ -331,10 +333,93 @@ const WorkPlan = () => {
 
     // console.log(method, data);
   };
+
   const handleClickEditAuto = (id) => {
     setShowModalAddAuto(true);
 
     console.log("id row", id);
+    const filteredPlan = plans.filter((plan) => plan.id === id)[0];
+    const filteredTypeOfWork = works.filter(
+      (type) => type.id === filteredPlan.id_vid_rabot
+    )[0];
+    const filteredObject = objects.filter(
+      (object) => object.id === filteredPlan.id_object
+    )[0];
+
+    const filteredAuto = auto.filter(
+      (item) => item.id === filteredPlan.avto
+    )[0];
+
+    const dataAuto =
+      filteredAuto.id === 1
+        ? null
+        : {
+            label: filteredAuto.name,
+            value: filteredAuto.id,
+          };
+
+    const filteredContractingOrganization = contractingOrganization.filter(
+      (item) => item.id === filteredPlan.id_podr_org
+    )[0];
+
+    const dataContractingOrganization =
+      filteredPlan.id_podr_org === 0
+        ? 0
+        : {
+            label: filteredContractingOrganization.name,
+            value: filteredContractingOrganization.id,
+          };
+
+    let dataBrigada = [];
+    if (filteredPlan.Brigada !== "") {
+      const arrBrigada = filteredPlan.Brigada.split(";");
+
+      arrBrigada.map((item) => {
+        const filteredItem = brigada.filter(
+          (member) => Number(member.id) === Number(item)
+        )[0];
+
+        dataBrigada.push({
+          label: filteredItem.fio,
+          value: filteredItem.id,
+        });
+      });
+    }
+    const filteredBrigadier = brigada.filter(
+      (item) => item.id === Number(filteredPlan.st_brigadi)
+    )[0];
+    const dataBrigadier =
+      filteredPlan.st_brigadi === ""
+        ? ""
+        : {
+            label: filteredBrigadier.fio,
+            value: filteredBrigadier.id,
+          };
+    // const dateOfWork =
+    //   method === "copy" ? filteredPlan.data_rabot : getTommorow();
+
+    //здесь нужно передавать данные
+    setData({
+      id: id,
+      id_sl: id_slButton,
+      dateOfWork: filteredPlan.data_rabot,
+      typeOfWork: {
+        label: filteredTypeOfWork.name,
+        value: filteredTypeOfWork.id,
+      },
+      isDanger: filteredPlan.OPASN,
+      objectForWork: {
+        label: filteredObject.name,
+        value: filteredObject.id,
+      },
+      auto: dataAuto,
+
+      methodOfWork: { name: filteredPlan.sposob, checked: true },
+      contractingOrganization: dataContractingOrganization,
+      brigada: dataBrigada,
+      brigadier: dataBrigadier,
+      comment: filteredPlan.comment,
+    });
   };
   const handleCloseModalAddAuto = () => {
     setShowModalAddAuto(false);
@@ -521,6 +606,9 @@ const WorkPlan = () => {
         <ModalAddAuto
           data={data}
           // setData={setData}
+          department={department}
+          objects={objects}
+          works={works}
           // errors={errors}
           // isValid={isValid}
           // edit={edit}
@@ -528,8 +616,6 @@ const WorkPlan = () => {
           show={showModalAddAuto}
           // onShow={onShow}
           onClose={handleCloseModalAddAuto}
-          // works={works}
-          // objects={objects}
           // auto={auto}
           // contractingOrganization={contractingOrganization}
           // brigada={brigada}

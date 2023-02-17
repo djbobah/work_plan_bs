@@ -12,6 +12,7 @@ import {
   FloatingLabel,
 } from "react-bootstrap";
 import { convertDate, getTommorow } from "../../utils/DateTimeFunctions";
+import Select from "react-select";
 import CreatableSelectModal from "./creatableSelectModal";
 import SelectModal from "./SelectModal";
 import MultiSelectModal from "./multiSelectModal";
@@ -192,8 +193,8 @@ const ModalAddAuto = ({
         onHide={onClose}
         backdrop="static"
         keyboard={false}
-        //   size="lg"
-        size="md"
+        size="lg"
+        // size="md"
       >
         <Modal.Header className="bg-info" closeButton>
           <Modal.Title className="fs-5">
@@ -257,14 +258,29 @@ const ModalAddAuto = ({
               </Col>
               <Col className="text-end">
                 <Form.Text className="text-primary fs-6 text-end">
-                  {filteredWork?.name}
-                  <button
-                    className="btn btn-secondary "
-                    type="button"
-                    onClick={() => setChangeTypeAuto(!changeTypeAuto)}
-                  >
-                    1
-                  </button>
+                  <div className="d-flex">
+                    {!changeTypeAuto ? filteredWork?.name : <Select />}
+                    <button
+                      className="btn  btn-light  border-secondary p-1 ms-1"
+                      type="button"
+                      onClick={() => setChangeTypeAuto(!changeTypeAuto)}
+                    >
+                      <svg
+                        width="20"
+                        height="20"
+                        color="primary"
+                        fill="bg-secondary"
+                        className="bi bi-pencil-square "
+                        viewBox="0 0 16 16"
+                      >
+                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                        <path
+                          fillRule="evenodd"
+                          d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"
+                        />
+                      </svg>
+                    </button>
+                  </div>
                 </Form.Text>
               </Col>
             </Row>

@@ -20,18 +20,24 @@ import axios from "axios";
 
 const ModalAddAuto = ({
   data,
+  setData,
   department,
   objects,
   works,
+  auto,
+  gn,
+  brigada,
   show,
   onClose,
+  changeTypeAuto,
+  setChangeTypeAuto,
 
   // onEdit,
   onSubmit,
 }) => {
-  const [changeTypeAuto, setChangeTypeAuto] = useState(false);
+  // const [changeTypeAuto, setChangeTypeAuto] = useState(false);
   // const [optionsBrigadier, setOptionsBrigadier] = useState([]);
-  console.log("data", data);
+  // console.log("data", data);
   // console.log("id_sl", data.id_sl);
 
   const filteredDepartment = department?.filter(
@@ -46,145 +52,85 @@ const ModalAddAuto = ({
     (work) => work.id === data.typeOfWork.value
   )[0];
 
-  // console.log("filteredWork", filteredWork.name);
-  // let optionsTypeOfWorksArray = works.map((work) => ({
-  //   label: work.name,
-  //   value: work.id,
-  // }));
-  // const optionsObjectForWork = objects?.map((object) => ({
-  //   label: object.name,
-  //   value: object.id,
-  // }));
+  let filteredAuto = null;
+  // console.log("typeof auto", data.auto);
+  if (data.auto !== null) {
+    const filteredCar = auto?.filter((car) => data.auto.value === car.id)[0];
+    filteredAuto = { value: filteredCar?.id, label: filteredCar?.name };
+  } else {
+    filteredAuto = { value: 1, label: "Нет необходимости" };
+  }
 
-  // const optionsAuto = auto.map((auto) => ({
-  //   label: auto.name,
-  //   value: auto.id,
-  // }));
-  // const optionsContractingOrganization = contractingOrganization.map(
-  //   (contract) => ({
-  //     label: contract.name,
-  //     value: contract.id,
-  //   })
-  // );
-  // const handleChangeDate = ({ target }) => {
-  //   setData((prevState) => ({
-  //     ...prevState,
-  //     [target.name]: target.value,
-  //   }));
-  // };
+  // console.log("gn", gn);
 
-  // const handleChangeComment = ({ target }) => {
-  //   setData((prevState) => ({
-  //     ...prevState,
-  //     [target.name]: target.value,
-  //   }));
-  // };
-  // const handleCheck = ({ target }) => {
-  //   setData((prevState) => ({
-  //     ...prevState,
-  //     [target.name]: target.checked,
-  //   }));
-  // };
-  // const handleRadio = ({ target }) => {
-  //   if (data[target.name]["name"] === "po") {
-  //     setData((prevState) => ({
-  //       ...prevState,
-  //       [target.name]: { name: target.value, checked: target.checked },
-  //       ["contractingOrganization"]: "",
-  //     }));
-  //     //   console.log("po");
-  //   } else {
-  //     // console.log("ss");
-  //     setData((prevState) => ({
-  //       ...prevState,
-  //       [target.name]: { name: target.value, checked: target.checked },
-  //     }));
-  //   }
-  // };
+  const optionsAuto = auto?.map((auto) => ({
+    label: auto.name,
+    value: auto.id,
+  }));
 
-  // useEffect(() => {
-  //   setOptionsBrigadier(data.brigada);
-  // }, [data.brigada]);
+  const handleChangeAuto = (target) => {
+    console.log("target", target);
+    target
+      ? setData((prevState) => ({
+          ...prevState,
+          auto: { value: target.value, label: target.label },
+          gn: null,
+        }))
+      : setData((prevState) => ({
+          ...prevState,
+          auto: null,
+          gn: null,
+          driver: null,
+        }));
+  };
 
-  // const handleChange = (target) => {
-  //   setData((prevState) => ({
-  //     ...prevState,
-  //     [target.name]: target.value,
-  //   }));
-  //   // console.log(target);
-  // };
+  const filteredGn = gn?.filter(
+    (item) => item.archive !== "1" && item.type === data.auto?.value
+  );
+  const optionsGn = filteredGn?.map((item) => ({
+    label: item.marka + " " + item.nomer,
+    value: item.id,
+  }));
+  const handleChangeGn = (target) => {
+    target
+      ? setData((prevState) => ({
+          ...prevState,
+          gn: { value: target.value, label: target.label },
+        }))
+      : setData((prevState) => ({
+          ...prevState,
+          gn: null,
+        }));
+  };
+  const filteredBrigada = brigada?.filter(
+    (member) => member.id_sl === localStorage.getItem("id_sl")
+  );
+  const optionsBrigada = filteredBrigada?.map((member) => ({
+    label: member.fio,
+    value: member.id,
+  }));
 
-  // const onCreateOption = (target) => {
-  //   if (target.name === "typeOfWork") {
-  //     console.log("Creatable select name: ", target);
-  //     target.id_sl = localStorage.getItem("id_sl");
-  //     axios
-  //       .post("http://localhost:5000/api/plan/work", target)
-  //       .then((work) => {
-  //         setData((prevState) => ({
-  //           ...prevState,
-  //           [target.name]: { label: work.data.name, value: work.data.id },
-  //         }));
-  //         // добавляю значение чтоб сразу появилось в списке
-  //         works.push({
-  //           comment: "",
-  //           id: work.data.id,
-  //           id_sl: localStorage.getItem("id_sl"),
-  //           name: work.data.name,
-  //         });
-  //       })
-  //       .catch((e) => {
-  //         console.log(e);
-  //       });
-  //   } else if (target.name === "objectForWork") {
-  //     console.log("Creatable select name: ", target);
-  //     target.id_sl = localStorage.getItem("id_sl");
+  const handleChangeDriver = (target) => {
+    console.log("tyarget", target);
+    target
+      ? setData((prevState) => ({
+          ...prevState,
+          driver: { value: target.value, label: target.label },
+        }))
+      : setData((prevState) => ({
+          ...prevState,
+          driver: null,
+        }));
+  };
 
-  //     axios
-  //       .post("http://localhost:5000/api/plan/object", target)
-  //       .then((object) => {
-  //         console.log("post----------------------", object.data);
-  //         console.log("post----------------------", object.data.id);
-  //         setData((prevState) => ({
-  //           ...prevState,
-  //           [target.name]: { label: object.data.name, value: object.data.id },
-  //         }));
-  //         // добавляю значение чтоб сразу появилось в списке
-  //         objects.push({
-  //           comment: localStorage.getItem("id_sl"),
-  //           id: object.data.id,
-  //           name: object.data.name,
-  //         });
-  //       })
-  //       .catch((e) => {
-  //         console.log(e);
-  //       });
-  //   } else if (target.name === "contractingOrganization") {
-  //     console.log("Creatable select name: ", target);
-  //     target.id_sl = localStorage.getItem("id_sl");
-
-  //     axios
-  //       .post("http://localhost:5000/api/plan/contractingOrganization", target)
-  //       .then((organization) => {
-  //         setData((prevState) => ({
-  //           ...prevState,
-  //           [target.name]: {
-  //             label: organization.data.name,
-  //             value: organization.data.id,
-  //           },
-  //         }));
-  //         // добавляю значение чтоб сразу появилось в списке
-  //         contractingOrganization.push({
-  //           comment: localStorage.getItem("id_sl"),
-  //           id: organization.data.id,
-  //           name: organization.data.name,
-  //         });
-  //       })
-  //       .catch((e) => {
-  //         console.log(e);
-  //       });
-  //   }
-  // };
+  const handleChangeComment = ({ target }) => {
+    console.log("target", target);
+    setData((prevState) => ({
+      ...prevState,
+      comment: target.value,
+    }));
+  };
+  // console.log("data", data);
 
   return (
     <>
@@ -250,7 +196,7 @@ const ModalAddAuto = ({
               </Col>
             </Row>
             <hr />
-            <Row>
+            <Row className="mb-3">
               <Col>
                 <Form.Label className="text-muted">
                   Заявленный тип транспорта:
@@ -258,30 +204,105 @@ const ModalAddAuto = ({
               </Col>
               <Col className="text-end">
                 <Form.Text className="text-primary fs-6 text-end">
-                  <div className="d-flex">
-                    {!changeTypeAuto ? filteredWork?.name : <Select />}
-                    <button
-                      className="btn  btn-light  border-secondary p-1 ms-1"
-                      type="button"
-                      onClick={() => setChangeTypeAuto(!changeTypeAuto)}
-                    >
-                      <svg
-                        width="20"
-                        height="20"
-                        color="primary"
-                        fill="bg-secondary"
-                        className="bi bi-pencil-square "
-                        viewBox="0 0 16 16"
-                      >
-                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
-                        <path
-                          fillRule="evenodd"
-                          d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"
+                  {/* <div className="row "> */}
+                  <div className="d-flex ">
+                    {!changeTypeAuto ? (
+                      <div style={{ width: "100%" }}>{filteredAuto?.label}</div>
+                    ) : (
+                      <div style={{ width: "100%" }}>
+                        <Select
+                          name="auto"
+                          isClearable
+                          placeholder="Выберите тип авто..."
+                          options={optionsAuto}
+                          value={data.auto}
+                          onChange={handleChangeAuto}
                         />
-                      </svg>
-                    </button>
+                      </div>
+                    )}
+                    <div>
+                      <button
+                        className="btn  btn-light  border-secondary p-1 ms-1"
+                        type="button"
+                        onClick={() => setChangeTypeAuto(!changeTypeAuto)}
+                      >
+                        <svg
+                          width="20"
+                          height="20"
+                          color="primary"
+                          fill="bg-secondary"
+                          className="bi bi-pencil-square "
+                          viewBox="0 0 16 16"
+                        >
+                          <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                          <path
+                            fillRule="evenodd"
+                            d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"
+                          />
+                        </svg>
+                      </button>
+                      {/* </div> */}
+                    </div>
                   </div>
                 </Form.Text>
+              </Col>
+            </Row>
+            <Row className="mb-3">
+              <Col>
+                <Form.Label className="text-muted">
+                  Марка, гос. номер:
+                </Form.Label>
+              </Col>
+              <Col className="text-end">
+                <Form.Text className="text-primary fs-6 text-end">
+                  {/* <div className="row "> */}
+
+                  <div style={{ width: "100%" }}>
+                    <Select
+                      name="gn"
+                      isClearable
+                      placeholder="Выберите автомобиль..."
+                      options={optionsGn}
+                      value={data.gn}
+                      onChange={handleChangeGn}
+                    />
+                  </div>
+                </Form.Text>
+              </Col>
+            </Row>
+            <Row className="mb-3">
+              <Col>
+                <Form.Label className="text-muted">Водитель:</Form.Label>
+              </Col>
+              <Col className="text-end">
+                <Form.Text className="text-primary fs-6 text-end">
+                  {/* <div className="row "> */}
+
+                  <div style={{ width: "100%" }}>
+                    <Select
+                      name="brigada"
+                      isClearable
+                      placeholder="Выберите водителя..."
+                      options={optionsBrigada}
+                      value={data.driver}
+                      onChange={handleChangeDriver}
+                    />
+                  </div>
+                </Form.Text>
+              </Col>
+            </Row>
+            <Row className="mb-3">
+              <Col>
+                <Form.Label className="text-muted">Комментарий:</Form.Label>
+              </Col>
+              <Col className="text-end">
+                <Form.Control
+                  as="textarea"
+                  rows={2}
+                  name="comment"
+                  value={data.comment}
+                  onChange={handleChangeComment}
+                />
               </Col>
             </Row>
             <hr />

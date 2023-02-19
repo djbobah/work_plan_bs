@@ -15,6 +15,8 @@ const initialData = {
   isDanger: false,
   objectForWork: "",
   auto: null,
+  gn: null,
+  driver: "",
   methodOfWork: { name: "ss", checked: true },
   contractingOrganization: "",
   brigada: [],
@@ -41,7 +43,7 @@ const WorkPlan = () => {
   const [showModalAdd, setShowModalAdd] = useState(false);
   const [showModalAddAuto, setShowModalAddAuto] = useState(false);
   const [edit, setEdit] = useState(0);
-
+  const [changeTypeAuto, setChangeTypeAuto] = useState(false);
   // const [copy, setCopy] = useState(0);
   // const [approveDangerWork, setApproveDangerWork] = useState(true);
   const [checkButtons, setCheckButtons] = useState([
@@ -423,6 +425,7 @@ const WorkPlan = () => {
   };
   const handleCloseModalAddAuto = () => {
     setShowModalAddAuto(false);
+    setChangeTypeAuto(false);
   };
   // const handleCopy = (id) => {
   //   // console.log("copy string id ", id);
@@ -529,6 +532,20 @@ const WorkPlan = () => {
     setData(initialData);
     handleClickAddClose();
   };
+  const handleSubmitAddAuto = (e) => {
+    e.preventDefault();
+    console.log(data);
+    axios
+      .patch("http://localhost:5000/api/plan/auto", { data })
+      .then((plan) => {
+        // console.log("post------------", plan.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+    setData(initialData);
+    handleCloseModalAddAuto();
+  };
 
   return (
     <>
@@ -605,10 +622,14 @@ const WorkPlan = () => {
 
         <ModalAddAuto
           data={data}
-          // setData={setData}
+          setData={setData}
           department={department}
           objects={objects}
           works={works}
+          auto={auto}
+          gn={gn}
+          changeTypeAuto={changeTypeAuto}
+          setChangeTypeAuto={setChangeTypeAuto}
           // errors={errors}
           // isValid={isValid}
           // edit={edit}
@@ -616,10 +637,9 @@ const WorkPlan = () => {
           show={showModalAddAuto}
           // onShow={onShow}
           onClose={handleCloseModalAddAuto}
-          // auto={auto}
           // contractingOrganization={contractingOrganization}
-          // brigada={brigada}
-          // onSubmit={onSubmit}
+          brigada={brigada}
+          onSubmit={handleSubmitAddAuto}
         />
       </div>
     </>

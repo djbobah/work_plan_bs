@@ -8,15 +8,15 @@ const ModalPrintPlan = ({ show, onShow, onClose, department }) => {
     checked: true,
   }));
   const [data, setData] = useState(initialData);
-  console.log("modal print initialData", typeof data);
+  console.log("modal print initialData", data);
 
   const handleCheck = ({ target }) => {
-    console.log(target.name);
+    console.log(target);
     console.log(target.checked);
-    // setData((prevState) => ({
-    //   ...prevState,
-    //   target.name: target.checked,
-    // }));
+    setData((prevState) => ({
+      ...prevState,
+      checked: target.checked,
+    }));
   };
   return (
     <>

@@ -9,6 +9,7 @@ import styles from "./ControlPanel.module.css";
 import Toast from "./Toast.jsx";
 import PrintToPdf from "./printToPdf";
 import { useReactToPrint } from "react-to-print";
+import ModalPrintPlan from "./modalPrintPlan";
 // import Toast from "./components/Toast.jsx";
 
 const ControlPanel = ({
@@ -38,6 +39,9 @@ const ControlPanel = ({
   // onEdit,
   checkButtons,
   onCheck,
+  showPrintPlan,
+  onShowPrintPlan,
+  onClosePrintPlan,
 }) => {
   return (
     <div
@@ -117,13 +121,14 @@ const ControlPanel = ({
         >
           <img width={24} src={AddImage} alt="Запланировать работу..." />
         </div>
+
         <div
           className="border rounded p-1 me-2"
           role="button"
           title="Распечатать работы..."
-          // onClick={handlePrintToPdf}
+          onClick={onShowPrintPlan}
         >
-          <img width={24} src={PrinterImage} alt="Распечатать работы..." />
+          <img width={24} src={PrinterImage} alt="Распечатать работы..." />{" "}
         </div>
 
         <div
@@ -152,6 +157,12 @@ const ControlPanel = ({
         brigada={brigada}
         onSubmit={onSubmit}
         // plans={plans}
+      />
+
+      <ModalPrintPlan
+        show={showPrintPlan}
+        //  onShow={onShowPrintPlan}
+        onClose={onClosePrintPlan}
       />
     </div>
   );

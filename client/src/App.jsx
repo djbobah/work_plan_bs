@@ -7,6 +7,7 @@ import { Route, Routes } from "react-router-dom";
 import DashBoard from "./components/dashBoard";
 import Auto from "./components/auto/auto";
 import ChooseDep from "./components/ChooseDep.jsx";
+import PrintPlan from "./components/modalPrintPlan.jsx";
 
 function App() {
   // localStorage.setItem("id_sl", "16-а00134");
@@ -20,6 +21,8 @@ function App() {
       <Routes>
         <Route path="/dashboard" element={<DashBoard />} />
         <Route path="/auto" element={<Auto />} />
+        {/* <Route path="/printPlan" element={<PrintPlan />} /> */}
+
         <Route path="/plan" element={<WorkPlan />} />
         <Route path="/" element={<ChooseDep />} />
       </Routes>

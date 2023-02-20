@@ -305,12 +305,12 @@ router.patch("/auto", async (req, res) => {
     const auto = req.body.data.auto === null ? 1 : req.body.data.auto.value;
     const gn = req.body.data.gn === null ? 0 : req.body.data.gn.value;
 
-    console.log(chalk.green("auto", auto));
-    console.log(chalk.green("gn -", gn, "-"));
-    // console.log(chalk.green("driver", req.body.data.driver.value));
-    console.log(chalk.green("comment", req.body.data.comment));
+    // console.log(chalk.green("auto", auto));
+    // console.log(chalk.green("gn -", gn, "-"));
+    // // console.log(chalk.green("driver", req.body.data.driver.value));
+    // console.log(chalk.green("comment", req.body.data.comment));
 
-    console.log(chalk.green("idRow", req.body.data.id));
+    // console.log(chalk.green("idRow", req.body.data.id));
     // , id_gn: gn, comment: req.body.data.comment
     await ModelPlanRabot.Plan.update(
       { avto: auto, id_gn: gn, comment: req.body.data.comment },

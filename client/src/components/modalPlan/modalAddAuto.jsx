@@ -87,11 +87,11 @@ const ModalAddAuto = ({
   const filteredGn = gn?.filter(
     (item) => item.archive !== "1" && item.type === data.auto?.value
   );
-  const optionsGn = filteredGn?.map((item) => ({
+  let optionsGn = filteredGn?.map((item) => ({
     label: item.marka + " " + item.nomer,
     value: item.id,
   }));
-  optionsGn.unshift({
+  optionsGn?.unshift({
     label: "Нет возможности",
     value: 1,
   });

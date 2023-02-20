@@ -42,6 +42,8 @@ const WorkPlan = () => {
   const [dangerWork, setDangerWork] = useState();
   const [showModalAdd, setShowModalAdd] = useState(false);
   const [showModalAddAuto, setShowModalAddAuto] = useState(false);
+  const [showModalPrintPlan, setShowModalPrintPlan] = useState(false);
+
   const [edit, setEdit] = useState(0);
   const [changeTypeAuto, setChangeTypeAuto] = useState(false);
   // const [copy, setCopy] = useState(0);
@@ -556,6 +558,13 @@ const WorkPlan = () => {
     handleCloseModalAddAuto();
   };
 
+  const handleClickShowPrintPlan = () => {
+    setShowModalPrintPlan(true);
+  };
+  const handleClickClosePrintPlan = () => {
+    setShowModalPrintPlan(false);
+  };
+
   return (
     <>
       <div className={styles["work-plan"]}>
@@ -589,6 +598,9 @@ const WorkPlan = () => {
             onCheck={handleCheckClick}
             onSubmit={handleSubmit}
             // onEdit={handleChangeEdit}
+            showPrintPlan={showModalPrintPlan}
+            onShowPrintPlan={handleClickShowPrintPlan}
+            onClosePrintPlan={handleClickClosePrintPlan}
           />
         )}
         {/* works && auto && objects && gn && brigada && */}

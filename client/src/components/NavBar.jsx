@@ -34,19 +34,20 @@ const NavBar = () => {
         </div>
         <div>
           {localStorage.getItem("id_sl") === "16-а00135" ? (
-            <button className="btn btn-secondary border">
+            <Link
+              className="dropdown-item"
+              to="/auto"
+              // onClick={toggleMenuIsOpen}
+            >
               {" "}
-              <Link
-                className="dropdown-item"
-                to="/auto"
-                // onClick={toggleMenuIsOpen}
-              >
+              <button className="btn btn-secondary border">
+                {" "}
                 Управление
                 <br /> базой
                 <br />
                 автомобилей
-              </Link>
-            </button>
+              </button>{" "}
+            </Link>
           ) : (
             ""
           )}

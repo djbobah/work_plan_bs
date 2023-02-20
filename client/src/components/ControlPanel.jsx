@@ -21,6 +21,7 @@ const ControlPanel = ({
   setWorks,
   objects,
   auto,
+  department,
   contractingOrganization,
   brigada,
   onShow,
@@ -163,6 +164,7 @@ const ControlPanel = ({
         show={showPrintPlan}
         //  onShow={onShowPrintPlan}
         onClose={onClosePrintPlan}
+        department={department}
       />
     </div>
   );

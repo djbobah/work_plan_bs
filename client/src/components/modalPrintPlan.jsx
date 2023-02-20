@@ -1,8 +1,23 @@
 import { Modal, Form, Row, Col } from "react-bootstrap";
-import React from "react";
+import React, { useState } from "react";
 
-const ModalPrintPlan = ({ show, onShow, onClose }) => {
-  console.log("modal print plan show", show);
+const ModalPrintPlan = ({ show, onShow, onClose, department }) => {
+  const initialData = department.map((item) => ({
+    value: item.id,
+    name: item.name,
+    checked: true,
+  }));
+  const [data, setData] = useState(initialData);
+  console.log("modal print initialData", typeof data);
+
+  const handleCheck = ({ target }) => {
+    console.log(target.name);
+    console.log(target.checked);
+    // setData((prevState) => ({
+    //   ...prevState,
+    //   target.name: target.checked,
+    // }));
+  };
   return (
     <>
       <Modal
@@ -10,7 +25,7 @@ const ModalPrintPlan = ({ show, onShow, onClose }) => {
         onHide={onClose}
         backdrop="static"
         keyboard={false}
-        size="md"
+        size="lg"
         // size="md"
       >
         <Modal.Header className="bg-info" closeButton>
@@ -20,18 +35,38 @@ const ModalPrintPlan = ({ show, onShow, onClose }) => {
         </Modal.Header>
         <Modal.Body>
           <Form>
-            {" "}
             {/* //onSubmit={onSubmit} */}
-            <Row className="mb-2">
+            <Row>
               <Col>
-                <Form.Label className="text-muted">Подразделение:</Form.Label>
+                <Form.Check
+                  type="checkbox"
+                  label="Все подразделения"
+                  name="AllDepartments"
+                  onChange={handleCheck}
+                  // value={data.isDanger}
+                  checked={true}
+                />
               </Col>
-              {/* <Col className="text-end">
-                <Form.Text className="text-primary fs-6  ">
-                  {filteredDepartment?.name}
-                </Form.Text>
-              </Col> */}
             </Row>
+            <hr />
+            {data.map((item) => (
+              <Row>
+                <Col>
+                  {/* <div className="form-check"> */}
+                  <Form.Check
+                    type="checkbox"
+                    label={item.name}
+                    name={item.name}
+                    id={item.name}
+                    onChange={handleCheck}
+                    value={item.checked}
+                    // checked={data.isDanger}
+                    checked={item.checked}
+                  />
+                  {/* </div> */}
+                </Col>
+              </Row>
+            ))}
             <hr />
             <Row>
               <Form.Group as={Col}>
@@ -40,7 +75,7 @@ const ModalPrintPlan = ({ show, onShow, onClose }) => {
                   // disabled={!isValid}
                   type="submit"
                 >
-                  Сохранить
+                  Печать
                 </button>{" "}
                 <button
                   className="btn btn-secondary"

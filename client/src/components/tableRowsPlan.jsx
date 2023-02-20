@@ -268,7 +268,10 @@ const TableRowsPlan = ({
           !checkButtons[0].checked ? (
             <tr key={row.id + row.id_sl}>
               {columns.map((column) => (
-                <td className="border text-center" key={column.id + column.id}>
+                <td
+                  className="border text-center align-middle"
+                  key={column.id + column.id}
+                >
                   {renderContent(column.path, row)}
                 </td>
               ))}

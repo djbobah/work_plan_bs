@@ -91,6 +91,10 @@ const ModalAddAuto = ({
     label: item.marka + " " + item.nomer,
     value: item.id,
   }));
+  optionsGn.unshift({
+    label: "Нет возможности",
+    value: 1,
+  });
   const handleChangeGn = (target) => {
     target
       ? setData((prevState) => ({

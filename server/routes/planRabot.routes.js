@@ -303,19 +303,20 @@ router.patch("/donestring", async (req, res) => {
 router.patch("/auto", async (req, res) => {
   try {
     const auto = req.body.data.auto === null ? 1 : req.body.data.auto.value;
-    // const gn = req.body.data.gn === null ? 0 : req.body.data.gn.value;
+    const gn = req.body.data.gn === null ? 0 : req.body.data.gn.value;
 
     console.log(chalk.green("auto", auto));
-    // console.log(chalk.green("gn", gn));
+    console.log(chalk.green("gn -", gn, "-"));
     // console.log(chalk.green("driver", req.body.data.driver.value));
     console.log(chalk.green("comment", req.body.data.comment));
 
     console.log(chalk.green("idRow", req.body.data.id));
-    // const gn = await ModelPlanRabot.Plan.update(
-    //   { avto: req.body.target.value, id_gn: req.body.target.value },
-    //   { where: { id: req.body.idRow } }
-    // ).then((result) => console.log("updated"));
-    // res.status(200);
+    // , id_gn: gn, comment: req.body.data.comment
+    await ModelPlanRabot.Plan.update(
+      { avto: auto, id_gn: gn, comment: req.body.data.comment },
+      { where: { id: req.body.data.id } }
+    ).then((result) => console.log("updated"));
+    res.status(200);
   } catch (error) {
     res
       .status(500)

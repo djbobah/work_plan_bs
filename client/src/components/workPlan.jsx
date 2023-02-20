@@ -140,7 +140,7 @@ const WorkPlan = () => {
         console.log(e);
       });
     // console.log("rerender VID RABOT");
-  }, [DateFrom, DateEnd, showModalAdd, state, checkButtons]);
+  }, [DateFrom, DateEnd, showModalAdd, state, checkButtons, showModalAddAuto]);
 
   useEffect(() => {
     // получаем данные о виде работ из БД
@@ -359,6 +359,15 @@ const WorkPlan = () => {
             label: filteredAuto.name,
             value: filteredAuto.id,
           };
+    console.log("id_gn", filteredPlan.id_gn);
+    let dataGn = null;
+    if (filteredPlan.id_gn !== 0) {
+      const filteredGn = gn.filter((item) => item.id === filteredPlan.id_gn)[0];
+      dataGn = {
+        label: filteredGn.marka + " " + filteredGn.nomer,
+        value: filteredGn.id,
+      };
+    }
 
     const filteredContractingOrganization = contractingOrganization.filter(
       (item) => item.id === filteredPlan.id_podr_org
@@ -415,7 +424,7 @@ const WorkPlan = () => {
         value: filteredObject.id,
       },
       auto: dataAuto,
-
+      gn: dataGn,
       methodOfWork: { name: filteredPlan.sposob, checked: true },
       contractingOrganization: dataContractingOrganization,
       brigada: dataBrigada,

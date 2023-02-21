@@ -1,7 +1,85 @@
 import { Modal, Form, Row, Col } from "react-bootstrap";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
+import { useReactToPrint } from "react-to-print";
+import { convertDate } from "../utils/DateTimeFunctions";
 
-const ModalPrintPlan = ({ show, onShow, onClose, department }) => {
+// const ComponentToPrint = () => {
+//   return (
+//     <div className="p-5">
+//       <h2 style={{ color: "green" }}>Attendance</h2>
+//       <table>
+//         <thead>
+//           <th>S/N</th>
+//           <th>Name</th>
+//           <th>Email</th>
+//         </thead>
+//         <tbody>
+//           <tr>
+//             <td>1</td>
+//             <td>Njoku Samson</td>
+//             <td>samson@yahoo.com</td>
+//           </tr>
+//           <tr>
+//             <td>2</td>
+//             <td>Ebere Plenty</td>
+//             <td>ebere@gmail.com</td>
+//           </tr>
+//           <tr>
+//             <td>3</td>
+//             <td>Undefined</td>
+//             <td>No Email</td>
+//           </tr>
+//         </tbody>
+//       </table>
+//     </div>
+//   );
+// };
+
+// export default ;
+
+const ModalPrintPlan = ({
+  show,
+  onShow,
+  onClose,
+  department,
+  dateFrom,
+  dateEnd,
+}) => {
+  class ComponentToPrint extends React.Component {
+    render() {
+      return (
+        <div className="p-5">
+          <p style={{ color: "green" }}>{`План работ на период с ${convertDate(
+            dateFrom
+          )} по ${convertDate(dateEnd)}`}</p>
+          <table>
+            <thead>
+              <th>S/N</th>
+              <th>Name</th>
+              <th>Email</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>Njoku Samson</td>
+                <td>samson@yahoo.com</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>Ebere Plenty</td>
+                <td>ebere@gmail.com</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>Undefined</td>
+                <td>No Email</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      );
+    }
+  }
   const initialData = department.map((item) => ({
     value: item.id,
     name: item.name,
@@ -28,6 +106,11 @@ const ModalPrintPlan = ({ show, onShow, onClose, department }) => {
     SetAllDepartments(target.checked);
     setData(data.map((item) => ({ ...item, checked: target.checked })));
   };
+
+  const componentRef = useRef();
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
   return (
     <>
       <Modal
@@ -84,10 +167,11 @@ const ModalPrintPlan = ({ show, onShow, onClose, department }) => {
                 <button
                   className="btn btn-primary"
                   // disabled={!isValid}
-                  type="submit"
+                  type="button"
+                  onClick={handlePrint}
                 >
                   Печать
-                </button>{" "}
+                </button>
                 <button
                   className="btn btn-secondary"
                   // disabled={!isValid}
@@ -98,6 +182,11 @@ const ModalPrintPlan = ({ show, onShow, onClose, department }) => {
                 </button>
               </Form.Group>
             </Row>
+            {/* component to be printed */}
+            {/* style={{ display: "none" }} */}
+            <div>
+              <ComponentToPrint ref={componentRef} />
+            </div>
           </Form>
         </Modal.Body>
       </Modal>

@@ -8,14 +8,25 @@ const ModalPrintPlan = ({ show, onShow, onClose, department }) => {
     checked: true,
   }));
   const [data, setData] = useState(initialData);
-  console.log("modal print data", data);
+  const [AllDepartments, SetAllDepartments] = useState(true);
+  // console.log("modal print data", data);
 
   const handleCheck = ({ target }) => {
-    console.log(target.id);
-    console.log(target.checked);
-    // setData(
-    //   data[target.id].checked= target.checked },
-    // ));
+    // console.log("target id",target.id);
+    // console.log("target value",target.value);
+    // console.log("checked",target.checked);
+
+    setData(
+      data.map((item) =>
+        item.value === Number(target.value)
+          ? { ...item, checked: target.checked }
+          : item
+      )
+    );
+  };
+  const handleCheckAllDepartments = ({ target }) => {
+    SetAllDepartments(target.checked);
+    setData(data.map((item) => ({ ...item, checked: target.checked })));
   };
   return (
     <>
@@ -41,14 +52,15 @@ const ModalPrintPlan = ({ show, onShow, onClose, department }) => {
                   type="checkbox"
                   label="Все подразделения"
                   name="AllDepartments"
-                  onChange={handleCheck}
-                  // value={data.isDanger}
-                  checked={true}
+                  onChange={handleCheckAllDepartments}
+                  id="AllDepartments"
+                  value={AllDepartments}
+                  checked={AllDepartments}
                 />
               </Col>
             </Row>
             <hr />
-            {data.map((item, index) => (
+            {data.map((item) => (
               <Row>
                 <Col>
                   {/* <div className="form-check"> */}
@@ -56,9 +68,9 @@ const ModalPrintPlan = ({ show, onShow, onClose, department }) => {
                     type="checkbox"
                     label={item.name}
                     name={item.name}
-                    id={index}
+                    id={item.name + item.value}
                     onChange={handleCheck}
-                    value={item.checked}
+                    value={item.value}
                     // checked={data.isDanger}
                     checked={item.checked}
                   />

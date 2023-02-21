@@ -3,6 +3,7 @@ const os = require("os");
 const chalk = require("chalk");
 const config = require("config");
 const cors = require("cors");
+const path = require("path");
 // const mysql = require("mysql2/promise");
 const routes = require("./routes");
 
@@ -15,6 +16,13 @@ app.use("/api", routes);
 const PORT = config.get("port") ?? 3000;
 
 if (process.env.NODE_ENV === "production") {
+  app.use("/", express.static(path.join(__dirname, "client")));
+
+  const indexPath = path.join(__dirname, "client", "index.html");
+
+  app.get("*", (req, res) => {
+    res.sendFile(indexPath);
+  });
   console.log(chalk.red("Production"));
 } else {
   console.log(chalk.red("Development"));

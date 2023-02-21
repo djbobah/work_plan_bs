@@ -8,15 +8,14 @@ const ModalPrintPlan = ({ show, onShow, onClose, department }) => {
     checked: true,
   }));
   const [data, setData] = useState(initialData);
-  console.log("modal print initialData", data);
+  console.log("modal print data", data);
 
   const handleCheck = ({ target }) => {
-    console.log(target);
+    console.log(target.id);
     console.log(target.checked);
-    setData((prevState) => ({
-      ...prevState,
-      checked: target.checked,
-    }));
+    // setData(
+    //   data[target.id].checked= target.checked },
+    // ));
   };
   return (
     <>
@@ -49,7 +48,7 @@ const ModalPrintPlan = ({ show, onShow, onClose, department }) => {
               </Col>
             </Row>
             <hr />
-            {data.map((item) => (
+            {data.map((item, index) => (
               <Row>
                 <Col>
                   {/* <div className="form-check"> */}
@@ -57,7 +56,7 @@ const ModalPrintPlan = ({ show, onShow, onClose, department }) => {
                     type="checkbox"
                     label={item.name}
                     name={item.name}
-                    id={item.name}
+                    id={index}
                     onChange={handleCheck}
                     value={item.checked}
                     // checked={data.isDanger}

@@ -1,5 +1,5 @@
 import { Modal, Form, Row, Col } from "react-bootstrap";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useReactToPrint } from "react-to-print";
 import { convertDate } from "../utils/DateTimeFunctions";
 
@@ -45,41 +45,6 @@ const ModalPrintPlan = ({
   dateFrom,
   dateEnd,
 }) => {
-  class ComponentToPrint extends React.Component {
-    render() {
-      return (
-        <div className="p-5">
-          <p style={{ color: "green" }}>{`План работ на период с ${convertDate(
-            dateFrom
-          )} по ${convertDate(dateEnd)}`}</p>
-          <table>
-            <thead>
-              <th>S/N</th>
-              <th>Name</th>
-              <th>Email</th>
-            </thead>
-            <tbody>
-              <tr>
-                <td>1</td>
-                <td>Njoku Samson</td>
-                <td>samson@yahoo.com</td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>Ebere Plenty</td>
-                <td>ebere@gmail.com</td>
-              </tr>
-              <tr>
-                <td>3</td>
-                <td>Undefined</td>
-                <td>No Email</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      );
-    }
-  }
   const initialData = department.map((item) => ({
     value: item.id,
     name: item.name,
@@ -87,6 +52,80 @@ const ModalPrintPlan = ({
   }));
   const [data, setData] = useState(initialData);
   const [AllDepartments, SetAllDepartments] = useState(true);
+
+  // useEffect(() => {
+  class ComponentToPrint extends React.Component {
+    render() {
+      return (
+        <div className="p-5">
+          <p style={{ color: "green" }}>{`План работ на  ${convertDate(
+            dateFrom
+          )} `}</p>
+          <table className="table table-striped table-bordered border text-center">
+            <thead className="bg-secondary">
+              <th className="border">№п/п</th>
+              <th className="border">Объект</th>
+              <th className="border">Вид работ</th>
+              <th className="border">Исполнитель</th>
+              <th className="border">Транспорт</th>
+            </thead>
+            <tbody>
+              {data.map((item) => {
+                item.checked && (
+                  <tr>
+                    <td colSpan={5}>{item.name}</td>
+                  </tr>
+                );
+              })}
+
+              {/* <tr>
+                {" "}
+                <td>Njoku Samson</td>
+                <td>samson@yahoo.com</td>
+              </tr> */}
+            </tbody>
+          </table>
+        </div>
+      );
+    }
+  }
+  // }, [data]);
+  // class ComponentToPrint extends React.Component {
+  //   render() {
+  //     return (
+  //       <div className="p-5">
+  //         <p style={{ color: "green" }}>{`План работ на  ${convertDate(
+  //           dateFrom
+  //         )} `}</p>
+  //         <table className="table table-striped table-bordered border text-center">
+  //           <thead className="bg-secondary">
+  //             <th className="border">№п/п</th>
+  //             <th className="border">Объект</th>
+  //             <th className="border">Вид работ</th>
+  //             <th className="border">Исполнитель</th>
+  //             <th className="border">Транспорт</th>
+  //           </thead>
+  //           <tbody>
+  //             {data.map((item) => {
+  //               item.checked && (
+  //                 <tr>
+  //                   <td colSpan={5}>{item.name}</td>
+  //                 </tr>
+  //               );
+  //             })}
+
+  //             {/* <tr>
+  //               {" "}
+  //               <td>Njoku Samson</td>
+  //               <td>samson@yahoo.com</td>
+  //             </tr> */}
+  //           </tbody>
+  //         </table>
+  //       </div>
+  //     );
+  //   }
+  // }
+
   // console.log("modal print data", data);
 
   const handleCheck = ({ target }) => {
@@ -111,6 +150,11 @@ const ModalPrintPlan = ({
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
   });
+
+  const handleClickPrint = () => {
+    console.log("data", data);
+    handlePrint();
+  };
   return (
     <>
       <Modal
@@ -168,7 +212,7 @@ const ModalPrintPlan = ({
                   className="btn btn-primary"
                   // disabled={!isValid}
                   type="button"
-                  onClick={handlePrint}
+                  onClick={handleClickPrint}
                 >
                   Печать
                 </button>

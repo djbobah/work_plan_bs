@@ -2,6 +2,10 @@ import { Modal, Form, Row, Col } from "react-bootstrap";
 import React, { useState, useRef, useEffect } from "react";
 import { useReactToPrint } from "react-to-print";
 import { convertDate } from "../utils/DateTimeFunctions";
+import ReactPDF from "@react-pdf/renderer";
+import { PDFViewer } from "@react-pdf/renderer";
+
+import TableRowsPlan from "./tableRowsPlan";
 
 // const ComponentToPrint = () => {
 //   return (
@@ -48,6 +52,7 @@ const ModalPrintPlan = ({
   const initialData = department.map((item) => ({
     value: item.id,
     name: item.name,
+    id_sl: item.id_sl,
     checked: true,
   }));
   const [data, setData] = useState(initialData);
@@ -70,11 +75,13 @@ const ModalPrintPlan = ({
               <th className="border">Транспорт</th>
             </thead>
             <tbody>
-              {data.map((item) => {
-                item.checked && (
-                  <tr>
-                    <td colSpan={5}>{item.name}</td>
-                  </tr>
+              {data.map((item, i) => {
+                return (
+                  item.checked && (
+                    <tr key={i}>
+                      <td colSpan={5}>{item.name}</td>
+                    </tr>
+                  )
                 );
               })}
 
@@ -153,7 +160,15 @@ const ModalPrintPlan = ({
 
   const handleClickPrint = () => {
     console.log("data", data);
+    // console.log("department", department);
+
+    // ReactPDF.render(<ComponentToPrint />, `example.pdf`);
     handlePrint();
+    // return (
+    //   <PDFViewer>
+    //     <ComponentToPrint />
+    //   </PDFViewer>
+    // );
   };
   return (
     <>

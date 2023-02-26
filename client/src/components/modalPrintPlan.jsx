@@ -2,50 +2,58 @@ import { Modal, Form, Row, Col } from "react-bootstrap";
 import React, { useState, useRef, useEffect } from "react";
 import { useReactToPrint } from "react-to-print";
 import { convertDate } from "../utils/DateTimeFunctions";
+import axios from "axios";
 import ReactPDF from "@react-pdf/renderer";
 import { PDFViewer } from "@react-pdf/renderer";
 
 import TableRowsPlan from "./tableRowsPlan";
 
-// const ComponentToPrint = () => {
-//   return (
-//     <div className="p-5">
-//       <h2 style={{ color: "green" }}>Attendance</h2>
-//       <table>
-//         <thead>
-//           <th>S/N</th>
-//           <th>Name</th>
-//           <th>Email</th>
-//         </thead>
-//         <tbody>
-//           <tr>
-//             <td>1</td>
-//             <td>Njoku Samson</td>
-//             <td>samson@yahoo.com</td>
-//           </tr>
-//           <tr>
-//             <td>2</td>
-//             <td>Ebere Plenty</td>
-//             <td>ebere@gmail.com</td>
-//           </tr>
-//           <tr>
-//             <td>3</td>
-//             <td>Undefined</td>
-//             <td>No Email</td>
-//           </tr>
-//         </tbody>
-//       </table>
-//     </div>
-//   );
-// };
+function dataPodrToPrint(podr, plan, objects, works) {
+  let returnedArr = [];
 
-// export default ;
+  podr.map((sl, i) => {
+    if (sl.checked) {
+      returnedArr.push(
+        <tr key={i} className="bg-light">
+          <td colSpan={5}>{sl.name}</td>{" "}
+        </tr>
+      );
+    }
+    let numb = 1;
+    plan?.map((rowPlan, ind) => {
+      if (sl.id_sl === rowPlan.id_sl) {
+        returnedArr.push(
+          <tr key={i + ind}>
+            <td>{numb}</td>
+            <td>
+              {
+                objects.filter((object) => object.id === rowPlan.id_object)[0]
+                  .name
+              }
+            </td>
+            <td>
+              {works.filter((work) => work.id === rowPlan.id_vid_rabot)[0].name}
+            </td>
+            <td>{rowPlan.Brigada + " " + rowPlan.st_brigadi}</td>
+            <td>{ind}</td>
+          </tr>
+        );
+        numb++;
+      }
+    });
+    numb = 0;
+  });
+
+  return returnedArr;
+}
 
 const ModalPrintPlan = ({
   show,
   onShow,
   onClose,
   department,
+  objects,
+
   dateFrom,
   dateEnd,
 }) => {
@@ -57,6 +65,42 @@ const ModalPrintPlan = ({
   }));
   const [data, setData] = useState(initialData);
   const [AllDepartments, SetAllDepartments] = useState(true);
+  const [planData, setPlanData] = useState();
+  const [works, setWorks] = useState();
+
+  // получаем данные о планах работ из БД
+  // console.log("rerender PLAN");
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/api/plan/planForPrint", {
+        params: {
+          dateFrom: dateFrom,
+          dateEnd: dateEnd,
+        },
+      })
+      .then((plan) => {
+        console.log("returned plan", plan.data);
+        setPlanData(plan.data);
+        // console.log("conditionWhere-------------", plan.conditionWhere);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+
+    // получаем данные о виде работ из БД
+    axios
+      .get("http://localhost:5000/api/plan/vid", {
+        params: {
+          id_sl: 0,
+        },
+      })
+      .then((vid) => {
+        setWorks(vid.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, []);
 
   // useEffect(() => {
   class ComponentToPrint extends React.Component {
@@ -66,7 +110,7 @@ const ModalPrintPlan = ({
           <p style={{ color: "green" }}>{`План работ на  ${convertDate(
             dateFrom
           )} `}</p>
-          <table className="table table-striped table-bordered border text-center">
+          <table className="table table-bordered border text-center">
             <thead className="bg-secondary">
               <th className="border">№п/п</th>
               <th className="border">Объект</th>
@@ -75,65 +119,16 @@ const ModalPrintPlan = ({
               <th className="border">Транспорт</th>
             </thead>
             <tbody>
-              {data.map((item, i) => {
-                return (
-                  item.checked && (
-                    <tr key={i}>
-                      <td colSpan={5}>{item.name}</td>
-                    </tr>
-                  )
-                );
+              {dataPodrToPrint(data, planData, objects, works).map((item) => {
+                return item;
               })}
-
-              {/* <tr>
-                {" "}
-                <td>Njoku Samson</td>
-                <td>samson@yahoo.com</td>
-              </tr> */}
             </tbody>
           </table>
         </div>
       );
     }
   }
-  // }, [data]);
-  // class ComponentToPrint extends React.Component {
-  //   render() {
-  //     return (
-  //       <div className="p-5">
-  //         <p style={{ color: "green" }}>{`План работ на  ${convertDate(
-  //           dateFrom
-  //         )} `}</p>
-  //         <table className="table table-striped table-bordered border text-center">
-  //           <thead className="bg-secondary">
-  //             <th className="border">№п/п</th>
-  //             <th className="border">Объект</th>
-  //             <th className="border">Вид работ</th>
-  //             <th className="border">Исполнитель</th>
-  //             <th className="border">Транспорт</th>
-  //           </thead>
-  //           <tbody>
-  //             {data.map((item) => {
-  //               item.checked && (
-  //                 <tr>
-  //                   <td colSpan={5}>{item.name}</td>
-  //                 </tr>
-  //               );
-  //             })}
-
-  //             {/* <tr>
-  //               {" "}
-  //               <td>Njoku Samson</td>
-  //               <td>samson@yahoo.com</td>
-  //             </tr> */}
-  //           </tbody>
-  //         </table>
-  //       </div>
-  //     );
-  //   }
-  // }
-
-  // console.log("modal print data", data);
+  // }, [handlePrint]);
 
   const handleCheck = ({ target }) => {
     // console.log("target id",target.id);
@@ -160,15 +155,9 @@ const ModalPrintPlan = ({
 
   const handleClickPrint = () => {
     console.log("data", data);
-    // console.log("department", department);
+    //получаем данные о планах работ
 
-    // ReactPDF.render(<ComponentToPrint />, `example.pdf`);
     handlePrint();
-    // return (
-    //   <PDFViewer>
-    //     <ComponentToPrint />
-    //   </PDFViewer>
-    // );
   };
   return (
     <>

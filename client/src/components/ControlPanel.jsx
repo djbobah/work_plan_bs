@@ -165,6 +165,8 @@ const ControlPanel = ({
         //  onShow={onShowPrintPlan}
         onClose={onClosePrintPlan}
         department={department}
+        objects={objects}
+        works={works}
         dateFrom={dateFrom}
         dateEnd={dateEnd}
       />

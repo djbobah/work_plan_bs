@@ -47,6 +47,7 @@ router.get("/vid", async (req, res) => {
       .json({ message: "На сервере произошла ошибкаю Попробуйте позже..." });
   }
 });
+
 router.get("/podr", async (req, res) => {
   try {
     await ModelPlanRabot.PodrOrg.findAll({ raw: true })
@@ -147,6 +148,34 @@ router.get("/plan", async (req, res) => {
       .json({ message: "На сервере произошла ошибкаю Попробуйте позже..." });
   }
 });
+
+router.get("/planForPrint", async (req, res) => {
+  try {
+    await ModelPlanRabot.Plan.findAll({
+      where: {
+        data_rabot: {
+          [Op.gte]: req.query.dateFrom,
+          [Op.lte]: req.query.dateEnd,
+        },
+      },
+      order: [
+        ["data_rabot", "ASC"],
+        // Will escape title and validate DESC against a list of valid direction parameters
+        ["id_sl", "ASC"],
+      ],
+      raw: true,
+    })
+      .then((plan) => {
+        res.status(200).send(plan);
+      })
+      .catch((err) => console.log(err));
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "На сервере произошла ошибкаю Попробуйте позже..." });
+  }
+});
+
 router.post("/work", async (req, res) => {
   try {
     const work = await ModelPlanRabot.VidRabot.create({

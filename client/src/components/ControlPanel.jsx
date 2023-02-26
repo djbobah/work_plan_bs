@@ -7,6 +7,7 @@ import ExcelImage from "../static/img/Microsoft_Office_-_Excel.png";
 import ModalAdd from "./modalPlan/modalAdd";
 import styles from "./ControlPanel.module.css";
 import Toast from "./Toast.jsx";
+import { ExportToXls } from "./exportToXls";
 import PrintToPdf from "./printToPdf";
 import { useReactToPrint } from "react-to-print";
 import ModalPrintPlan from "./modalPrintPlan";
@@ -21,6 +22,7 @@ const ControlPanel = ({
   setWorks,
   objects,
   auto,
+  gn,
   department,
   contractingOrganization,
   brigada,
@@ -44,6 +46,9 @@ const ControlPanel = ({
   onShowPrintPlan,
   onClosePrintPlan,
 }) => {
+  const handleClickExportToXls = () => {
+    return <ExportToXls />;
+  };
   return (
     <div
       className={`navbar navbar-expand-lg  justify-content-between fs-6   ${styles.nav}`}
@@ -136,8 +141,10 @@ const ControlPanel = ({
           className="border rounded p-1 me-2"
           role="button"
           title="Выгрузить работы в Excel..."
+          onClick={handleClickExportToXls}
         >
           <img width={24} src={ExcelImage} alt="Выгрузить работы в Excel..." />
+          {/* <ExportToXls /> */}
         </div>
       </div>
 
@@ -166,7 +173,8 @@ const ControlPanel = ({
         onClose={onClosePrintPlan}
         department={department}
         objects={objects}
-        works={works}
+        brigada={brigada}
+        gn={gn}
         dateFrom={dateFrom}
         dateEnd={dateEnd}
       />

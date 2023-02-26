@@ -579,6 +579,7 @@ const WorkPlan = () => {
             works={works}
             objects={objects}
             auto={auto}
+            gn={gn}
             department={department}
             contractingOrganization={contractingOrganization}
             brigada={brigada}

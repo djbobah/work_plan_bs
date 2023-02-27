@@ -45,33 +45,40 @@ function dataPodrToPrint(podr, plan, objects, works, brigada, gn) {
     const auto = gn.filter((auto) => auto.id === id_gn)[0];
     return auto.marka + " " + auto.nomer;
   }
-
+  console.log("plan", plan);
   // const auto=gn.filter.
+  let current_date = "";
 
-  podr.map((sl, i) => {
+  const checkedDepartment = podr.filter((item) => item.checked);
+  // console.log("checkedDepartment", checkedDepartment);
+  plan?.map((rowPlan, ind) => {
     let numb = 1;
-    let first = true;
-    plan?.map((rowPlan, ind) => {
-      if (sl.id_sl === rowPlan.id_sl) {
-        if (first) {
-          if (sl.checked) {
-            returnedArr.push(
-              <tr key={i} className="bg-light">
-                <td colSpan={5}>{sl.name}</td>{" "}
-              </tr>
-            );
-          }
-          first = false;
-        }
+    let current_id_sl = "";
+
+    //  let first_date = true;
+
+    if (current_date !== rowPlan.data_rabot) {
+      current_date = rowPlan.data_rabot;
+      console.log(rowPlan.data_rabot);
+      // if (sl.checked) {
+      // if (sl.id_sl === rowPlan.id_sl) {
+      returnedArr.push(
+        <tr key={rowPlan.id_sl + ind} className="bg-light">
+          <td colSpan={5}>{`Работы на: ${convertDate(rowPlan.data_rabot)}`}</td>{" "}
+        </tr>
+      );
+    }
+    checkedDepartment.map((dep, ind) => {
+      if (rowPlan.id_sl === dep.id_sl) {
         returnedArr.push(
-          <tr key={i + ind}>
-            <td>{numb}</td>
+          <tr key={dep.id_sl + ind} className="bg-light">
+            <td>1</td>{" "}
             <td>
               {
                 objects?.filter((object) => object.id === rowPlan.id_object)[0]
                   .name
               }
-            </td>
+            </td>{" "}
             <td>
               {works.filter((work) => work.id === rowPlan.id_vid_rabot)[0].name}
             </td>
@@ -79,11 +86,53 @@ function dataPodrToPrint(podr, plan, objects, works, brigada, gn) {
             <td>{autoFunc(rowPlan.id_gn, gn)}</td>
           </tr>
         );
-        numb++;
       }
     });
+    // podr.map((sl, i) => {
+    // if (first_date) {
+    //   current_date = rowPlan.data_rabot;
+    // }
+
+    //   first_date = false;
+
+    // }
+    // if (sl.id_sl === rowPlan.id_sl) {
+    // if (current_id_sl !== sl.id_sl) {
+    //   <tr>
+    //     <td rowspan={}></td>
+    //   </tr>;
+    // }
+    // if (first) {
+    //   if (sl.checked) {
+    //     returnedArr.push(
+    //       <tr key={rowPlan.id_sl + ind} className="bg-light">
+    //         <td colSpan={5}>{sl.name}</td>{" "}
+    //       </tr>
+    //     );
+    //   }
+    //   first = false;
+    // }
+    // returnedArr.push(
+    //   <tr key={rowPlan.id_sl + i + ind}>
+    //     <td>{numb}</td>
+    //     <td>
+    //       {
+    //         objects?.filter((object) => object.id === rowPlan.id_object)[0]
+    //           .name
+    //       }
+    //     </td>
+    //     <td>
+    //       {works.filter((work) => work.id === rowPlan.id_vid_rabot)[0].name}
+    //     </td>
+    //     <td>{brigabaFunc(rowPlan.Brigada, rowPlan.st_brigadi, brigada)}</td>
+    //     <td>{autoFunc(rowPlan.id_gn, gn)}</td>
+    //   </tr>
+    // );
+    // numb++;
+    // }
+    // });
     numb = 0;
-    first = true;
+    // first_date = true;
   });
 
   return returnedArr;
@@ -129,7 +178,8 @@ const ModalPrintPlan = ({
       .catch((e) => {
         console.log(e);
       });
-
+  }, [data]);
+  useEffect(() => {
     // получаем данные о виде работ из БД
     axios
       .get("http://localhost:5000/api/plan/vid", {
@@ -164,30 +214,27 @@ const ModalPrintPlan = ({
     render() {
       return (
         //className="p-5"
-        <div>
-          <p style={{ color: "green" }}>{`План работ на  ${convertDate(
-            dateFrom
-          )} `}</p>
-          <table className="table table-bordered border text-center p-5">
-            <thead className="bg-secondary">
-              <th className="border">
-                № <br />
-                п/п
-              </th>
-              <th className="border">Объект</th>
-              <th className="border">Вид работ</th>
-              <th className="border">Исполнитель</th>
-              <th className="border">Транспорт</th>
-            </thead>
-            <tbody>
-              {dataPodrToPrint(data, planData, objects, works, brigada, gn).map(
-                (item) => {
-                  return item;
-                }
-              )}
-            </tbody>
-          </table>
-        </div>
+        // <div>
+        //   <p style={{ color: "green" }}>{`План работ на  ${convertDate(
+        //     dateFrom
+        //   )} `}</p>
+        <table className="table table-bordered border text-center p-5">
+          <thead className="bg-secondary">
+            <th className="border">Служба</th>
+            <th className="border">Объект</th>
+            <th className="border">Вид работ</th>
+            <th className="border">Исполнитель</th>
+            <th className="border">Транспорт</th>
+          </thead>
+          <tbody>
+            {dataPodrToPrint(data, planData, objects, works, brigada, gn).map(
+              (item) => {
+                return item;
+              }
+            )}
+          </tbody>
+        </table>
+        // </div>
       );
     }
   }
@@ -296,7 +343,7 @@ const ModalPrintPlan = ({
             </Row>
             {/* component to be printed */}
             {/* style={{ display: "none" }} */}
-            <div style={{ display: "none" }}>
+            <div>
               <ComponentToPrint ref={componentRef} />
             </div>
           </Form>

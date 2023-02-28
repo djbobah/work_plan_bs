@@ -7,6 +7,7 @@ import ExcelImage from "../static/img/Microsoft_Office_-_Excel.png";
 import ModalAdd from "./modalPlan/modalAdd";
 import styles from "./ControlPanel.module.css";
 import Toast from "./Toast.jsx";
+import ExcelJS from "exceljs";
 import { ExportToXls } from "./exportToXls";
 import PrintToPdf from "./printToPdf";
 import { useReactToPrint } from "react-to-print";
@@ -47,7 +48,162 @@ const ControlPanel = ({
   onClosePrintPlan,
 }) => {
   const handleClickExportToXls = () => {
-    return <ExportToXls />;
+    const workbook = new ExcelJS.Workbook();
+    // const sheet = workbook.addWorksheet("My Sheet");
+    const worksheet = workbook.addWorksheet("sheet", {
+      pageSetup: { paperSize: 9, orientation: "landscape" },
+      style: {
+        font: {
+          size: 12,
+          name: "Times New Roman",
+          family: 3,
+        },
+      },
+    });
+    worksheet.pageSetup.margins = {
+      left: 0.7,
+      right: 0.7,
+      top: 0.75,
+      bottom: 0.75,
+      header: 0.3,
+      footer: 0.3,
+    };
+    worksheet.getCell("H1").font = {
+      name: "Times New Roman",
+      family: 3,
+      size: 12,
+    };
+    worksheet.mergeCells("H1:I1");
+    worksheet.getCell("H1").value = "Утверждаю";
+    worksheet.getCell("H1").alignment = {
+      vertical: "middle",
+      horizontal: "center",
+    };
+    worksheet.mergeCells("H2:I2");
+
+    worksheet.getCell("H2").value = "Главный инженер";
+    worksheet.getCell("H2").alignment = {
+      vertical: "middle",
+      horizontal: "center",
+    };
+    worksheet.mergeCells("H3:I3");
+    worksheet.getCell("H3").value = "филиала Каменск-Шахтинское ЛПУМГ";
+    worksheet.getCell("H3").alignment = {
+      vertical: "middle",
+      horizontal: "center",
+    };
+    worksheet.mergeCells("H4:I4");
+    worksheet.getCell("H4").value = 'ООО "Газпром трансгаз Краснодар"';
+    worksheet.getCell("H4").alignment = {
+      vertical: "middle",
+      horizontal: "center",
+    };
+
+    worksheet.mergeCells("H6:I6");
+    worksheet.getCell("H6").value = "     __________________С.В. Колесников";
+    worksheet.getCell("H6").alignment = {
+      vertical: "middle",
+      horizontal: "center",
+    };
+    worksheet.mergeCells("H7:I7");
+    worksheet.getCell("H7").value = ' "____" _______________   2022 г.';
+    worksheet.getCell("H7").alignment = {
+      vertical: "middle",
+      horizontal: "center",
+    };
+    // add a table to a sheet
+    worksheet.addTable({
+      name: "MyTable",
+      ref: "A10",
+      headerRow: true,
+      // totalsRow: true,
+      style: {
+        theme: "TableStyleDark3",
+        showRowStripes: true,
+      },
+      columns: [
+        { name: "№ п/п" },
+        { name: "Дата поездки" },
+        // { name: "Date", totalsRowLabel: "Totals:", filterButton: true },
+        // { name: "Amount", totalsRowFunction: "sum", filterButton: false },
+      ],
+      rows: [
+        [new Date("2019-07-20"), 70.1],
+        [new Date("2019-07-21"), 70.6],
+        [new Date("2019-07-22"), 70.1],
+      ],
+    });
+    // sheet.getRow(1).border = {
+    //   top: { style: "thick", color: { argb: "FFFF0000" } },
+    //   left: { style: "thick", color: { argb: "000000FF" } },
+    //   bottom: { style: "thick", color: { argb: "F08080" } },
+    //   right: { style: "thick", color: { argb: "FF00FF00" } },
+    // };
+
+    // sheet.getRow(1).fill = {
+    //   type: "pattern",
+    //   pattern: "darkVertical",
+    //   fgColor: { argb: "FFFF00" },
+    // };
+
+    // sheet.getRow(1).font = {
+    //   name: "Times New Roman",
+    //   family: 3,
+    //   size: 12,
+    //   // bold: true,
+    // };
+
+    // const rowValues = [];
+    // rowValues[1] = 4;
+    // rowValues[5] = "Kyle";
+    // rowValues[9] = new Date();
+    // worksheet.addRow(rowValues);
+
+    // sheet.columns = [
+    //   {
+    //     header: "Id",
+    //     key: "id",
+    //     width: 10,
+    //   },
+    //   { header: "Title", key: "title", width: 32 },
+    //   {
+    //     header: "Brand",
+    //     key: "brand",
+    //     width: 20,
+    //   },
+    //   {
+    //     header: "Category",
+    //     key: "category",
+    //     width: 20,
+    //   },
+    //   {
+    //     header: "Price",
+    //     key: "price",
+    //     width: 15,
+    //   },
+    //   {
+    //     header: "Rating",
+    //     key: "rating",
+    //     width: 10,
+    //   },
+    //   {
+    //     header: "Photo",
+    //     key: "thumbnail",
+    //     width: 30,
+    //   },
+    // ];
+
+    workbook.xlsx.writeBuffer().then(function (data) {
+      const blob = new Blob([data], {
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      });
+      const url = window.URL.createObjectURL(blob);
+      const anchor = document.createElement("a");
+      anchor.href = url;
+      anchor.download = `План на ${dateFrom}.xlsx`;
+      anchor.click();
+      window.URL.revokeObjectURL(url);
+    });
   };
   return (
     <div

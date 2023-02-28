@@ -51,88 +51,68 @@ function dataPodrToPrint(podr, plan, objects, works, brigada, gn) {
 
   const checkedDepartment = podr.filter((item) => item.checked);
   // console.log("checkedDepartment", checkedDepartment);
+
+  let first = true;
+  let current_id_sl = "";
   plan?.map((rowPlan, ind) => {
-    let numb = 1;
-    let current_id_sl = "";
-
-    //  let first_date = true;
-
+    if (current_id_sl !== rowPlan.id_sl) {
+      first = true;
+    }
     if (current_date !== rowPlan.data_rabot) {
+      first = true;
       current_date = rowPlan.data_rabot;
-      console.log(rowPlan.data_rabot);
-      // if (sl.checked) {
-      // if (sl.id_sl === rowPlan.id_sl) {
       returnedArr.push(
-        <tr key={rowPlan.id_sl + ind} className="bg-light">
+        <tr key={rowPlan.id_sl + ind} className="bg-primary text-white">
           <td colSpan={5}>{`Работы на: ${convertDate(rowPlan.data_rabot)}`}</td>{" "}
         </tr>
       );
     }
-    checkedDepartment.map((dep, ind) => {
-      if (rowPlan.id_sl === dep.id_sl) {
+    checkedDepartment.map((dep, i) => {
+      //выводим если службы совпали и если работа не ОПАСНАЯ или ОПАСНАЯ РАБОТА согласована
+      if (
+        rowPlan.id_sl === dep.id_sl &&
+        (rowPlan.OPASN === 0 ||
+          (rowPlan.OPASN === 1 && rowPlan.utv_opasn === 1))
+      ) {
+        const opasn = rowPlan.OPASN === 1 ? " fw-bold" : "";
         returnedArr.push(
-          <tr key={dep.id_sl + ind} className="bg-light">
-            <td>1</td>{" "}
-            <td>
+          // className={rowPlan.OPASN===1?"table-danger":""}
+          <tr key={dep.id_sl + i + ind} className={`align-middle `}>
+            {first ? (
+              <td
+                rowSpan={
+                  plan.filter(
+                    (item) =>
+                      item.id_sl === dep.id_sl &&
+                      item.data_rabot === rowPlan.data_rabot
+                  ).length
+                }
+              >
+                {dep.name}
+              </td>
+            ) : (
+              ""
+            )}
+            <td className={opasn}>
               {
                 objects?.filter((object) => object.id === rowPlan.id_object)[0]
                   .name
               }
-            </td>{" "}
-            <td>
+            </td>
+            <td className={opasn}>
               {works.filter((work) => work.id === rowPlan.id_vid_rabot)[0].name}
             </td>
-            <td>{brigabaFunc(rowPlan.Brigada, rowPlan.st_brigadi, brigada)}</td>
-            <td>{autoFunc(rowPlan.id_gn, gn)}</td>
+            <td className={opasn}>
+              {" "}
+              {brigabaFunc(rowPlan.Brigada, rowPlan.st_brigadi, brigada)}
+            </td>
+            <td className={opasn}>{autoFunc(rowPlan.id_gn, gn)}</td>
           </tr>
         );
+        first = false;
       }
     });
-    // podr.map((sl, i) => {
-    // if (first_date) {
-    //   current_date = rowPlan.data_rabot;
-    // }
-
-    //   first_date = false;
-
-    // }
-    // if (sl.id_sl === rowPlan.id_sl) {
-    // if (current_id_sl !== sl.id_sl) {
-    //   <tr>
-    //     <td rowspan={}></td>
-    //   </tr>;
-    // }
-    // if (first) {
-    //   if (sl.checked) {
-    //     returnedArr.push(
-    //       <tr key={rowPlan.id_sl + ind} className="bg-light">
-    //         <td colSpan={5}>{sl.name}</td>{" "}
-    //       </tr>
-    //     );
-    //   }
-    //   first = false;
-    // }
-    // returnedArr.push(
-    //   <tr key={rowPlan.id_sl + i + ind}>
-    //     <td>{numb}</td>
-    //     <td>
-    //       {
-    //         objects?.filter((object) => object.id === rowPlan.id_object)[0]
-    //           .name
-    //       }
-    //     </td>
-    //     <td>
-    //       {works.filter((work) => work.id === rowPlan.id_vid_rabot)[0].name}
-    //     </td>
-    //     <td>{brigabaFunc(rowPlan.Brigada, rowPlan.st_brigadi, brigada)}</td>
-    //     <td>{autoFunc(rowPlan.id_gn, gn)}</td>
-    //   </tr>
-    // );
-    // numb++;
-    // }
-    // });
-    numb = 0;
-    // first_date = true;
+    current_id_sl = rowPlan.id_sl;
   });
 
   return returnedArr;
@@ -178,7 +158,7 @@ const ModalPrintPlan = ({
       .catch((e) => {
         console.log(e);
       });
-  }, [data]);
+  }, [data, show]);
   useEffect(() => {
     // получаем данные о виде работ из БД
     axios
@@ -343,7 +323,7 @@ const ModalPrintPlan = ({
             </Row>
             {/* component to be printed */}
             {/* style={{ display: "none" }} */}
-            <div>
+            <div style={{ display: "none" }}>
               <ComponentToPrint ref={componentRef} />
             </div>
           </Form>

@@ -576,6 +576,7 @@ const WorkPlan = () => {
             setData={setData}
             errors={errors}
             isValid={isValid}
+            plans={plans}
             works={works}
             objects={objects}
             auto={auto}

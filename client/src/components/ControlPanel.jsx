@@ -12,6 +12,7 @@ import { ExportToXls } from "./exportToXls";
 import PrintToPdf from "./printToPdf";
 import { useReactToPrint } from "react-to-print";
 import ModalPrintPlan from "./modalPrintPlan";
+import { convertDate } from "../utils/DateTimeFunctions";
 // import Toast from "./components/Toast.jsx";
 
 const ControlPanel = ({
@@ -19,6 +20,7 @@ const ControlPanel = ({
   setData,
   errors,
   isValid,
+  plans,
   works,
   setWorks,
   objects,
@@ -48,150 +50,173 @@ const ControlPanel = ({
   onClosePrintPlan,
 }) => {
   const handleClickExportToXls = () => {
+    console.log("plans", plans);
+    // const rows = plans.map((plan, i) => [
+    //   i + 1,
+    //   convertDate(plan.data_rabot),
+    //   works.filter((work) => work.id === plan.id_vid_rabot)[0].name,
+    //   plan.Brigada,
+    //   objects.filter((object) => object.id === plan.id_object)[0].name,
+    //   auto.filter((car) => car.id === plan.avto)[0].name,
+    //   plan.id_gn,
+    //   "",
+    //   plan.comment,
+    // ]);
+
+    // console.log("rows", rows);
     const workbook = new ExcelJS.Workbook();
-    // const sheet = workbook.addWorksheet("My Sheet");
-    const worksheet = workbook.addWorksheet("sheet", {
-      pageSetup: { paperSize: 9, orientation: "landscape" },
-      style: {
-        font: {
-          size: 12,
-          name: "Times New Roman",
-          family: 3,
-        },
-      },
-    });
+    const worksheet = workbook.addWorksheet("My Sheet");
+    worksheet.pageSetup.orientation = "landscape";
+    worksheet.pageSetup.paperSize = 9;
+    worksheet.pageSetup.fitToPage = true;
+    worksheet.pageSetup.fitToWidth = 1;
+    //     const worksheet = workbook.addWorksheet("sheet", {
+    //       pageSetup: { paperSize: 9, orientation: "landscape" },
+    //       // style: {
+    //       //   font: {
+    //       //     size: 12,
+    //       //     name: "Times New Roman",
+    //       //     family: 3,
+    //       //   },
+    //       // },
+    //     });
     worksheet.pageSetup.margins = {
-      left: 0.7,
-      right: 0.7,
-      top: 0.75,
-      bottom: 0.75,
-      header: 0.3,
-      footer: 0.3,
+      left: 0.2,
+      right: 0.1,
+      top: 0.2,
+      bottom: 0.2,
+      // header: 0.3,
+      // footer: 0.3,
     };
-    worksheet.getCell("H1").font = {
-      name: "Times New Roman",
-      family: 3,
-      size: 12,
-    };
+
     worksheet.mergeCells("H1:I1");
-    worksheet.getCell("H1").value = "Утверждаю";
+    worksheet.getCell("H1").value = "УТВЕРЖДАЮ";
     worksheet.getCell("H1").alignment = {
       vertical: "middle",
       horizontal: "center",
     };
+    worksheet.getCell("H1").font = { bold: true };
     worksheet.mergeCells("H2:I2");
-
     worksheet.getCell("H2").value = "Главный инженер";
     worksheet.getCell("H2").alignment = {
       vertical: "middle",
       horizontal: "center",
     };
+    worksheet.getCell("H2").font = { bold: true };
     worksheet.mergeCells("H3:I3");
     worksheet.getCell("H3").value = "филиала Каменск-Шахтинское ЛПУМГ";
     worksheet.getCell("H3").alignment = {
       vertical: "middle",
       horizontal: "center",
     };
+    worksheet.getCell("H3").font = { bold: true };
     worksheet.mergeCells("H4:I4");
     worksheet.getCell("H4").value = 'ООО "Газпром трансгаз Краснодар"';
     worksheet.getCell("H4").alignment = {
       vertical: "middle",
       horizontal: "center",
     };
-
+    worksheet.getCell("H4").font = { bold: true };
     worksheet.mergeCells("H6:I6");
     worksheet.getCell("H6").value = "     __________________С.В. Колесников";
     worksheet.getCell("H6").alignment = {
       vertical: "middle",
       horizontal: "center",
     };
+    worksheet.getCell("H6").font = { bold: true };
     worksheet.mergeCells("H7:I7");
     worksheet.getCell("H7").value = ' "____" _______________   2022 г.';
     worksheet.getCell("H7").alignment = {
       vertical: "middle",
       horizontal: "center",
     };
-    // add a table to a sheet
-    worksheet.addTable({
-      name: "MyTable",
-      ref: "A10",
-      headerRow: true,
-      // totalsRow: true,
-      style: {
-        theme: "TableStyleDark3",
-        showRowStripes: true,
-      },
-      columns: [
-        { name: "№ п/п" },
-        { name: "Дата поездки" },
-        // { name: "Date", totalsRowLabel: "Totals:", filterButton: true },
-        // { name: "Amount", totalsRowFunction: "sum", filterButton: false },
-      ],
-      rows: [
-        [new Date("2019-07-20"), 70.1],
-        [new Date("2019-07-21"), 70.6],
-        [new Date("2019-07-22"), 70.1],
-      ],
+    worksheet.getCell("H7").font = { bold: true };
+
+    worksheet.columns = [
+      { width: 5 },
+      { width: 15 },
+      { width: 30 },
+      { width: 20 },
+      { width: 30 },
+      { width: 20 },
+      { width: 20 },
+      { width: 20 },
+      { width: 20 },
+    ];
+
+    worksheet.addRow();
+    worksheet.addRow();
+    worksheet.addRow([
+      "№ п/п",
+      "Дата поездки",
+      "Цель поездки",
+      "Пассажиры",
+      "Место назначения",
+      "Необходимый автомобиль ",
+      "Марка, гос. номер выделенного автомобиля",
+      "Изменение маршрута",
+      "Примечание",
+    ]);
+    worksheet.getRow(10).font = { bold: true };
+    worksheet.getRow(10).eachCell((cell) => {
+      cell.border = {
+        top: { style: "thin" },
+        left: { style: "thin" },
+        bottom: { style: "thin" },
+        right: { style: "thin" },
+      };
+      cell.alignment = {
+        wrapText: true,
+        vertical: "middle",
+        horizontal: "center",
+      };
     });
-    // sheet.getRow(1).border = {
-    //   top: { style: "thick", color: { argb: "FFFF0000" } },
-    //   left: { style: "thick", color: { argb: "000000FF" } },
-    //   bottom: { style: "thick", color: { argb: "F08080" } },
-    //   right: { style: "thick", color: { argb: "FF00FF00" } },
-    // };
+    let NRow = 10;
+    plans.map((plan, i) => {
+      if (plan.avto !== 1) {
+        NRow++;
+        worksheet.addRow([
+          1,
+          convertDate(plan.data_rabot),
+          works.filter((work) => work.id === plan.id_vid_rabot)[0].name,
+          "Пассажиры",
+          objects.filter((object) => object.id === plan.id_object)[0].name,
+          auto.filter((car) => car.id === plan.avto)[0].name,
+          "Марка, гос. номер выделенного автомобиля",
+          "Изменение маршрута",
+          "Примечание",
+        ]);
 
-    // sheet.getRow(1).fill = {
-    //   type: "pattern",
-    //   pattern: "darkVertical",
-    //   fgColor: { argb: "FFFF00" },
-    // };
+        // console.log("-----", 11 + i);
+        worksheet.getRow(NRow).eachCell((cell) => {
+          cell.border = {
+            top: { style: "thin" },
+            left: { style: "thin" },
+            bottom: { style: "thin" },
+            right: { style: "thin" },
+          };
+          cell.alignment = {
+            wrapText: true,
+            vertical: "middle",
+            horizontal: "center",
+          };
+        });
+      }
+    });
 
-    // sheet.getRow(1).font = {
-    //   name: "Times New Roman",
-    //   family: 3,
-    //   size: 12,
-    //   // bold: true,
-    // };
-
-    // const rowValues = [];
-    // rowValues[1] = 4;
-    // rowValues[5] = "Kyle";
-    // rowValues[9] = new Date();
-    // worksheet.addRow(rowValues);
-
-    // sheet.columns = [
-    //   {
-    //     header: "Id",
-    //     key: "id",
-    //     width: 10,
-    //   },
-    //   { header: "Title", key: "title", width: 32 },
-    //   {
-    //     header: "Brand",
-    //     key: "brand",
-    //     width: 20,
-    //   },
-    //   {
-    //     header: "Category",
-    //     key: "category",
-    //     width: 20,
-    //   },
-    //   {
-    //     header: "Price",
-    //     key: "price",
-    //     width: 15,
-    //   },
-    //   {
-    //     header: "Rating",
-    //     key: "rating",
-    //     width: 10,
-    //   },
-    //   {
-    //     header: "Photo",
-    //     key: "thumbnail",
-    //     width: 30,
-    //   },
-    // ];
+    worksheet.eachRow((row) => {
+      row.eachCell((cell) => {
+        // default styles
+        if (!cell.font?.size) {
+          cell.font = Object.assign(cell.font || {}, { size: 12 });
+        }
+        if (!cell.font?.name) {
+          cell.font = Object.assign(cell.font || {}, {
+            name: "Times New Roman",
+          });
+        }
+      });
+    });
 
     workbook.xlsx.writeBuffer().then(function (data) {
       const blob = new Blob([data], {

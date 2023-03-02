@@ -13,6 +13,7 @@ import PrintToPdf from "./printToPdf";
 import { useReactToPrint } from "react-to-print";
 import ModalPrintPlan from "./modalPrintPlan";
 import { convertDate } from "../utils/DateTimeFunctions";
+import { shortFio } from "../utils/fioUtils";
 // import Toast from "./components/Toast.jsx";
 
 const ControlPanel = ({
@@ -50,44 +51,19 @@ const ControlPanel = ({
   onClosePrintPlan,
 }) => {
   const handleClickExportToXls = () => {
-    console.log("plans", plans);
-    // const rows = plans.map((plan, i) => [
-    //   i + 1,
-    //   convertDate(plan.data_rabot),
-    //   works.filter((work) => work.id === plan.id_vid_rabot)[0].name,
-    //   plan.Brigada,
-    //   objects.filter((object) => object.id === plan.id_object)[0].name,
-    //   auto.filter((car) => car.id === plan.avto)[0].name,
-    //   plan.id_gn,
-    //   "",
-    //   plan.comment,
-    // ]);
-
-    // console.log("rows", rows);
     const workbook = new ExcelJS.Workbook();
     const worksheet = workbook.addWorksheet("My Sheet");
     worksheet.pageSetup.orientation = "landscape";
     worksheet.pageSetup.paperSize = 9;
     worksheet.pageSetup.fitToPage = true;
     worksheet.pageSetup.fitToWidth = 1;
-    //     const worksheet = workbook.addWorksheet("sheet", {
-    //       pageSetup: { paperSize: 9, orientation: "landscape" },
-    //       // style: {
-    //       //   font: {
-    //       //     size: 12,
-    //       //     name: "Times New Roman",
-    //       //     family: 3,
-    //       //   },
-    //       // },
-    //     });
-    worksheet.pageSetup.margins = {
-      left: 0.2,
-      right: 0.1,
-      top: 0.2,
-      bottom: 0.2,
-      // header: 0.3,
-      // footer: 0.3,
-    };
+    worksheet.pageSetup.margins.left =0.2 
+    worksheet.pageSetup.margins.right =0.2 
+    worksheet.pageSetup.margins.top =0.2 
+    worksheet.pageSetup.margins.bottom =0.2 
+
+    const date= new Date()
+    const year=date.getFullYear()
 
     worksheet.mergeCells("H1:I1");
     worksheet.getCell("H1").value = "УТВЕРЖДАЮ";
@@ -118,14 +94,14 @@ const ControlPanel = ({
     };
     worksheet.getCell("H4").font = { bold: true };
     worksheet.mergeCells("H6:I6");
-    worksheet.getCell("H6").value = "     __________________С.В. Колесников";
+    worksheet.getCell("H6").value = "__________________С.В. Колесников";
     worksheet.getCell("H6").alignment = {
       vertical: "middle",
       horizontal: "center",
     };
     worksheet.getCell("H6").font = { bold: true };
     worksheet.mergeCells("H7:I7");
-    worksheet.getCell("H7").value = ' "____" _______________   2022 г.';
+    worksheet.getCell("H7").value = `"____" _______________   ${year} г.`;
     worksheet.getCell("H7").alignment = {
       vertical: "middle",
       horizontal: "center",
@@ -135,13 +111,13 @@ const ControlPanel = ({
     worksheet.columns = [
       { width: 5 },
       { width: 15 },
+      { width: 40 },
       { width: 30 },
-      { width: 20 },
-      { width: 30 },
-      { width: 20 },
-      { width: 20 },
-      { width: 20 },
-      { width: 20 },
+      { width: 40 },
+      { width: 21 },
+      { width: 21 },
+      { width: 23 },
+      { width: 23 },
     ];
 
     worksheet.addRow();
@@ -172,21 +148,71 @@ const ControlPanel = ({
       };
     });
     let NRow = 10;
+    let currentDepartment=''
+    let startNumb=0
     plans.map((plan, i) => {
       if (plan.avto !== 1) {
         NRow++;
+        // const mergeStr="H"+NRow+":I"+NRow
+        const filteedGn=gn.filter(car=>car.id===plan.id_gn)[0]
+
+        //пассажиры
+        const idArr = plan.Brigada.split(";");
+        let fioList = "";
+        idArr.map((id) => {
+          if (id !== "") {
+            if (id === plan.st_brigadi) {
+              fioList +=
+                shortFio(
+                  brigada?.filter((brigada) => brigada.id === Number(id))[0]?.fio
+                ) + "(ст.), ";
+            } else {
+              fioList +=
+                shortFio(
+                  brigada?.filter((brigada) => brigada.id === Number(id))[0]?.fio
+                ) + ", ";
+            }
+          }
+        });
+
+
+        // выводим наименование подразделения
+        if(currentDepartment!==plan.id_sl){
+          worksheet.addRow([department.filter(dep=>dep.id_sl===plan.id_sl)[0].name])    
+          worksheet.mergeCells(`A${NRow}:I${NRow}`); 
+          worksheet.getCell(`A${NRow}`).font = { bold: true };
+          worksheet.getRow(NRow).eachCell((cell) => {
+            cell.border = {
+              top: { style: "thin" },
+              left: { style: "thin" },
+              bottom: { style: "thin" },
+              right: { style: "thin" },
+            };
+            cell.alignment = {
+              wrapText: true,
+              vertical: "middle",
+              horizontal: "center",
+            };
+          });
+
+          NRow++
+          currentDepartment=plan.id_sl
+          startNumb=1
+        }
+
+
         worksheet.addRow([
-          1,
+          startNumb,
           convertDate(plan.data_rabot),
           works.filter((work) => work.id === plan.id_vid_rabot)[0].name,
-          "Пассажиры",
+          fioList,
           objects.filter((object) => object.id === plan.id_object)[0].name,
           auto.filter((car) => car.id === plan.avto)[0].name,
-          "Марка, гос. номер выделенного автомобиля",
-          "Изменение маршрута",
-          "Примечание",
+          filteedGn.marka+" "+filteedGn.nomer,
+          "",
+          plan.comment,
         ]);
-
+        startNumb++
         // console.log("-----", 11 + i);
         worksheet.getRow(NRow).eachCell((cell) => {
           cell.border = {
@@ -203,6 +229,15 @@ const ControlPanel = ({
         });
       }
     });
+
+    worksheet.addRow()
+    worksheet.addRow(["","","Начальник АТУ","","","","_______________  С.Ю. Полухин"])    
+    worksheet.getRow(NRow+2).eachCell((cell) => {cell.font = { bold: true}})
+    worksheet.addRow()
+    worksheet.addRow(["","","Инженер по безопасности движения 1 категории","","","","_______________  В.В. Долженков"])    
+    worksheet.getRow(NRow+4).eachCell((cell) => {cell.font = { bold: true}})
+    worksheet.mergeCells(`C${NRow+4}:D${NRow+4}`);
+
 
     worksheet.eachRow((row) => {
       row.eachCell((cell) => {

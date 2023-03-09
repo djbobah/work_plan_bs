@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ModalAuto from "./modalAuto";
 import axios from "axios";
+import config from "../../config.json";
 
 import deletePng from "../../static/img/delete.png";
 // import editPng from "../../static/img/edit.png";
@@ -21,7 +22,7 @@ const Auto = () => {
   const [data, setData] = useState(initialData);
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/auto/auto")
+      .get(config.apiEndpoint + "auto/auto")
       .then((avto) => {
         setTypeAuto(avto.data);
         // console.log("avto", avto.data);
@@ -30,7 +31,7 @@ const Auto = () => {
         console.log(e);
       });
     axios
-      .get("http://localhost:5000/api/auto/gn")
+      .get(config.apiEndpoint + "auto/gn")
       .then((gn) => {
         // console.log("gn", gn.data);
         setStateNumberAuto(gn.data);
@@ -67,7 +68,7 @@ const Auto = () => {
       filtredStateNumberAuto.filter((number) => number.id !== id)
     );
     axios
-      .patch("http://localhost:5000/api/auto/delete", { id })
+      .patch(config.apiEndpoint + "auto/delete", { id })
       .then((gn) => {
         console.log("put----------------------", gn.data);
       })

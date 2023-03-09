@@ -4,6 +4,7 @@ import CreatableSelectModal from "../modalPlan//creatableSelectModal";
 // import SelectModal from "../modalPlan/selectModal";
 // import MultiSelectModal from "../modalPlan//multiSelectModal";
 import axios from "axios";
+import config from "../../config.json";
 
 const ModalAuto = ({
   show,
@@ -21,7 +22,7 @@ const ModalAuto = ({
       console.log("edit");
       console.log(data);
       axios
-        .patch("http://localhost:5000/api/auto/auto", { data })
+        .patch(config.apiEndpoint + "auto/auto", { data })
         .then((gn) => {
           console.log("put----------------------", gn.data);
         })
@@ -30,7 +31,7 @@ const ModalAuto = ({
         });
     } else {
       let result = axios
-        .post("http://localhost:5000/api/auto/auto", { data })
+        .post(config.apiEndpoint + "auto/auto", { data })
         .then((gn) => {
           console.log("post------------", gn.data);
         })

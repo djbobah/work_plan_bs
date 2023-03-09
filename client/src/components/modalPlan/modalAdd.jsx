@@ -16,6 +16,7 @@ import CreatableSelectModal from "./creatableSelectModal";
 import SelectModal from "./SelectModal";
 import MultiSelectModal from "./multiSelectModal";
 import axios from "axios";
+import config from "../../config.json";
 
 const ModalAdd = ({
   data,
@@ -110,7 +111,7 @@ const ModalAdd = ({
       console.log("Creatable select name: ", target);
       target.id_sl = localStorage.getItem("id_sl");
       axios
-        .post("http://localhost:5000/api/plan/work", target)
+        .post(config.apiEndpoint + "plan/work", target)
         .then((work) => {
           setData((prevState) => ({
             ...prevState,
@@ -132,7 +133,7 @@ const ModalAdd = ({
       target.id_sl = localStorage.getItem("id_sl");
 
       axios
-        .post("http://localhost:5000/api/plan/object", target)
+        .post(config.apiEndpoint + "plan/object", target)
         .then((object) => {
           console.log("post----------------------", object.data);
           console.log("post----------------------", object.data.id);
@@ -155,7 +156,7 @@ const ModalAdd = ({
       target.id_sl = localStorage.getItem("id_sl");
 
       axios
-        .post("http://localhost:5000/api/plan/contractingOrganization", target)
+        .post(config.apiEndpoint + "plan/contractingOrganization", target)
         .then((organization) => {
           setData((prevState) => ({
             ...prevState,

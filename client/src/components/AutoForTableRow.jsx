@@ -2,6 +2,7 @@ import React, { useState, useCallback, useMemo, useEffect } from "react";
 // import SelectModal from "./modalPlan/SelectModal";
 import Select from "react-select";
 import axios from "axios";
+import config from "../config.json";
 
 const AutoForTableRow = ({ auto, idAuto, idRow }) => {
   const [dataAuto, setDataAuto] = useState({});
@@ -13,7 +14,7 @@ const AutoForTableRow = ({ auto, idAuto, idRow }) => {
     });
     console.log("change auto id ", target);
     axios
-      .patch("http://localhost:5000/api/plan/auto", { target, idRow })
+      .patch(config.apiEndpoint + "plan/auto", { target, idRow })
       .then((plan) => {
         // console.log("post------------", plan.data);
       })

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { shortFio } from "../utils/fioUtils";
 import { getToday, convertDate, getTime } from "../utils/DateTimeFunctions";
 import axios from "axios";
+import config from "../config.json";
 
 const DangerWork = ({ row, dangerWork, brigada }) => {
   // console.log("row", row);
@@ -27,7 +28,7 @@ const DangerWork = ({ row, dangerWork, brigada }) => {
       user: "pds.kamensk",
     });
     axios
-      .post("http://localhost:5000/api/danger/work", {
+      .post(config.apiEndpoint + "danger/work", {
         id,
         user,
         remote_addr,

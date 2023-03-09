@@ -1,6 +1,8 @@
 import React, { useState, useMemo, useEffect } from "react";
 import Select from "react-select";
 import axios from "axios";
+import config from "../config.json";
+
 const GnForTableRows = ({ autoId, gn, idGn, idRow }) => {
   const [dataGn, setDataGn] = useState({});
 
@@ -11,7 +13,7 @@ const GnForTableRows = ({ autoId, gn, idGn, idRow }) => {
     });
     console.log("change GN id ", target.value);
     axios
-      .patch("http://localhost:5000/api/plan/gn", { target, idRow })
+      .patch(config.apiEndpoint + "plan/gn", { target, idRow })
       .then((plan) => {
         // console.log("post------------", plan.data);
       })

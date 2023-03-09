@@ -8,6 +8,7 @@ import styles from "./workPlan.module.css";
 import { columnsPlans } from "../utils/columnsPlans";
 import { validator } from "../utils/validator";
 import ModalAddAuto from "./modalPlan/modalAddAuto";
+import config from "../config.json";
 
 const initialData = {
   dateOfWork: getTommorow(),
@@ -82,7 +83,7 @@ const WorkPlan = () => {
   useEffect(() => {
     // получаем данные о виде работ из БД
     axios
-      .get("http://localhost:5000/api/users/department")
+      .get(config.apiEndpoint + "users/department")
       .then((department) => {
         setDepartment(department.data);
       })
@@ -99,7 +100,7 @@ const WorkPlan = () => {
   useEffect(() => {
     // получаем данные о пользователях из БД
     axios
-      .get("http://localhost:5000/api/users/user", {
+      .get(config.apiEndpoint + "users/user", {
         params: {
           id_sl: id_sl,
         },
@@ -115,7 +116,7 @@ const WorkPlan = () => {
     // получаем данные о планах работ из БД
     // console.log("rerender PLAN");
     axios
-      .get("http://localhost:5000/api/plan/plan", {
+      .get(config.apiEndpoint + "plan/plan", {
         params: {
           id_sl: id_sl,
           opasn: checkButtons[2].checked,
@@ -134,7 +135,7 @@ const WorkPlan = () => {
       });
     // получаем данные о опасных работах из БД
     axios
-      .get("http://localhost:5000/api/danger/work")
+      .get(config.apiEndpoint + "danger/work")
       .then((work) => {
         setDangerWork(work.data);
       })
@@ -147,7 +148,7 @@ const WorkPlan = () => {
   useEffect(() => {
     // получаем данные о виде работ из БД
     axios
-      .get("http://localhost:5000/api/plan/vid", {
+      .get(config.apiEndpoint + "plan/vid", {
         params: {
           id_sl: id_sl,
         },
@@ -163,7 +164,7 @@ const WorkPlan = () => {
     // console.log("rerender OTHER");
     // получаем данные об объектах  из БД
     axios
-      .get("http://localhost:5000/api/plan/object")
+      .get(config.apiEndpoint + "plan/object")
       .then((object) => {
         setObjects(object.data);
       })
@@ -172,7 +173,7 @@ const WorkPlan = () => {
       });
     // получаем данные о моделях автомобилей из БД
     axios
-      .get("http://localhost:5000/api/auto/auto")
+      .get(config.apiEndpoint + "auto/auto")
       .then((avto) => {
         setAuto(avto.data);
       })
@@ -181,7 +182,7 @@ const WorkPlan = () => {
       });
     // получаем данные о автомобилях из БД
     axios
-      .get("http://localhost:5000/api/auto/gn")
+      .get(config.apiEndpoint + "auto/gn")
       .then((gn) => {
         setGn(gn.data);
       })
@@ -191,7 +192,7 @@ const WorkPlan = () => {
 
     // получаем данные о подрядных организациях из БД
     axios
-      .get("http://localhost:5000/api/plan/podr")
+      .get(config.apiEndpoint + "plan/podr")
       .then((podr) => {
         setContractingOrganization(podr.data);
       })
@@ -227,7 +228,7 @@ const WorkPlan = () => {
     setPlans(plans.filter((row) => row.id !== id));
     console.log("id", id);
     axios
-      .delete(`http://localhost:5000/api/plan/${id}`)
+      .delete(config.apiEndpoint + `plan/${id}`)
       .then((i) => {
         console.log("put----------------------", i.data);
       })
@@ -519,7 +520,7 @@ const WorkPlan = () => {
     if (edit !== 0) {
       console.log("EDIT---");
       axios
-        .patch("http://localhost:5000/api/plan/plan", { data, id_sl })
+        .patch(config.apiEndpoint + "plan/plan", { data, id_sl })
         .then((plan) => {
           // console.log("post------------", plan.data);
         })
@@ -529,7 +530,7 @@ const WorkPlan = () => {
     } else {
       console.log("ADD---");
       axios
-        .post("http://localhost:5000/api/plan/plan", { data, id_sl })
+        .post(config.apiEndpoint + "plan/plan", { data, id_sl })
         .then((plan) => {
           // console.log("post------------", plan.data);
         })
@@ -547,7 +548,7 @@ const WorkPlan = () => {
     e.preventDefault();
     console.log(data);
     axios
-      .patch("http://localhost:5000/api/plan/auto", { data })
+      .patch(config.apiEndpoint + "plan/auto", { data })
       .then((plan) => {
         // console.log("post------------", plan.data);
       })

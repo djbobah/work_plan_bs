@@ -6,7 +6,7 @@ import axios from "axios";
 import { shortFio } from "../utils/fioUtils";
 import ReactPDF from "@react-pdf/renderer";
 import { PDFViewer } from "@react-pdf/renderer";
-
+import config from "../config.json";
 import TableRowsPlan from "./tableRowsPlan";
 
 function dataPodrToPrint(podr, plan, objects, works, brigada, gn) {
@@ -144,7 +144,7 @@ const ModalPrintPlan = ({
   // console.log("rerender PLAN");
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/plan/planForPrint", {
+      .get(config.apiEndpoint + "plan/planForPrint", {
         params: {
           dateFrom: dateFrom,
           dateEnd: dateEnd,
@@ -162,7 +162,7 @@ const ModalPrintPlan = ({
   useEffect(() => {
     // получаем данные о виде работ из БД
     axios
-      .get("http://localhost:5000/api/plan/vid", {
+      .get(config.apiEndpoint + "plan/vid", {
         params: {
           id_sl: 0,
         },
@@ -175,7 +175,7 @@ const ModalPrintPlan = ({
       });
     // получаем данные о пользователях из БД
     axios
-      .get("http://localhost:5000/api/users/user", {
+      .get(config.apiEndpoint + "users/user", {
         params: {
           id_sl: 0,
         },

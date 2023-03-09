@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import config from "../config.json";
 
 const Done = ({ done, id }) => {
   const [doneState, setDoneState] = useState(done);
@@ -7,7 +8,7 @@ const Done = ({ done, id }) => {
   const handleDoneClick = (id) => {
     console.log("sring of plans done/ id:", id);
     axios
-      .patch("http://localhost:5000/api/plan/donestring", { id })
+      .patch(config.apiEndpoint + "plan/donestring", { id })
       .then((i) => {
         console.log("put----------------------", i.data);
       })

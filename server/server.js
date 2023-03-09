@@ -6,6 +6,7 @@ const cors = require("cors");
 const path = require("path");
 // const mysql = require("mysql2/promise");
 const routes = require("./routes");
+const morgan = require("morgan");
 
 const app = express();
 app.use(cors());
@@ -34,11 +35,26 @@ console.log("ARM: ", os.hostname());
 
 console.log("PORT", PORT);
 
-// // получение данных
+// app.use(morgan("tiny"));
 // app.get("/", (req, res) => {
-//   //здесь нужно прописать действия сервера при пути /
-//   res.end(os.hostname());
+//   res.send("************** hello");
 // });
+
+app.set("trust proxy", true);
+
+// Use req.ip or req.ips in the usual way
+
+// // получение данных
+app.get("/", (req, res) => {
+  //здесь нужно прописать действия сервера при пути /
+  let ip = req.connection.remoteAddress.split(`:`).pop();
+  console.log(chalk.red("------- "));
+  console.log(chalk.red("------- ", ip));
+  console.log(chalk.red("------- "));
+  console.log(chalk.red("------- "));
+  console.log(chalk.red("------- ", req.ip));
+  console.log(chalk.red("------- "));
+});
 
 // // отправка данных
 // app.post("/", (req, res) => {

@@ -31,6 +31,8 @@ const ChooseDep = () => {
     );
     localStorage.setItem("id_sl", id_sl[0].id_sl);
     localStorage.setItem("name_sl", id_sl[0].name);
+    localStorage.setItem("remoteUser", "user");
+    localStorage.setItem("remoteAddress", "10.27.27.111");
 
     console.log(id_sl[0].id_sl);
     // setData()name_sl

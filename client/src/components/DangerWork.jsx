@@ -14,8 +14,8 @@ const DangerWork = ({ row, dangerWork, brigada }) => {
   const handleClickApprove = (id) => {
     console.log(" approve work with id: ", id);
 
-    const user = "pds.kamensk";
-    const remote_addr = "10.27.27.116";
+    const user = localStorage.getItem("remoteUser");
+    const remote_addr = localStorage.getItem("remoteAddress");
     const date_utv = getToday();
     const time_utv = getTime();
     //рендерим компонент до записи, чтоб не выдавало ошибку, т.к. рендер происходит до записи в базу
@@ -23,9 +23,9 @@ const DangerWork = ({ row, dangerWork, brigada }) => {
       comment: "",
       date_utv: date_utv,
       id_rab: id,
-      remote_addr: "10.27.27.116",
+      remote_addr: remote_addr,
       time_utv: time_utv,
-      user: "pds.kamensk",
+      user: user,
     });
     axios
       .post(config.apiEndpoint + "danger/work", {

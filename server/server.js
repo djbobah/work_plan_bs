@@ -12,6 +12,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(morgan(":remote-user :remote-addr"));
 app.use("/api", routes);
 
 const PORT = config.get("port") ?? 3000;
@@ -35,10 +36,9 @@ console.log("ARM: ", os.hostname());
 
 console.log("PORT", PORT);
 
-// app.use(morgan("tiny"));
-// app.get("/", (req, res) => {
-//   res.send("************** hello");
-// });
+app.get("/", (req, res) => {
+  res.send("************** hello");
+});
 
 app.set("trust proxy", true);
 

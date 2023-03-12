@@ -8,6 +8,7 @@ import DashBoard from "./components/dashBoard";
 import Auto from "./components/auto/auto";
 import ChooseDep from "./components/ChooseDep.jsx";
 import PrintPlan from "./components/modalPrintPlan.jsx";
+import axios from "axios";
 
 function App() {
   // localStorage.setItem("id_sl", "16-а00134");
@@ -15,6 +16,14 @@ function App() {
   //   "name_sl",
   //   "Служба автоматизации и метрологического обеспечения"
   // );
+  axios
+    .get("http://localhost/auth.php")
+    .then((plan) => {
+      console.log("post------------", plan.data);
+    })
+    .catch((e) => {
+      console.log(e);
+    });
   return (
     <>
       <NavBar />

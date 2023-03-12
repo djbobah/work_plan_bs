@@ -16,14 +16,15 @@ function App() {
   //   "name_sl",
   //   "Служба автоматизации и метрологического обеспечения"
   // );
-  axios
-    .get("http://localhost/auth.php")
-    .then((plan) => {
-      console.log("post------------", plan.data);
-    })
-    .catch((e) => {
-      console.log(e);
-    });
+
+  // axios
+  //   .get("http://localhost/auth.php")
+  //   .then((plan) => {
+  //     console.log("post------------", plan.data);
+  //   })
+  //   .catch((e) => {
+  //     console.log(e);
+  //   });
   return (
     <>
       <NavBar />

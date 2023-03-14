@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ControlPanel from "./ControlPanel";
 import Table from "./Table";
-import { getToday, getTommorow, getTime } from "../utils/DateTimeFunctions";
+import { getToday, getTommorow } from "../utils/DateTimeFunctions";
 // import api from "../api";
 import axios from "axios";
 import styles from "./workPlan.module.css";

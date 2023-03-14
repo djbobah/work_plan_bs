@@ -159,18 +159,23 @@ const WorkPlan = () => {
       .catch((e) => {
         console.log(e);
       });
-  }, [id_sl]);
-  useEffect(() => {
+
     // console.log("rerender OTHER");
     // получаем данные об объектах  из БД
     axios
-      .get(config.apiEndpoint + "plan/object")
+      .get(config.apiEndpoint + "plan/object", {
+        params: {
+          id_sl: id_sl,
+        },
+      })
       .then((object) => {
         setObjects(object.data);
       })
       .catch((e) => {
         console.log(e);
       });
+  }, [id_sl]);
+  useEffect(() => {
     // получаем данные о моделях автомобилей из БД
     axios
       .get(config.apiEndpoint + "auto/auto")
@@ -644,28 +649,29 @@ const WorkPlan = () => {
         ) : (
           <h1>нет данных для отображения или на данный день нет планов...</h1>
         )}
-
-        <ModalAddAuto
-          data={data}
-          setData={setData}
-          department={department}
-          objects={objects}
-          works={works}
-          auto={auto}
-          gn={gn}
-          changeTypeAuto={changeTypeAuto}
-          setChangeTypeAuto={setChangeTypeAuto}
-          // errors={errors}
-          // isValid={isValid}
-          // edit={edit}
-          // onEdit={onEdit}
-          show={showModalAddAuto}
-          // onShow={onShow}
-          onClose={handleCloseModalAddAuto}
-          // contractingOrganization={contractingOrganization}
-          brigada={brigada}
-          onSubmit={handleSubmitAddAuto}
-        />
+        {data.objectForWork && data.typeOfWork && (
+          <ModalAddAuto
+            data={data}
+            setData={setData}
+            department={department}
+            objects={objects}
+            works={works}
+            auto={auto}
+            gn={gn}
+            changeTypeAuto={changeTypeAuto}
+            setChangeTypeAuto={setChangeTypeAuto}
+            // errors={errors}
+            // isValid={isValid}
+            // edit={edit}
+            // onEdit={onEdit}
+            show={showModalAddAuto}
+            // onShow={onShow}
+            onClose={handleCloseModalAddAuto}
+            // contractingOrganization={contractingOrganization}
+            brigada={brigada}
+            onSubmit={handleSubmitAddAuto}
+          />
+        )}
       </div>
     </>
   );

@@ -11,7 +11,14 @@ const ModelPlanRabot = modelPlanRabot();
 
 router.get("/object", async (req, res) => {
   try {
+    const conditionWhere =
+      req.query.id_sl === "0"
+        ? {}
+        : {
+            comment: { [Op.eq]: req.query.id_sl },
+          };
     await ModelPlanRabot.Object.findAll({
+      where: conditionWhere,
       raw: true,
     })
       .then((object) => {

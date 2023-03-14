@@ -44,6 +44,8 @@ const ModalAddAuto = ({
     (dept) => dept.id_sl === data.id_sl
   )[0];
 
+  // console.log("objects", objects);
+  // data.objectForWork.value!==null?
   const filteredObject = objects?.filter(
     (obj) => obj.id === data.objectForWork.value
   )[0];

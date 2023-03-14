@@ -57,13 +57,13 @@ const ControlPanel = ({
     worksheet.pageSetup.paperSize = 9;
     worksheet.pageSetup.fitToPage = true;
     worksheet.pageSetup.fitToWidth = 1;
-    worksheet.pageSetup.margins.left =0.2 
-    worksheet.pageSetup.margins.right =0.2 
-    worksheet.pageSetup.margins.top =0.2 
-    worksheet.pageSetup.margins.bottom =0.2 
+    worksheet.pageSetup.margins.left = 0.2;
+    worksheet.pageSetup.margins.right = 0.2;
+    worksheet.pageSetup.margins.top = 0.2;
+    worksheet.pageSetup.margins.bottom = 0.2;
 
-    const date= new Date()
-    const year=date.getFullYear()
+    const date = new Date();
+    const year = date.getFullYear();
 
     worksheet.mergeCells("H1:I1");
     worksheet.getCell("H1").value = "УТВЕРЖДАЮ";
@@ -148,13 +148,13 @@ const ControlPanel = ({
       };
     });
     let NRow = 10;
-    let currentDepartment=''
-    let startNumb=0
+    let currentDepartment = "";
+    let startNumb = 0;
     plans.map((plan, i) => {
       if (plan.avto !== 1) {
         NRow++;
         // const mergeStr="H"+NRow+":I"+NRow
-        const filteedGn=gn.filter(car=>car.id===plan.id_gn)[0]
+        const filteedGn = gn.filter((car) => car.id === plan.id_gn)[0];
 
         //пассажиры
         const idArr = plan.Brigada.split(";");
@@ -164,22 +164,25 @@ const ControlPanel = ({
             if (id === plan.st_brigadi) {
               fioList +=
                 shortFio(
-                  brigada?.filter((brigada) => brigada.id === Number(id))[0]?.fio
+                  brigada?.filter((brigada) => brigada.id === Number(id))[0]
+                    ?.fio
                 ) + "(ст.), ";
             } else {
               fioList +=
                 shortFio(
-                  brigada?.filter((brigada) => brigada.id === Number(id))[0]?.fio
+                  brigada?.filter((brigada) => brigada.id === Number(id))[0]
+                    ?.fio
                 ) + ", ";
             }
           }
         });
 
-
         // выводим наименование подразделения
-        if(currentDepartment!==plan.id_sl){
-          worksheet.addRow([department.filter(dep=>dep.id_sl===plan.id_sl)[0].name])    
-          worksheet.mergeCells(`A${NRow}:I${NRow}`); 
+        if (currentDepartment !== plan.id_sl) {
+          worksheet.addRow([
+            department.filter((dep) => dep.id_sl === plan.id_sl)[0].name,
+          ]);
+          worksheet.mergeCells(`A${NRow}:I${NRow}`);
           worksheet.getCell(`A${NRow}`).font = { bold: true };
           worksheet.getRow(NRow).eachCell((cell) => {
             cell.border = {
@@ -195,11 +198,10 @@ const ControlPanel = ({
             };
           });
 
-          NRow++
-          currentDepartment=plan.id_sl
-          startNumb=1
+          NRow++;
+          currentDepartment = plan.id_sl;
+          startNumb = 1;
         }
-
 
         worksheet.addRow([
           startNumb,
@@ -208,11 +210,11 @@ const ControlPanel = ({
           fioList,
           objects.filter((object) => object.id === plan.id_object)[0].name,
           auto.filter((car) => car.id === plan.avto)[0].name,
-          filteedGn.marka+" "+filteedGn.nomer,
+          filteedGn.marka + " " + filteedGn.nomer,
           "",
           plan.comment,
         ]);
-        startNumb++
+        startNumb++;
         // console.log("-----", 11 + i);
         worksheet.getRow(NRow).eachCell((cell) => {
           cell.border = {
@@ -230,14 +232,33 @@ const ControlPanel = ({
       }
     });
 
-    worksheet.addRow()
-    worksheet.addRow(["","","Начальник АТУ","","","","_______________  С.Ю. Полухин"])    
-    worksheet.getRow(NRow+2).eachCell((cell) => {cell.font = { bold: true}})
-    worksheet.addRow()
-    worksheet.addRow(["","","Инженер по безопасности движения 1 категории","","","","_______________  В.В. Долженков"])    
-    worksheet.getRow(NRow+4).eachCell((cell) => {cell.font = { bold: true}})
-    worksheet.mergeCells(`C${NRow+4}:D${NRow+4}`);
-
+    worksheet.addRow();
+    worksheet.addRow([
+      "",
+      "",
+      "Начальник АТУ",
+      "",
+      "",
+      "",
+      "_______________  С.Ю. Полухин",
+    ]);
+    worksheet.getRow(NRow + 2).eachCell((cell) => {
+      cell.font = { bold: true };
+    });
+    worksheet.addRow();
+    worksheet.addRow([
+      "",
+      "",
+      "Инженер по безопасности движения 1 категории",
+      "",
+      "",
+      "",
+      "_______________  В.В. Долженков",
+    ]);
+    worksheet.getRow(NRow + 4).eachCell((cell) => {
+      cell.font = { bold: true };
+    });
+    worksheet.mergeCells(`C${NRow + 4}:D${NRow + 4}`);
 
     worksheet.eachRow((row) => {
       row.eachCell((cell) => {
@@ -335,14 +356,16 @@ const ControlPanel = ({
         ))}
       </div>
       <div className="d-flex p-2 justify-content-between">
-        <div
-          className="border rounded p-1 me-2"
-          onClick={onShow}
-          role="button"
-          title="Добавить строку плана..."
-        >
-          <img width={24} src={AddImage} alt="Запланировать работу..." />
-        </div>
+        {!checkButtons[0].checked && (
+          <div
+            className="border rounded p-1 me-2"
+            onClick={onShow}
+            role="button"
+            title="Добавить строку плана..."
+          >
+            <img width={24} src={AddImage} alt="Запланировать работу..." />
+          </div>
+        )}
 
         <div
           className="border rounded p-1 me-2"

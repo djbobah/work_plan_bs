@@ -6,13 +6,11 @@ const cors = require("cors");
 const path = require("path");
 // const mysql = require("mysql2/promise");
 const routes = require("./routes");
-const morgan = require("morgan");
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(morgan(":remote-user :remote-addr"));
 app.use("/api", routes);
 
 const PORT = config.get("port") ?? 3000;
@@ -36,25 +34,25 @@ console.log("ARM: ", os.hostname());
 
 console.log("PORT", PORT);
 
-app.get("/", (req, res) => {
-  res.send("************** hello");
-});
+// app.get("/", (req, res) => {
+//   res.send("************** hello");
+// });
 
-app.set("trust proxy", true);
+// app.set("trust proxy", true);
 
 // Use req.ip or req.ips in the usual way
 
 // // получение данных
-app.get("/", (req, res) => {
-  //здесь нужно прописать действия сервера при пути /
-  let ip = req.connection.remoteAddress.split(`:`).pop();
-  console.log(chalk.red("------- "));
-  console.log(chalk.red("------- ", ip));
-  console.log(chalk.red("------- "));
-  console.log(chalk.red("------- "));
-  console.log(chalk.red("------- ", req.ip));
-  console.log(chalk.red("------- "));
-});
+// app.get("/", (req, res) => {
+//   //здесь нужно прописать действия сервера при пути /
+//   let ip = req.connection.remoteAddress.split(`:`).pop();
+//   console.log(chalk.red("------- "));
+//   console.log(chalk.red("------- ", ip));
+//   console.log(chalk.red("------- "));
+//   console.log(chalk.red("------- "));
+//   console.log(chalk.red("------- ", req.ip));
+//   console.log(chalk.red("------- "));
+// });
 
 // // отправка данных
 // app.post("/", (req, res) => {

@@ -12,7 +12,7 @@ const DangerWork = ({ row, dangerWork, brigada }) => {
   const [work, setWork] = useState(undefined);
 
   const handleClickApprove = (id) => {
-    console.log(" approve work with id: ", id);
+    // console.log(" approve work with id: ", id);
 
     const user = localStorage.getItem("remoteUser");
     const remote_addr = localStorage.getItem("remoteAddress");
@@ -36,7 +36,7 @@ const DangerWork = ({ row, dangerWork, brigada }) => {
         time_utv,
       })
       .then((work) => {
-        console.log("post------------", work.data);
+        // console.log("post------------", work.data);
       })
       .catch((e) => {
         console.log(e);

@@ -231,11 +231,11 @@ const WorkPlan = () => {
 
   const handleRowDelete = (id) => {
     setPlans(plans.filter((row) => row.id !== id));
-    console.log("id", id);
+    // console.log("id", id);
     axios
       .delete(config.apiEndpoint + `plan/${id}`)
       .then((i) => {
-        console.log("put----------------------", i.data);
+        // console.log("put----------------------", i.data);
       })
       .catch((e) => {
         console.log(e);
@@ -254,10 +254,10 @@ const WorkPlan = () => {
   };
 
   const handleChangeEdit = (id, method) => {
-    console.log("edited work id: ", id);
+    // console.log("edited work id: ", id);
 
     //выбираем режим - копирование или редактироване
-    console.log("method = ", method);
+    // console.log("method = ", method);
     method === "edit" ? setEdit(id) : setEdit(0);
 
     setShowModalAdd(true);
@@ -347,7 +347,7 @@ const WorkPlan = () => {
   const handleClickEditAuto = (id) => {
     setShowModalAddAuto(true);
 
-    console.log("id row", id);
+    // console.log("id row", id);
     const filteredPlan = plans.filter((plan) => plan.id === id)[0];
     const filteredTypeOfWork = works.filter(
       (type) => type.id === filteredPlan.id_vid_rabot
@@ -367,7 +367,7 @@ const WorkPlan = () => {
             label: filteredAuto.name,
             value: filteredAuto.id,
           };
-    console.log("id_gn", filteredPlan.id_gn);
+    // console.log("id_gn", filteredPlan.id_gn);
     let dataGn = null;
     if (filteredPlan.id_gn !== 0) {
       const filteredGn = gn.filter((item) => item.id === filteredPlan.id_gn)[0];
@@ -519,11 +519,11 @@ const WorkPlan = () => {
     const isValid = validate();
     if (!isValid) return;
     const id_sl = localStorage.getItem("id_sl");
-    console.log("submit edit-", edit);
-    console.log("data", data);
+    // console.log("submit edit-", edit);
+    // console.log("data", data);
     // add;
     if (edit !== 0) {
-      console.log("EDIT---");
+      // console.log("EDIT---");
       axios
         .patch(config.apiEndpoint + "plan/plan", { data, id_sl })
         .then((plan) => {
@@ -533,7 +533,7 @@ const WorkPlan = () => {
           console.log(e);
         });
     } else {
-      console.log("ADD---");
+      // console.log("ADD---");
       axios
         .post(config.apiEndpoint + "plan/plan", { data, id_sl })
         .then((plan) => {
@@ -543,7 +543,7 @@ const WorkPlan = () => {
           console.log(e);
         });
     }
-    console.log(data);
+    // console.log(data);
     setEdit(0);
     // setCopy(0);
     setData(initialData);
@@ -551,7 +551,7 @@ const WorkPlan = () => {
   };
   const handleSubmitAddAuto = (e) => {
     e.preventDefault();
-    console.log(data);
+    // console.log(data);
     axios
       .patch(config.apiEndpoint + "plan/auto", { data })
       .then((plan) => {

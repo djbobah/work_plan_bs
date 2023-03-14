@@ -45,7 +45,7 @@ function dataPodrToPrint(podr, plan, objects, works, brigada, gn) {
     const auto = gn.filter((auto) => auto.id === id_gn)[0];
     return auto.marka + " " + auto.nomer;
   }
-  console.log("plan", plan);
+  // console.log("plan", plan);
   // const auto=gn.filter.
   let current_date = "";
 
@@ -151,7 +151,7 @@ const ModalPrintPlan = ({
         },
       })
       .then((plan) => {
-        console.log("returned plan", plan.data);
+        // console.log("returned plan", plan.data);
         setPlanData(plan.data);
         // console.log("conditionWhere-------------", plan.conditionWhere);
       })

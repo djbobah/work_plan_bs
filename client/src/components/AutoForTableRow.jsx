@@ -12,7 +12,7 @@ const AutoForTableRow = ({ auto, idAuto, idRow }) => {
       label: target.label,
       value: target.value,
     });
-    console.log("change auto id ", target);
+    // console.log("change auto id ", target);
     axios
       .patch(config.apiEndpoint + "plan/auto", { target, idRow })
       .then((plan) => {

@@ -19,12 +19,12 @@ const ModalAuto = ({
   const handleSubmit = (e) => {
     e.preventDefault();
     if (edit) {
-      console.log("edit");
-      console.log(data);
+      // console.log("edit");
+      // console.log(data);
       axios
         .patch(config.apiEndpoint + "auto/auto", { data })
         .then((gn) => {
-          console.log("put----------------------", gn.data);
+          // console.log("put----------------------", gn.data);
         })
         .catch((e) => {
           console.log(e);
@@ -33,7 +33,7 @@ const ModalAuto = ({
       let result = axios
         .post(config.apiEndpoint + "auto/auto", { data })
         .then((gn) => {
-          console.log("post------------", gn.data);
+          // console.log("post------------", gn.data);
         })
         .catch((e) => {
           console.log(e);

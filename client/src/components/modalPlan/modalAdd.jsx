@@ -108,7 +108,7 @@ const ModalAdd = ({
 
   const onCreateOption = (target) => {
     if (target.name === "typeOfWork") {
-      console.log("Creatable select name: ", target);
+      // console.log("Creatable select name: ", target);
       target.id_sl = localStorage.getItem("id_sl");
       axios
         .post(config.apiEndpoint + "plan/work", target)
@@ -129,14 +129,14 @@ const ModalAdd = ({
           console.log(e);
         });
     } else if (target.name === "objectForWork") {
-      console.log("Creatable select name: ", target);
+      // console.log("Creatable select name: ", target);
       target.id_sl = localStorage.getItem("id_sl");
 
       axios
         .post(config.apiEndpoint + "plan/object", target)
         .then((object) => {
-          console.log("post----------------------", object.data);
-          console.log("post----------------------", object.data.id);
+          // console.log("post----------------------", object.data);
+          // console.log("post----------------------", object.data.id);
           setData((prevState) => ({
             ...prevState,
             [target.name]: { label: object.data.name, value: object.data.id },
@@ -152,7 +152,7 @@ const ModalAdd = ({
           console.log(e);
         });
     } else if (target.name === "contractingOrganization") {
-      console.log("Creatable select name: ", target);
+      // console.log("Creatable select name: ", target);
       target.id_sl = localStorage.getItem("id_sl");
 
       axios

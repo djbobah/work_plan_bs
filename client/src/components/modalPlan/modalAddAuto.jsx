@@ -71,7 +71,7 @@ const ModalAddAuto = ({
   }));
 
   const handleChangeAuto = (target) => {
-    console.log("target", target);
+    // console.log("target", target);
     target
       ? setData((prevState) => ({
           ...prevState,
@@ -117,7 +117,7 @@ const ModalAddAuto = ({
   }));
 
   const handleChangeDriver = (target) => {
-    console.log("tyarget", target);
+    // console.log("tyarget", target);
     target
       ? setData((prevState) => ({
           ...prevState,
@@ -130,7 +130,7 @@ const ModalAddAuto = ({
   };
 
   const handleChangeComment = ({ target }) => {
-    console.log("target", target);
+    // console.log("target", target);
     setData((prevState) => ({
       ...prevState,
       comment: target.value,

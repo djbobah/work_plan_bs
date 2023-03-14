@@ -70,7 +70,7 @@ const Auto = () => {
     axios
       .patch(config.apiEndpoint + "auto/delete", { id })
       .then((gn) => {
-        console.log("put----------------------", gn.data);
+        // console.log("put----------------------", gn.data);
       })
       .catch((e) => {
         console.log(e);
@@ -83,7 +83,7 @@ const Auto = () => {
     //   .catch((e) => {
     //     console.log(e);
     //   });
-    console.log("delete id:", id);
+    // console.log("delete id:", id);
   };
   const onAddAuto = () => {
     setEdit(false);
@@ -113,7 +113,7 @@ const Auto = () => {
     //console.log("data", data);
   };
   const handleChange = (target) => {
-    console.log(target);
+    // console.log(target);
     setData((prevState) => ({
       ...prevState,
       [target.name]: target.value,
@@ -127,7 +127,7 @@ const Auto = () => {
     }));
   };
   const handleShowModalAuto = () => {
-    console.log("show");
+    // console.log("show");
     setShowModalAuto(true);
   };
   const handleCloseModalAuto = () => {

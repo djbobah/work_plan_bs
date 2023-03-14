@@ -72,9 +72,9 @@ router.get("/plan", async (req, res) => {
   try {
     // console.log(req.query.id_sl);
     // console.log(chalk.blue("--------------------"));
-    console.log(chalk.blue(req.query.state));
-    console.log(chalk.blue("opasn------------", req.query.opasn));
-    console.log(chalk.blue("auto------------", req.query.auto));
+    // console.log(chalk.blue(req.query.state));
+    // console.log(chalk.blue("opasn------------", req.query.opasn));
+    // console.log(chalk.blue("auto------------", req.query.auto));
     const state = req.query.state;
     const conditionWhere =
       // if(req.query.id_sl === "0")
@@ -102,7 +102,7 @@ router.get("/plan", async (req, res) => {
     } else {
       delete conditionWhere.avto;
     }
-    console.log(chalk.blue("conditionWhere------------", conditionWhere));
+    // console.log(chalk.blue("conditionWhere------------", conditionWhere));
 
     if (state === "Все" || state === "") {
       await ModelPlanRabot.Plan.findAll({
@@ -191,8 +191,8 @@ router.post("/work", async (req, res) => {
       id_sl: req.body.id_sl,
     });
 
-    console.log(chalk.green("WORK--------------", req.body.value));
-    console.log(chalk.green("WORK--------------", req.body.id_sl));
+    // console.log(chalk.green("WORK--------------", req.body.value));
+    // console.log(chalk.green("WORK--------------", req.body.id_sl));
     res.status(200).send(work);
   } catch (error) {
     res
@@ -208,8 +208,8 @@ router.post("/object", async (req, res) => {
       // id_sl: req.body.id_sl,
     });
 
-    console.log(chalk.green("OBJECT--------------", req.body.value));
-    console.log(chalk.green("OBJECT--------------", req.body.id_sl));
+    // console.log(chalk.green("OBJECT--------------", req.body.value));
+    // console.log(chalk.green("OBJECT--------------", req.body.id_sl));
     res.status(200).send(object);
   } catch (error) {
     res
@@ -225,8 +225,8 @@ router.post("/contractingOrganization", async (req, res) => {
       // id_sl: req.body.id_sl,
     });
 
-    console.log(chalk.green("ORG--------------", req.body.value));
-    console.log(chalk.green("ORG--------------", req.body.id_sl));
+    // console.log(chalk.green("ORG--------------", req.body.value));
+    // console.log(chalk.green("ORG--------------", req.body.id_sl));
     res.status(200).send(organization);
   } catch (error) {
     res
@@ -237,7 +237,7 @@ router.post("/contractingOrganization", async (req, res) => {
 
 router.post("/plan", async (req, res) => {
   try {
-    console.log(chalk.green("data_rabot:", req.body.data.dateOfWork));
+    // console.log(chalk.green("data_rabot:", req.body.data.dateOfWork));
     const podrOrg =
       typeof req.body.data.contractingOrganization != "object"
         ? "0"
@@ -294,7 +294,7 @@ router.patch("/plan", async (req, res) => {
       req.body.data.brigadier.value === undefined
         ? ""
         : String(req.body.data.brigadier.value);
-    console.log(chalk.green("editPlan", req.body.data.id));
+    // console.log(chalk.green("editPlan", req.body.data.id));
     const gn = await ModelPlanRabot.Plan.update(
       {
         id_object: req.body.data.objectForWork.value,
@@ -323,7 +323,7 @@ router.patch("/plan", async (req, res) => {
 
 router.patch("/donestring", async (req, res) => {
   try {
-    console.log(chalk.green("doneString", req.body.id));
+    // console.log(chalk.green("doneString", req.body.id));
     const gn = await ModelPlanRabot.Plan.update(
       { vipolneno: 1 },
       { where: { id: req.body.id } }
@@ -361,8 +361,8 @@ router.patch("/auto", async (req, res) => {
 });
 router.patch("/gn", async (req, res) => {
   try {
-    console.log(chalk.green("gn", req.body.target.value));
-    console.log(chalk.green("idRow", req.body.idRow));
+    // console.log(chalk.green("gn", req.body.target.value));
+    // console.log(chalk.green("idRow", req.body.idRow));
     const gn = await ModelPlanRabot.Plan.update(
       { id_gn: req.body.target.value },
       { where: { id: req.body.idRow } }

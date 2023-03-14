@@ -25,7 +25,7 @@ const ChooseDep = () => {
   }));
 
   const handleChange = (target) => {
-    console.log(target["value"].label);
+    // console.log(target["value"].label);
     const id_sl = department.filter(
       (department) => target["value"].label === department.name
     );
@@ -34,10 +34,10 @@ const ChooseDep = () => {
     localStorage.setItem("remoteUser", "user");
     localStorage.setItem("remoteAddress", "10.27.27.111");
 
-    console.log(id_sl[0].id_sl);
+    // console.log(id_sl[0].id_sl);
     // setData()name_sl
   };
-  console.log("department", department);
+  // console.log("department", department);
 
   return (
     <>

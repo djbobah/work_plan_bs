@@ -11,7 +11,7 @@ const GnForTableRows = ({ autoId, gn, idGn, idRow }) => {
       label: target.label,
       value: target.value,
     });
-    console.log("change GN id ", target.value);
+    // console.log("change GN id ", target.value);
     axios
       .patch(config.apiEndpoint + "plan/gn", { target, idRow })
       .then((plan) => {
@@ -23,7 +23,7 @@ const GnForTableRows = ({ autoId, gn, idGn, idRow }) => {
   };
 
   let filteredGn = gn.filter((item) => item.type === autoId);
-  console.log("filteredGn", filteredGn);
+  // console.log("filteredGn", filteredGn);
   filteredGn.unshift({
     archive: "",
     comment: "",

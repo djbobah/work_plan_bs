@@ -6,11 +6,11 @@ const Done = ({ done, id }) => {
   const [doneState, setDoneState] = useState(done);
 
   const handleDoneClick = (id) => {
-    console.log("sring of plans done/ id:", id);
+    // console.log("sring of plans done/ id:", id);
     axios
       .patch(config.apiEndpoint + "plan/donestring", { id })
       .then((i) => {
-        console.log("put----------------------", i.data);
+        // console.log("put----------------------", i.data);
       })
       .catch((e) => {
         console.log(e);

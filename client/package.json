@@ -1,5 +1,6 @@
 {
   "name": "work_plan_bs",
+  "homepage": "http://sr-kam-www-01x/work_plan",
   "version": "0.1.0",
   "private": true,
   "proxy": "http://localhost:5000",

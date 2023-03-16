@@ -152,7 +152,7 @@ const ModalPrintPlan = ({
         },
       })
       .then((plan) => {
-        console.log("returned plan", plan.data);
+        // console.log("returned plan", plan.data);
         // setPlanData(plan.data);
         // console.log("conditionWhere-------------", plan.conditionWhere);
 

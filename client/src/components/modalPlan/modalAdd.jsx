@@ -96,7 +96,15 @@ const ModalAdd = ({
 
   useEffect(() => {
     setOptionsBrigadier(data.brigada);
-    data.brigadier = "";
+    let present = false;
+    data.brigada.forEach((item) => {
+      if (item.label === data.brigadier.label) {
+        present = true;
+      }
+    });
+    if (!present) {
+      data.brigadier = "";
+    }
   }, [data.brigada]);
 
   const handleChange = (target) => {

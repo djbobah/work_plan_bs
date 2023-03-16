@@ -416,6 +416,7 @@ const ControlPanel = ({
         gn={gn}
         dateFrom={dateFrom}
         dateEnd={dateEnd}
+        allDepartments={checkButtons[0].checked}
       />
     </div>
   );

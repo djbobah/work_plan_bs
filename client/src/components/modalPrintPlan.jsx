@@ -127,6 +127,7 @@ const ModalPrintPlan = ({
   gn,
   dateFrom,
   dateEnd,
+  allDepartments,
 }) => {
   const initialData = department.map((item) => ({
     value: item.id,
@@ -151,14 +152,24 @@ const ModalPrintPlan = ({
         },
       })
       .then((plan) => {
-        // console.log("returned plan", plan.data);
-        setPlanData(plan.data);
+        console.log("returned plan", plan.data);
+        // setPlanData(plan.data);
         // console.log("conditionWhere-------------", plan.conditionWhere);
+
+        !allDepartments
+          ? setPlanData(
+              plan.data?.filter(
+                (dep) => dep.id_sl === localStorage.getItem("id_sl")
+              )
+            )
+          : setPlanData(plan.data);
+        // console.log("allDepartments============", allDepartments);
+        // console.log("planData============", planData);
       })
       .catch((e) => {
         console.log(e);
       });
-  }, [data, show]);
+  }, [data, show, allDepartments]);
   useEffect(() => {
     // получаем данные о виде работ из БД
     axios
@@ -188,6 +199,18 @@ const ModalPrintPlan = ({
         console.log(e);
       });
   }, []);
+
+  useEffect(() => {
+    // // !allDepartments && console.log("odno");
+    // // setPlanData((prevState) =>
+    // //   prevState?.filter((dep) => dep.id_sl === localStorage.getItem("id_sl"))
+    // // );
+    // setPlanData(
+    //   planData?.filter((dep) => dep.id_sl === localStorage.getItem("id_sl"))
+    // );
+    // console.log("allDepartments============", allDepartments);
+    // console.log("planData============", planData);
+  }, [allDepartments]);
 
   // useEffect(() => {
   class ComponentToPrint extends React.Component {

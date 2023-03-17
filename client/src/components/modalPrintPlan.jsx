@@ -200,18 +200,6 @@ const ModalPrintPlan = ({
       });
   }, []);
 
-  useEffect(() => {
-    // // !allDepartments && console.log("odno");
-    // // setPlanData((prevState) =>
-    // //   prevState?.filter((dep) => dep.id_sl === localStorage.getItem("id_sl"))
-    // // );
-    // setPlanData(
-    //   planData?.filter((dep) => dep.id_sl === localStorage.getItem("id_sl"))
-    // );
-    // console.log("allDepartments============", allDepartments);
-    // console.log("planData============", planData);
-  }, [allDepartments]);
-
   // useEffect(() => {
   class ComponentToPrint extends React.Component {
     render() {

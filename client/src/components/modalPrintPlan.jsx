@@ -84,7 +84,9 @@ function dataPodrToPrint(podr, plan, objects, works, brigada, gn) {
                   plan.filter(
                     (item) =>
                       item.id_sl === dep.id_sl &&
-                      item.data_rabot === rowPlan.data_rabot
+                      item.data_rabot === rowPlan.data_rabot &&
+                      (item.OPASN === 0 ||
+                        (item.OPASN === 1 && item.utv_opasn === 1))
                   ).length
                 }
               >

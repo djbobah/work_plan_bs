@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import NavCheckButton from "./NavCheckButton";
 // import { getToday, getTommorow } from "../utils/DateTimeFunctions";
 import AddImage from "../static/img/add.png";
@@ -8,6 +8,7 @@ import ModalAdd from "./modalPlan/modalAdd";
 import styles from "./ControlPanel.module.css";
 import Toast from "./Toast.jsx";
 import ExcelJS from "exceljs";
+import _ from "lodash";
 import { ExportToXls } from "./exportToXls";
 import PrintToPdf from "./printToPdf";
 import { useReactToPrint } from "react-to-print";
@@ -50,6 +51,12 @@ const ControlPanel = ({
   onShowPrintPlan,
   onClosePrintPlan,
 }) => {
+  const [sortedPlans, setSortedPlans] = useState(plans);
+  console.log("plans", plans);
+  useEffect(() => {
+    setSortedPlans(_.orderBy(plans, "data_rabot", "asc"));
+  }, [plans]);
+
   const handleClickExportToXls = () => {
     const workbook = new ExcelJS.Workbook();
     const worksheet = workbook.addWorksheet("My Sheet");
@@ -150,7 +157,7 @@ const ControlPanel = ({
     let NRow = 10;
     let currentDepartment = "";
     let startNumb = 0;
-    plans.map((plan, i) => {
+    sortedPlans.map((plan, i) => {
       if (plan.avto !== 1) {
         NRow++;
         // const mergeStr="H"+NRow+":I"+NRow

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { shortFio } from "../utils/fioUtils";
 
@@ -8,6 +8,7 @@ import copyPng from "../static/img/copy-two-paper-sheets-interface-symbol_icon-i
 import Done from "./Done";
 import { getToday, convertDate } from "../utils/DateTimeFunctions";
 import DangerWork from "./DangerWork";
+import _ from "lodash";
 import AutoForTableRow from "./AutoForTableRow";
 import GnForTableRows from "./gnForTableRows";
 
@@ -29,7 +30,18 @@ const TableRowsPlan = ({
   // onCopy,
 }) => {
   // const [idAutoState, setIdAutoState] = useState(0);
-  // const [department, setDepartment] = useState();
+  const [sortedRows, setSetSortedRows] = useState(rows);
+
+  useEffect(() => {
+    if (checkButtons[0].checked) {
+      setSetSortedRows(_.orderBy(rows, ["id_sl", "data_rabot"], "asc"));
+    } else {
+      setSetSortedRows(_.orderBy(rows, "data_rabot", "asc"));
+    }
+
+    // console.log("sortedRows", sortedRows);
+  }, [rows]);
+
   let number = 0;
   let currentDay;
   const id_sl = localStorage.getItem("id_sl");
@@ -263,8 +275,8 @@ const TableRowsPlan = ({
 
   return (
     <tbody>
-      {rows &&
-        rows.map((row) =>
+      {sortedRows &&
+        sortedRows.map((row) =>
           !checkButtons[0].checked ? (
             <tr key={row.id + row.id_sl}>
               {columns.map((column) => (

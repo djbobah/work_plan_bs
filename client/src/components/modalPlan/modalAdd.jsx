@@ -17,6 +17,7 @@ import SelectModal from "./SelectModal";
 import MultiSelectModal from "./multiSelectModal";
 import axios from "axios";
 import config from "../../config.json";
+import _ from "lodash";
 
 const ModalAdd = ({
   data,
@@ -48,7 +49,9 @@ const ModalAdd = ({
     value: object.id,
   }));
 
-  const optionsAuto = auto.map((auto) => ({
+  const filteredAuto = auto?.filter((number) => number.comment !== "archive");
+  const sortedAuto = _.orderBy(filteredAuto, "name", "asc");
+  const optionsAuto = sortedAuto.map((auto) => ({
     label: auto.name,
     value: auto.id,
   }));

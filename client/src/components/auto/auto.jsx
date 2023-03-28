@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import ModalAuto from "./modalAuto";
 import axios from "axios";
 import config from "../../config.json";
+import _ from "lodash";
 
 import deletePng from "../../static/img/delete.png";
 // import editPng from "../../static/img/edit.png";
@@ -42,7 +43,12 @@ const Auto = () => {
   }, [showModalAuto]);
 
   // if (typeAuto) {
-  const optionsTypeAuto = typeAuto?.map((type) => ({
+
+  const filteredAllTypeAuto = typeAuto?.filter(
+    (number) => number.comment !== "archive"
+  );
+  const sortedAuto = _.orderBy(filteredAllTypeAuto, "name", "asc");
+  const optionsTypeAuto = sortedAuto?.map((type) => ({
     label: type.name,
     value: type.id,
   }));

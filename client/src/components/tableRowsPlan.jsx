@@ -71,7 +71,7 @@ const TableRowsPlan = ({
     }
 
     // const id_podr_org = row["id_podr_org"];
-    const podrOrgName = contractingOrganization.filter(
+    const podrOrgName = contractingOrganization?.filter(
       (org) => org.id === row["id_podr_org"]
     )[0]?.name;
 

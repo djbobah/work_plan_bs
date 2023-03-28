@@ -52,7 +52,7 @@ const ControlPanel = ({
   onClosePrintPlan,
 }) => {
   const [sortedPlans, setSortedPlans] = useState(plans);
-  console.log("plans", plans);
+  // console.log("plans", plans);
   useEffect(() => {
     setSortedPlans(_.orderBy(plans, "data_rabot", "asc"));
   }, [plans]);

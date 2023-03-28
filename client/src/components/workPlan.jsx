@@ -347,7 +347,7 @@ const WorkPlan = () => {
   const handleClickEditAuto = (id) => {
     setShowModalAddAuto(true);
 
-    // console.log("id row", id);
+    console.log("id row", id);
     const filteredPlan = plans.filter((plan) => plan.id === id)[0];
     const filteredTypeOfWork = works.filter(
       (type) => type.id === filteredPlan.id_vid_rabot
@@ -356,7 +356,7 @@ const WorkPlan = () => {
       (object) => object.id === filteredPlan.id_object
     )[0];
 
-    const filteredAuto = auto.filter(
+    const filteredAuto = auto?.filter(
       (item) => item.id === filteredPlan.avto
     )[0];
 

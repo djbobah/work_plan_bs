@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 // import { validator } from "../../utils/validator";
 // import CreatableSelect from "react-select/creatable";
+import _ from "lodash";
 import {
   data,
   Modal,
@@ -64,8 +65,8 @@ const ModalAddAuto = ({
   }
 
   // console.log("gn", gn);
-
-  const optionsAuto = auto?.map((auto) => ({
+  const sortedAuto = _.orderBy(auto, "name", "asc");
+  const optionsAuto = sortedAuto?.map((auto) => ({
     label: auto.name,
     value: auto.id,
   }));

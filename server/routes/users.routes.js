@@ -10,7 +10,7 @@ const modelUsers = require("../models/users");
 const ModelUsers = modelUsers();
 
 router.get("/user", async (req, res) => {
-  console.log(chalk.red("---------------", req.query.id_sl));
+  // console.log(chalk.red("---------------", req.query.id_sl));
   if (req.query.id_sl === "0") {
     try {
       await ModelUsers.User.findAll({

@@ -78,7 +78,7 @@ export function getTommorow(currentDay) {
     } else if (month < 9) {
       month = "0" + (month + 1);
     } else if (month >= 9) {
-      console.log("month", month);
+      // console.log("month", month);
       month = month + 1;
     }
   }

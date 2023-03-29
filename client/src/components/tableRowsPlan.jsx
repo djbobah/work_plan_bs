@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
-
 import { shortFio } from "../utils/fioUtils";
-
 import deletePng from "../static/img/delete.png";
 // import editPng from "../static/img/edit.png";
 import copyPng from "../static/img/copy-two-paper-sheets-interface-symbol_icon-icons.com_73283.svg";
@@ -9,8 +7,8 @@ import Done from "./Done";
 import { getToday, convertDate } from "../utils/DateTimeFunctions";
 import DangerWork from "./DangerWork";
 import _ from "lodash";
-import AutoForTableRow from "./AutoForTableRow";
-import GnForTableRows from "./gnForTableRows";
+// import AutoForTableRow from "./AutoForTableRow";
+// import GnForTableRows from "./gnForTableRows";
 
 const TableRowsPlan = ({
   columns,
@@ -146,7 +144,12 @@ const TableRowsPlan = ({
         // } else {
         const avtoNumber = gn.filter((gn) => gn.id === Number(row[column]));
 
-        return avtoNumber[0].marka + " " + avtoNumber[0].nomer;
+        return (
+          <>
+            {avtoNumber[0].marka} <br />
+            {avtoNumber[0].nomer}
+          </>
+        );
       }
     }
     if (column === "comment") {

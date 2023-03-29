@@ -44,11 +44,11 @@ const Auto = () => {
 
   // if (typeAuto) {
 
-  const filteredAllTypeAuto = typeAuto?.filter(
+  let filteredAllTypeAuto = typeAuto?.filter(
     (number) => number.comment !== "archive"
   );
-  const sortedAuto = _.orderBy(filteredAllTypeAuto, "name", "asc");
-  const optionsTypeAuto = sortedAuto?.map((type) => ({
+  let sortedAuto = _.orderBy(filteredAllTypeAuto, "name", "asc");
+  let optionsTypeAuto = sortedAuto?.map((type) => ({
     label: type.name,
     value: type.id,
   }));
@@ -140,6 +140,43 @@ const Auto = () => {
     setShowModalAuto(false);
     setData(initialData);
   };
+
+  const handleCreateTypeOption = (target) => {
+    // console.log("target", target.value);
+    axios
+      .post(config.apiEndpoint + "auto/typeauto", target)
+      .then((type) => {
+        setData((prevState) => ({
+          ...prevState,
+          [target.name]: {
+            label: type.data.type.name,
+            value: type.data.type.id,
+          },
+        }));
+        // добавляю значение чтоб сразу появилось в списке
+        typeAuto.push({
+          id: type.data.type.id,
+          name: type.data.type.name,
+          comment: "",
+        });
+
+        // console.log("typeAuto", typeAuto);
+        filteredAllTypeAuto = typeAuto?.filter(
+          (number) => number.comment !== "archive"
+        );
+        sortedAuto = _.orderBy(filteredAllTypeAuto, "name", "asc");
+        optionsTypeAuto = sortedAuto?.map((type) => ({
+          label: type.name,
+          value: type.id,
+        }));
+        // console.log("type name", type.data.type.name);
+        // setTypeAuto(typeAuto);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
   return (
     <div className="container border rounded mt-3">
       <button className="btn btn-primary float-end mt-2" onClick={onAddAuto}>
@@ -222,6 +259,7 @@ const Auto = () => {
           onChangeComment={handleChangeComment}
           optionsTypeAuto={optionsTypeAuto}
           data={data}
+          onCreateTypeOption={handleCreateTypeOption}
         />
       )}
     </div>

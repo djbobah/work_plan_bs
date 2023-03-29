@@ -26,7 +26,7 @@ router.post("/work", async (req, res) => {
     // console.log(chalk.blue(req.body.id));
     // console.log(chalk.blue(req.body.user));
     // console.log(chalk.blue(req.body.remote_addr));
-    console.log(chalk.blue(typeof Date(req.body.date_utv)));
+    // console.log(chalk.blue(typeof Date(req.body.date_utv)));
     // console.log(chalk.blue(req.body.time_utv));
 
     const dangerWork = await ModelDangerWork.DangerWorks.create({

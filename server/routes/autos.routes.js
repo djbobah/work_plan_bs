@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router({ mergeParams: true });
 // const mysql = require("mysql2");
-// const chalk = require("chalk");
+const chalk = require("chalk");
 // const Sequelize = require("sequelize");
 const modelAuto = require("../models/auto");
 
@@ -42,11 +42,30 @@ router.post("/auto", async (req, res) => {
       archive: "",
       comment: req.body.data.comment,
     });
-    console.log("gn--------------", gn);
+    // console.log("gn--------------", gn);
     // console.log("gn's auto-generated ID:", gn.id);
     // console.log(req.body);
     // console.log(req.body.data.typeAuto.value);
     res.status(200).send({ gn });
+    //res.data(gn);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "На сервере произошла ошибкаю Попробуйте позже..." });
+  }
+});
+router.post("/typeauto", async (req, res) => {
+  try {
+    // console.log("target", req.body.value);
+    const type = await ModelAuto.Avtos.create({
+      name: req.body.value,
+      comment: "",
+    });
+    // console.log("gn--------------", gn);
+    // console.log("gn's auto-generated ID:", gn.id);
+    // console.log(req.body);
+    // console.log(req.body.data.typeAuto.value);
+    res.status(200).send({ type });
     //res.data(gn);
   } catch (error) {
     res
@@ -65,8 +84,8 @@ router.patch("/delete", async (req, res) => {
     );
 
     // console.log("gn's auto-generated ID:", gn.id);
-    console.log("id:-------------------------------- ");
-    console.log("id: ", req.body);
+    // console.log("id:-------------------------------- ");
+    // console.log("id: ", req.body);
     // console.log(req.body.data.typeAuto.value);
     res.status(200);
   } catch (error) {
@@ -89,9 +108,9 @@ router.patch("/auto/", async (req, res) => {
     ).then((result) => console.log("updated"));
     // console.log("gn's auto-generated ID:", gn.id);
 
-    console.log("------------------------------");
-    console.log(req.body);
-    console.log("------------------------------");
+    // console.log("------------------------------");
+    // console.log(req.body);
+    // console.log("------------------------------");
     // console.log(req.body.data.typeAuto.value);
     res.status(200).send({ gn });
   } catch (error) {

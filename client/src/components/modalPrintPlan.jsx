@@ -257,7 +257,7 @@ const ModalPrintPlan = ({
   });
 
   const handleClickPrint = () => {
-    console.log("data", data);
+    // console.log("data", data);
     //получаем данные о планах работ
 
     handlePrint();

@@ -14,6 +14,7 @@ const ModalAuto = ({
   data,
   edit,
   onChangeComment,
+  onCreateTypeOption,
 }) => {
   // console.log("data typeauto", optionsTypeAuto[1]);
   const handleSubmit = (e) => {
@@ -68,6 +69,7 @@ const ModalAuto = ({
                 onChange={onChange}
                 // error={errors.typeOfWork}
                 // defaultValue={optionsTypeAuto[1]}
+                onCreateOption={onCreateTypeOption}
                 value={data.typeAuto}
               />
             </Form.Group>

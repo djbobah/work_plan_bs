@@ -128,7 +128,7 @@ const WorkPlan = () => {
       })
       .then((plan) => {
         setPlans(plan.data);
-        // console.log("conditionWhere-------------", plan.conditionWhere);
+        // console.log("plan-------------", plan);
       })
       .catch((e) => {
         console.log(e);
@@ -302,10 +302,10 @@ const WorkPlan = () => {
         const filteredItem = brigada.filter(
           (member) => Number(member.id) === Number(item)
         )[0];
-
+        // console.log("filteredItem", filteredItem);
         dataBrigada.push({
-          label: filteredItem.fio,
-          value: filteredItem.id,
+          label: filteredItem?.fio,
+          value: filteredItem?.id,
         });
       });
     }
@@ -331,7 +331,9 @@ const WorkPlan = () => {
         value: filteredTypeOfWork.id,
       },
       isDanger: filteredPlan.OPASN,
-      objectForWork: { label: filteredObject.name, value: filteredObject.id },
+      objectForWork: filteredObject
+        ? { label: filteredObject?.name, value: filteredObject?.id }
+        : "",
       auto: dataAuto,
 
       methodOfWork: { name: filteredPlan.sposob, checked: true },

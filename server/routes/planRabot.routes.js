@@ -105,6 +105,7 @@ router.get("/plan", async (req, res) => {
     // console.log(chalk.blue("conditionWhere------------", conditionWhere));
 
     if (state === "Все" || state === "") {
+      if (conditionWhere.vipolneno) delete conditionWhere.vipolneno;
       await ModelPlanRabot.Plan.findAll({
         where: conditionWhere,
         order: [
@@ -122,20 +123,23 @@ router.get("/plan", async (req, res) => {
     } else {
       let stateFlag;
       if (state === "Выполнено") {
-        stateFlag = 1;
+        conditionWhere.vipolneno = { [Op.gt]: 0 };
+        // stateFlag = 1;
       } else if (state === "Не выполнено") {
-        stateFlag = 0;
+        conditionWhere.vipolneno = { [Op.gt]: 1 };
+        // stateFlag = 0;
       }
 
       await ModelPlanRabot.Plan.findAll({
-        where: {
-          data_rabot: {
-            [Op.gte]: req.query.dateFrom,
-            [Op.lte]: req.query.dateEnd,
-          },
-          id_sl: { [Op.eq]: req.query.id_sl },
-          vipolneno: { [Op.eq]: stateFlag },
-        },
+        where: conditionWhere,
+        //  {
+        //   data_rabot: {
+        //     [Op.gte]: req.query.dateFrom,
+        //     [Op.lte]: req.query.dateEnd,
+        //   },
+        //   id_sl: { [Op.eq]: req.query.id_sl },
+        //   vipolneno: { [Op.eq]: stateFlag },
+        // },
         order: [
           ["data_rabot", "ASC"],
           // Will escape title and validate DESC against a list of valid direction parameters

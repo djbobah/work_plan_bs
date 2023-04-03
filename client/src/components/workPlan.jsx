@@ -143,7 +143,15 @@ const WorkPlan = () => {
         console.log(e);
       });
     // console.log("rerender VID RABOT");
-  }, [DateFrom, DateEnd, showModalAdd, state, checkButtons, showModalAddAuto]);
+  }, [
+    DateFrom,
+    DateEnd,
+    showModalAdd,
+    state,
+    checkButtons,
+    showModalAddAuto,
+    id_sl,
+  ]);
 
   useEffect(() => {
     // получаем данные о виде работ из БД

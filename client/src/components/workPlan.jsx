@@ -402,16 +402,17 @@ const WorkPlan = () => {
     let dataBrigada = [];
     if (filteredPlan.Brigada !== "") {
       const arrBrigada = filteredPlan.Brigada.split(";");
-
+      console.log("arrBrigada", arrBrigada);
       arrBrigada.map((item) => {
         const filteredItem = brigada.filter(
           (member) => Number(member.id) === Number(item)
         )[0];
-
-        dataBrigada.push({
-          label: filteredItem.fio,
-          value: filteredItem.id,
-        });
+        if (filteredItem) {
+          dataBrigada.push({
+            label: filteredItem.fio,
+            value: filteredItem.id,
+          });
+        }
       });
     }
     const filteredBrigadier = brigada.filter(

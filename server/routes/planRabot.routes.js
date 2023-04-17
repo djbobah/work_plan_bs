@@ -377,7 +377,7 @@ router.delete("/:rowId", async (req, res) => {
       },
     });
 
-    res.status(200).send.del;
+    res.status(200).send(del);
   } catch (error) {
     res
       .status(500)

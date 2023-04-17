@@ -87,7 +87,7 @@ router.patch("/delete", async (req, res) => {
     // console.log("id:-------------------------------- ");
     // console.log("id: ", req.body);
     // console.log(req.body.data.typeAuto.value);
-    res.status(200);
+    res.status(200).send(gn);
   } catch (error) {
     res
       .status(500)

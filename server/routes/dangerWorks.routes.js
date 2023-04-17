@@ -44,7 +44,7 @@ router.post("/work", async (req, res) => {
       { where: { id: req.body.id } }
     );
 
-    res.status(200).send(dangerWork);
+    res.status(200).send(workPlan);
   } catch (error) {
     res
       .status(500)

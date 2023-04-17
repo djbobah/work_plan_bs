@@ -20,11 +20,9 @@ router.get("/object", async (req, res) => {
     await ModelPlanRabot.Object.findAll({
       where: conditionWhere,
       raw: true,
-    })
-      .then((object) => {
-        res.status(200).send(object);
-      })
-      .catch((err) => console.log(err));
+    }).then((object) => {
+      res.status(200).send(object);
+    });
   } catch (error) {
     res
       .status(500)
@@ -43,11 +41,9 @@ router.get("/vid", async (req, res) => {
     await ModelPlanRabot.VidRabot.findAll({
       where: conditionWhere,
       raw: true,
-    })
-      .then((vid) => {
-        res.status(200).send(vid);
-      })
-      .catch((err) => console.log(err));
+    }).then((vid) => {
+      res.status(200).send(vid);
+    });
   } catch (error) {
     res
       .status(500)
@@ -57,11 +53,9 @@ router.get("/vid", async (req, res) => {
 
 router.get("/podr", async (req, res) => {
   try {
-    await ModelPlanRabot.PodrOrg.findAll({ raw: true })
-      .then((podr) => {
-        res.status(200).send(podr);
-      })
-      .catch((err) => console.log(err));
+    await ModelPlanRabot.PodrOrg.findAll({ raw: true }).then((podr) => {
+      res.status(200).send(podr);
+    });
   } catch (error) {
     res
       .status(500)
@@ -114,12 +108,10 @@ router.get("/plan", async (req, res) => {
           ["id_sl", "ASC"],
         ],
         raw: true,
-      })
-        .then((plan) => {
-          // console.log(chalk.red(plan));
-          res.status(200).send(plan);
-        })
-        .catch((err) => console.log(err));
+      }).then((plan) => {
+        // console.log(chalk.red(plan));
+        res.status(200).send(plan);
+      });
     } else {
       let stateFlag;
       if (state === "Выполнено") {
@@ -146,12 +138,10 @@ router.get("/plan", async (req, res) => {
           ["id_sl", "ASC"],
         ],
         raw: true,
-      })
-        .then((plan) => {
-          // console.log(chalk.red(plan));
-          res.status(200).send(plan);
-        })
-        .catch((err) => console.log(err));
+      }).then((plan) => {
+        // console.log(chalk.red(plan));
+        res.status(200).send(plan);
+      });
     }
   } catch (error) {
     res
@@ -175,11 +165,9 @@ router.get("/planForPrint", async (req, res) => {
         ["id_sl", "ASC"],
       ],
       raw: true,
-    })
-      .then((plan) => {
-        res.status(200).send(plan);
-      })
-      .catch((err) => console.log(err));
+    }).then((plan) => {
+      res.status(200).send(plan);
+    });
   } catch (error) {
     res
       .status(500)
@@ -317,7 +305,7 @@ router.patch("/plan", async (req, res) => {
       },
       { where: { id: req.body.data.id } }
     ).then((result) => console.log("updated"));
-    res.status(200);
+    res.status(200).send(gn);
   } catch (error) {
     res
       .status(500)
@@ -332,7 +320,7 @@ router.patch("/donestring", async (req, res) => {
       { vipolneno: 1 },
       { where: { id: req.body.id } }
     ).then((result) => console.log("updated"));
-    res.status(200);
+    res.status(200).send(gn);
   } catch (error) {
     res
       .status(500)
@@ -342,21 +330,21 @@ router.patch("/donestring", async (req, res) => {
 
 router.patch("/auto", async (req, res) => {
   try {
+    // console.log(chalk.green("auto", req.body.data.auto.value));
+    // console.log(chalk.green("gn -", req.body.data.gn.value, "-"));
+
     const auto = req.body.data.auto === null ? 1 : req.body.data.auto.value;
     const gn = req.body.data.gn === null ? 0 : req.body.data.gn.value;
-
-    // console.log(chalk.green("auto", auto));
-    // console.log(chalk.green("gn -", gn, "-"));
     // // console.log(chalk.green("driver", req.body.data.driver.value));
     // console.log(chalk.green("comment", req.body.data.comment));
 
     // console.log(chalk.green("idRow", req.body.data.id));
     // , id_gn: gn, comment: req.body.data.comment
-    await ModelPlanRabot.Plan.update(
+    const plan = await ModelPlanRabot.Plan.update(
       { avto: auto, id_gn: gn, comment: req.body.data.comment },
       { where: { id: req.body.data.id } }
     ).then((result) => console.log("updated"));
-    res.status(200);
+    res.status(200).send(plan);
   } catch (error) {
     res
       .status(500)
@@ -371,7 +359,7 @@ router.patch("/gn", async (req, res) => {
       { id_gn: req.body.target.value },
       { where: { id: req.body.idRow } }
     ).then((result) => console.log("updated"));
-    res.status(200);
+    res.status(200).send(gn);
   } catch (error) {
     res
       .status(500)
@@ -383,13 +371,13 @@ router.delete("/:rowId", async (req, res) => {
   try {
     const { rowId } = req.params;
     // console.log(chalk.green("delete", rowId));
-    await ModelPlanRabot.Plan.destroy({
+    const del = await ModelPlanRabot.Plan.destroy({
       where: {
         id: rowId,
       },
     });
 
-    res.status(200);
+    res.status(200).send.del;
   } catch (error) {
     res
       .status(500)

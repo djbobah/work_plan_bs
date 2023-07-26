@@ -335,13 +335,15 @@ router.patch("/auto", async (req, res) => {
 
     const auto = req.body.data.auto === null ? 1 : req.body.data.auto.value;
     const gn = req.body.data.gn === null ? 0 : req.body.data.gn.value;
+    const driver =
+      req.body.data.driver === null ? 0 : req.body.data.driver.value;
     // // console.log(chalk.green("driver", req.body.data.driver.value));
-    // console.log(chalk.green("comment", req.body.data.comment));
+    console.log(chalk.green("driver", req.body.data.driver.value));
 
     // console.log(chalk.green("idRow", req.body.data.id));
     // , id_gn: gn, comment: req.body.data.comment
     const plan = await ModelPlanRabot.Plan.update(
-      { avto: auto, id_gn: gn, comment: req.body.data.comment },
+      { avto: auto, id_gn: gn, comment: req.body.data.comment, driver: driver },
       { where: { id: req.body.data.id } }
     ).then((result) => console.log("updated"));
     res.status(200).send(plan);

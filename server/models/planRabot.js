@@ -85,6 +85,7 @@ const modelPlanRabot = () => {
       OPASN: { type: Sequelize.TINYINT, allowNull: true },
       utv_avto: { type: Sequelize.TINYINT, allowNull: true },
       utv_opasn: { type: Sequelize.TINYINT, allowNull: true },
+      driver: { type: Sequelize.TEXT, allowNull: true },
     },
     { freezeTableName: true }
   );

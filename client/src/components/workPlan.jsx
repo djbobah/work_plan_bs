@@ -349,6 +349,7 @@ const WorkPlan = () => {
       brigada: dataBrigada,
       brigadier: dataBrigadier,
       comment: filteredPlan.comment,
+      driver: filteredPlan.driver,
     });
 
     // console.log(method, data);
@@ -402,7 +403,7 @@ const WorkPlan = () => {
     let dataBrigada = [];
     if (filteredPlan.Brigada !== "") {
       const arrBrigada = filteredPlan.Brigada.split(";");
-      console.log("arrBrigada", arrBrigada);
+      // console.log("arrBrigada", arrBrigada);
       arrBrigada.map((item) => {
         const filteredItem = brigada.filter(
           (member) => Number(member.id) === Number(item)
@@ -424,6 +425,17 @@ const WorkPlan = () => {
         : {
             label: filteredBrigadier.fio,
             value: filteredBrigadier.id,
+          };
+
+    const filteredDriver = brigada.filter(
+      (item) => item.id === Number(filteredPlan.driver)
+    )[0];
+    const dataDriver =
+      filteredPlan.driver === null
+        ? ""
+        : {
+            label: filteredDriver.fio,
+            value: filteredDriver.id,
           };
     // const dateOfWork =
     //   method === "copy" ? filteredPlan.data_rabot : getTommorow();
@@ -448,6 +460,7 @@ const WorkPlan = () => {
       contractingOrganization: dataContractingOrganization,
       brigada: dataBrigada,
       brigadier: dataBrigadier,
+      driver: dataDriver,
       comment: filteredPlan.comment,
     });
   };
@@ -538,7 +551,7 @@ const WorkPlan = () => {
       axios
         .patch(config.apiEndpoint + "plan/plan", { data, id_sl })
         .then((plan) => {
-          // console.log("post------------", plan.data);
+          console.log("post------------", plan.data);
         })
         .catch((e) => {
           console.log(e);
@@ -562,7 +575,7 @@ const WorkPlan = () => {
   };
   const handleSubmitAddAuto = (e) => {
     e.preventDefault();
-    // console.log(data);
+    // console.log("submit auto", data);
     axios
       .patch(config.apiEndpoint + "plan/auto", { data })
       .then((plan) => {

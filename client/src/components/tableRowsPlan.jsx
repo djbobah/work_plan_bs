@@ -168,23 +168,58 @@ const TableRowsPlan = ({
       return (
         <div className="d-flex">
           {currentDay >= getToday() && id_sl === "16-а00135" && (
-            <button
-              className="btn btn-light border border-secondary rounded m-1 p-1 "
-              onClick={() => onEditAuto(row.id)}
-              title="Добавить автомобиль..."
-            >
-              <svg
-                fill="bg-secondary"
-                color="primary"
-                width="30"
-                height="30"
-                viewBox="-1 0 19 19"
-                // xmlns="http://www.w3.org/2000/svg"
-                className="cf-icon-svg"
+            <>
+              {" "}
+              <button
+                className="btn btn-light border border-secondary rounded m-1 p-1 "
+                onClick={() => onEditAuto(row.id)}
+                title="Добавить автомобиль..."
               >
-                <path d="M16.417 9.583A7.917 7.917 0 1 1 8.5 1.666a7.917 7.917 0 0 1 7.917 7.917zm-3.948-1.455-.758-1.955a.816.816 0 0 0-.726-.498H6.054a.816.816 0 0 0-.727.498L4.57 8.128a1.43 1.43 0 0 0-1.052 1.375v2.046a.318.318 0 0 0 .317.317h.496v1.147a.238.238 0 0 0 .238.237h.892a.238.238 0 0 0 .237-.237v-1.147h5.644v1.147a.238.238 0 0 0 .237.237h.892a.238.238 0 0 0 .238-.237v-1.147h.496a.318.318 0 0 0 .317-.317V9.503a1.43 1.43 0 0 0-1.052-1.375zm-7.445.582a.792.792 0 1 0 .792.792.792.792 0 0 0-.792-.792zm5.96-2.402a.192.192 0 0 1 .137.094l.65 1.676H5.267l.65-1.676a.192.192 0 0 1 .136-.094h4.93zm1.04 2.402a.792.792 0 1 0 .792.792.792.792 0 0 0-.791-.792z" />
-              </svg>
-            </button>
+                <svg
+                  fill="bg-secondary"
+                  color="primary"
+                  width="30"
+                  height="30"
+                  viewBox="-1 0 19 19"
+                  // xmlns="http://www.w3.org/2000/svg"
+                  className="cf-icon-svg"
+                >
+                  <path d="M16.417 9.583A7.917 7.917 0 1 1 8.5 1.666a7.917 7.917 0 0 1 7.917 7.917zm-3.948-1.455-.758-1.955a.816.816 0 0 0-.726-.498H6.054a.816.816 0 0 0-.727.498L4.57 8.128a1.43 1.43 0 0 0-1.052 1.375v2.046a.318.318 0 0 0 .317.317h.496v1.147a.238.238 0 0 0 .238.237h.892a.238.238 0 0 0 .237-.237v-1.147h5.644v1.147a.238.238 0 0 0 .237.237h.892a.238.238 0 0 0 .238-.237v-1.147h.496a.318.318 0 0 0 .317-.317V9.503a1.43 1.43 0 0 0-1.052-1.375zm-7.445.582a.792.792 0 1 0 .792.792.792.792 0 0 0-.792-.792zm5.96-2.402a.192.192 0 0 1 .137.094l.65 1.676H5.267l.65-1.676a.192.192 0 0 1 .136-.094h4.93zm1.04 2.402a.792.792 0 1 0 .792.792.792.792 0 0 0-.791-.792z" />
+                </svg>
+              </button>
+              <button
+                className="btn btn-light border border-secondary rounded m-1 p-1 "
+                onClick={() => onEditAuto(row.id)}
+                title="Согласовать автомобиль..."
+              >
+                <svg
+                  // xmlns="http://www.w3.org/2000/svg"
+                  width="30"
+                  height="30"
+                  fill="success"
+                  color="primary"
+                  className="bi bi-check-square"
+                  viewBox="0 0 16 16"
+                >
+                  <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
+                  <path d="M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.235.235 0 0 1 .02-.022z" />
+                </svg>
+                {/* <i class="bi bi-check-square"></i> */}
+                {/* <svg
+                  fill="bg-secondary"
+                  color="primary"
+                  width="30"
+                  height="30"
+                  viewBox="-1 0 19 19"
+                  // xmlns="http://www.w3.org/2000/svg"
+                  className="cf-icon-svg"
+                > */}
+                {/* <path d="M16.417 9.583A7.917 7.917 0 1 1 8.5 1.666a7.917 7.917 0 0 1 7.917 7.917zm-3.948-1.455-.758-1.955a.816.816 0 0 0-.726-.498H6.054a.816.816 0 0 0-.727.498L4.57 8.128a1.43 1.43 0 0 0-1.052 1.375v2.046a.318.318 0 0 0 .317.317h.496v1.147a.238.238 0 0 0 .238.237h.892a.238.238 0 0 0 .237-.237v-1.147h5.644v1.147a.238.238 0 0 0 .237.237h.892a.238.238 0 0 0 .238-.237v-1.147h.496a.318.318 0 0 0 .317-.317V9.503a1.43 1.43 0 0 0-1.052-1.375zm-7.445.582a.792.792 0 1 0 .792.792.792.792 0 0 0-.792-.792zm5.96-2.402a.192.192 0 0 1 .137.094l.65 1.676H5.267l.65-1.676a.192.192 0 0 1 .136-.094h4.93zm1.04 2.402a.792.792 0 1 0 .792.792.792.792 0 0 0-.791-.792z" /> */}
+                {/* <path d="M16 20v4h4v2.668h-4v4h-2.668v-4h-4V24h4v-4H28m-9.332 4H4V8h21.332v9.332H28V8a2.66 2.66 0 0 0-2.668-2.668H4A2.669 2.669 0 0 0 1.332 8v16A2.669 2.669 0 0 0 4 26.668h14.668Zm0 0" /> */}
+                {/* </svg> */}
+                {/* <img src={approvedCar} alt="" /> */}
+              </button>
+            </>
           )}
         </div>
       );
@@ -242,9 +277,11 @@ const TableRowsPlan = ({
   const renderAllDepartment = (row) => {
     if (row.id_sl !== department_) {
       department_ = row.id_sl;
+      // if (department) {
       const departmentName = department.filter(
         (dep) => dep.id_sl === row.id_sl
-      )[0].name;
+      )[0]?.name;
+
       // console.log(departmentName);
       return (
         <>
@@ -264,6 +301,7 @@ const TableRowsPlan = ({
         </>
       );
     }
+    // }
 
     return (
       <tr key={row.id + row.id_sl}>

@@ -38,7 +38,7 @@ const ModalAddAuto = ({
 }) => {
   // const [changeTypeAuto, setChangeTypeAuto] = useState(false);
   // const [optionsBrigadier, setOptionsBrigadier] = useState([]);
-  // console.log("data", data);
+  // console.log("modaladd auto data", data);
   // console.log("id_sl", data.id_sl);
 
   const filteredDepartment = department?.filter(

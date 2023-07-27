@@ -148,7 +148,7 @@ const TableRowsPlan = ({
         const avtoNumber = gn.filter((gn) => gn.id === Number(row[column]));
 
         let driver = "";
-        console.log("drivers", drivers);
+        //  console.log("drivers", drivers);
         if (row["driver"]) {
           driver = shortFio(
             drivers?.filter((driver) => driver.id === Number(row["driver"]))[0]
@@ -156,7 +156,7 @@ const TableRowsPlan = ({
           );
         }
 
-        console.log();
+        //console.log();
         return (
           <ApproveCar
             utvAvto={row["utv_avto"]}

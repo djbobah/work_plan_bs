@@ -485,8 +485,8 @@ const WorkPlan = () => {
   const handleClickApproveAuto = (id) => {
     const filteredPlan = plans.filter((plan) => plan.id === id)[0];
     const utv_avto = filteredPlan.utv_avto === 0 ? 1 : 0;
-    console.log("id", id);
-    console.log("utv_avto", utv_avto);
+    //console.log("id", id);
+    // console.log("utv_avto", utv_avto);
 
     axios
       .patch(config.apiEndpoint + "plan/approveCar", { id, utv_avto })

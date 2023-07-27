@@ -6,7 +6,7 @@ const ApproveCar = ({ utvAvto, driver, avto, id, id_sl }) => {
   const [approveCarState, setApproveCarState] = useState(utvAvto);
 
   const handleApproveCarClick = (id) => {
-    console.log("sring of plans done/ id:", id);
+    // console.log("sring of plans done/ id:", id);
 
     const approveCarStatus = approveCarState === 0 ? 1 : 0;
     axios

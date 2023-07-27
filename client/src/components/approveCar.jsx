@@ -29,7 +29,7 @@ const ApproveCar = ({ utvAvto, driver, avto, id, id_sl }) => {
               className="btn btn-sm btn-primary mt-2"
               onClick={() => handleApproveCarClick(id)}
             >
-              утвердить
+              Утвердить
             </button>
             <br />
             {avto[0].marka} <br />
@@ -48,8 +48,13 @@ const ApproveCar = ({ utvAvto, driver, avto, id, id_sl }) => {
   } else {
     return (
       <>
-        {/* <span className="badge bg-success">согласовано</span> */}
-        {/* <br /> */}
+        <button
+          className="btn btn-sm btn-danger mt-2"
+          onClick={() => handleApproveCarClick(id)}
+        >
+          Отменить
+        </button>
+        <br />
         {avto[0].marka} <br />
         {avto[0].nomer}
         {driver ? (

@@ -330,9 +330,9 @@ router.patch("/donestring", async (req, res) => {
 router.patch("/approveCar", async (req, res) => {
   try {
     console.log(chalk.green("id", req.body.id));
-    console.log(chalk.green("utv_avto", req.body.utv_avto));
+    console.log(chalk.green("utv_avto", req.body.approveCarStatus));
     const gn = await ModelPlanRabot.Plan.update(
-      { utv_avto: 1 },
+      { utv_avto: req.body.approveCarStatus },
       { where: { id: req.body.id } }
     ).then((result) => console.log("updated"));
     res.status(200).send(gn);

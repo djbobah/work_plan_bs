@@ -7,6 +7,7 @@ import Done from "./Done";
 import { getToday, convertDate } from "../utils/DateTimeFunctions";
 import DangerWork from "./DangerWork";
 import _ from "lodash";
+import ApproveCar from "./approveCar";
 // import AutoForTableRow from "./AutoForTableRow";
 // import GnForTableRows from "./gnForTableRows";
 
@@ -18,6 +19,7 @@ const TableRowsPlan = ({
   auto,
   gn,
   brigada,
+  drivers,
   department,
   contractingOrganization,
   dangerWork,
@@ -25,6 +27,7 @@ const TableRowsPlan = ({
   checkButtons,
   onEdit,
   onEditAuto,
+  onApproveAuto,
   // onCopy,
 }) => {
   // const [idAutoState, setIdAutoState] = useState(0);
@@ -144,11 +147,43 @@ const TableRowsPlan = ({
         // } else {
         const avtoNumber = gn.filter((gn) => gn.id === Number(row[column]));
 
+        let driver = "";
+        console.log("drivers", drivers);
+        if (row["driver"]) {
+          driver = shortFio(
+            drivers?.filter((driver) => driver.id === Number(row["driver"]))[0]
+              ?.fio
+          );
+        }
+
+        console.log();
         return (
-          <>
-            {avtoNumber[0].marka} <br />
-            {avtoNumber[0].nomer}
-          </>
+          <ApproveCar
+            utvAvto={row["utv_avto"]}
+            driver={driver}
+            avto={avtoNumber}
+            id={row.id}
+            id_sl={id_sl}
+          />
+          // <>
+          //   {row["utv_avto"] === 1 ? (
+          //     <>
+          //       <span className="badge bg-success">согласовано</span>
+          //       <br />
+          //     </>
+          //   ) : (
+          //     ""
+          //   )}
+          //   {avtoNumber[0].marka} <br />
+          //   {avtoNumber[0].nomer}
+          //   {driver ? (
+          //     <>
+          //       <span className="badge bg-secondary">Водитель: {driver}</span>
+          //     </>
+          //   ) : (
+          //     ""
+          //   )}
+          // </>
         );
       }
     }
@@ -187,9 +222,9 @@ const TableRowsPlan = ({
                   <path d="M16.417 9.583A7.917 7.917 0 1 1 8.5 1.666a7.917 7.917 0 0 1 7.917 7.917zm-3.948-1.455-.758-1.955a.816.816 0 0 0-.726-.498H6.054a.816.816 0 0 0-.727.498L4.57 8.128a1.43 1.43 0 0 0-1.052 1.375v2.046a.318.318 0 0 0 .317.317h.496v1.147a.238.238 0 0 0 .238.237h.892a.238.238 0 0 0 .237-.237v-1.147h5.644v1.147a.238.238 0 0 0 .237.237h.892a.238.238 0 0 0 .238-.237v-1.147h.496a.318.318 0 0 0 .317-.317V9.503a1.43 1.43 0 0 0-1.052-1.375zm-7.445.582a.792.792 0 1 0 .792.792.792.792 0 0 0-.792-.792zm5.96-2.402a.192.192 0 0 1 .137.094l.65 1.676H5.267l.65-1.676a.192.192 0 0 1 .136-.094h4.93zm1.04 2.402a.792.792 0 1 0 .792.792.792.792 0 0 0-.791-.792z" />
                 </svg>
               </button>
-              <button
+              {/* <button
                 className="btn btn-light border border-secondary rounded m-1 p-1 "
-                onClick={() => onEditAuto(row.id)}
+                onClick={() => onApproveAuto(row.id)}
                 title="Согласовать автомобиль..."
               >
                 <svg
@@ -205,7 +240,7 @@ const TableRowsPlan = ({
                   <path d="M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.235.235 0 0 1 .02-.022z" />
                 </svg>
                 {/* <i class="bi bi-check-square"></i> */}
-                {/* <svg
+              {/* <svg
                   fill="bg-secondary"
                   color="primary"
                   width="30"
@@ -214,11 +249,11 @@ const TableRowsPlan = ({
                   // xmlns="http://www.w3.org/2000/svg"
                   className="cf-icon-svg"
                 > */}
-                {/* <path d="M16.417 9.583A7.917 7.917 0 1 1 8.5 1.666a7.917 7.917 0 0 1 7.917 7.917zm-3.948-1.455-.758-1.955a.816.816 0 0 0-.726-.498H6.054a.816.816 0 0 0-.727.498L4.57 8.128a1.43 1.43 0 0 0-1.052 1.375v2.046a.318.318 0 0 0 .317.317h.496v1.147a.238.238 0 0 0 .238.237h.892a.238.238 0 0 0 .237-.237v-1.147h5.644v1.147a.238.238 0 0 0 .237.237h.892a.238.238 0 0 0 .238-.237v-1.147h.496a.318.318 0 0 0 .317-.317V9.503a1.43 1.43 0 0 0-1.052-1.375zm-7.445.582a.792.792 0 1 0 .792.792.792.792 0 0 0-.792-.792zm5.96-2.402a.192.192 0 0 1 .137.094l.65 1.676H5.267l.65-1.676a.192.192 0 0 1 .136-.094h4.93zm1.04 2.402a.792.792 0 1 0 .792.792.792.792 0 0 0-.791-.792z" /> */}
-                {/* <path d="M16 20v4h4v2.668h-4v4h-2.668v-4h-4V24h4v-4H28m-9.332 4H4V8h21.332v9.332H28V8a2.66 2.66 0 0 0-2.668-2.668H4A2.669 2.669 0 0 0 1.332 8v16A2.669 2.669 0 0 0 4 26.668h14.668Zm0 0" /> */}
-                {/* </svg> */}
-                {/* <img src={approvedCar} alt="" /> */}
-              </button>
+              {/* <path d="M16.417 9.583A7.917 7.917 0 1 1 8.5 1.666a7.917 7.917 0 0 1 7.917 7.917zm-3.948-1.455-.758-1.955a.816.816 0 0 0-.726-.498H6.054a.816.816 0 0 0-.727.498L4.57 8.128a1.43 1.43 0 0 0-1.052 1.375v2.046a.318.318 0 0 0 .317.317h.496v1.147a.238.238 0 0 0 .238.237h.892a.238.238 0 0 0 .237-.237v-1.147h5.644v1.147a.238.238 0 0 0 .237.237h.892a.238.238 0 0 0 .238-.237v-1.147h.496a.318.318 0 0 0 .317-.317V9.503a1.43 1.43 0 0 0-1.052-1.375zm-7.445.582a.792.792 0 1 0 .792.792.792.792 0 0 0-.792-.792zm5.96-2.402a.192.192 0 0 1 .137.094l.65 1.676H5.267l.65-1.676a.192.192 0 0 1 .136-.094h4.93zm1.04 2.402a.792.792 0 1 0 .792.792.792.792 0 0 0-.791-.792z" /> */}
+              {/* <path d="M16 20v4h4v2.668h-4v4h-2.668v-4h-4V24h4v-4H28m-9.332 4H4V8h21.332v9.332H28V8a2.66 2.66 0 0 0-2.668-2.668H4A2.669 2.669 0 0 0 1.332 8v16A2.669 2.669 0 0 0 4 26.668h14.668Zm0 0" /> */}
+              {/* </svg> */}
+              {/* <img src={approvedCar} alt="" /> 
+              </button> */}
             </>
           )}
         </div>

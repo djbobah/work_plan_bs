@@ -23,6 +23,7 @@ const initialData = {
   brigada: [],
   brigadier: "",
   comment: "",
+  utv_avto: 0,
 };
 
 const WorkPlan = () => {
@@ -38,6 +39,7 @@ const WorkPlan = () => {
   const [auto, setAuto] = useState();
   const [gn, setGn] = useState();
   const [brigada, setBrigada] = useState();
+  const [drivers, setDrivers] = useState();
   const [department, setDepartment] = useState();
   const [contractingOrganization, setContractingOrganization] = useState();
   const [dangerWork, setDangerWork] = useState();
@@ -108,6 +110,20 @@ const WorkPlan = () => {
       .then((user) => {
         // console.log("user", user.data);
         setBrigada(user.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+    // получаем данные о водителях из БД (точнее о всех с АТЦ)
+    axios
+      .get(config.apiEndpoint + "users/user", {
+        params: {
+          id_sl: "16-а00135",
+        },
+      })
+      .then((user) => {
+        // console.log("user", user.data);
+        setDrivers(user.data);
       })
       .catch((e) => {
         console.log(e);
@@ -350,6 +366,7 @@ const WorkPlan = () => {
       brigadier: dataBrigadier,
       comment: filteredPlan.comment,
       driver: filteredPlan.driver,
+      utv_avto: filteredPlan.utv_avto,
     });
 
     // console.log(method, data);
@@ -462,7 +479,23 @@ const WorkPlan = () => {
       brigadier: dataBrigadier,
       driver: dataDriver,
       comment: filteredPlan.comment,
+      utv_avto: filteredPlan.utv_avto,
     });
+  };
+  const handleClickApproveAuto = (id) => {
+    const filteredPlan = plans.filter((plan) => plan.id === id)[0];
+    const utv_avto = filteredPlan.utv_avto === 0 ? 1 : 0;
+    console.log("id", id);
+    console.log("utv_avto", utv_avto);
+
+    axios
+      .patch(config.apiEndpoint + "plan/approveCar", { id, utv_avto })
+      .then((plan) => {
+        // console.log("post------------", plan.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   };
   const handleCloseModalAddAuto = () => {
     setShowModalAddAuto(false);
@@ -551,7 +584,7 @@ const WorkPlan = () => {
       axios
         .patch(config.apiEndpoint + "plan/plan", { data, id_sl })
         .then((plan) => {
-          console.log("post------------", plan.data);
+          // console.log("post------------", plan.data);
         })
         .catch((e) => {
           console.log(e);
@@ -642,6 +675,7 @@ const WorkPlan = () => {
         objects &&
         gn &&
         brigada &&
+        drivers &&
         objects &&
         plans &&
         dangerWork &&
@@ -659,12 +693,14 @@ const WorkPlan = () => {
             auto={auto}
             gn={gn}
             brigada={brigada}
+            drivers={drivers}
             department={department}
             dangerWork={dangerWork}
             onDelete={handleRowDelete}
             contractingOrganization={contractingOrganization}
             onEdit={handleChangeEdit}
             onEditAuto={handleClickEditAuto}
+            onApproveAuto={handleClickApproveAuto}
             // optionsAuto={optionsAuto}
             // onCopy={handleCopy}
             checkButtons={checkButtons}

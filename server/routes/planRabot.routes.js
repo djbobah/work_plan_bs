@@ -327,6 +327,21 @@ router.patch("/donestring", async (req, res) => {
       .json({ message: "На сервере произошла ошибкаю Попробуйте позже..." });
   }
 });
+router.patch("/approveCar", async (req, res) => {
+  try {
+    console.log(chalk.green("id", req.body.id));
+    console.log(chalk.green("utv_avto", req.body.utv_avto));
+    const gn = await ModelPlanRabot.Plan.update(
+      { utv_avto: 1 },
+      { where: { id: req.body.id } }
+    ).then((result) => console.log("updated"));
+    res.status(200).send(gn);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "На сервере произошла ошибкаю Попробуйте позже..." });
+  }
+});
 
 router.patch("/auto", async (req, res) => {
   try {
@@ -336,14 +351,21 @@ router.patch("/auto", async (req, res) => {
     const auto = req.body.data.auto === null ? 1 : req.body.data.auto.value;
     const gn = req.body.data.gn === null ? 0 : req.body.data.gn.value;
     const driver =
-      req.body.data.driver === null ? 0 : req.body.data.driver.value;
+      req.body.data.driver === null ? null : req.body.data.driver.value;
+
     // // console.log(chalk.green("driver", req.body.data.driver.value));
-    console.log(chalk.green("driver", req.body.data.driver.value));
+    // console.log(chalk.green("utv_avto", req.body.data.utv_avto));
 
     // console.log(chalk.green("idRow", req.body.data.id));
     // , id_gn: gn, comment: req.body.data.comment
     const plan = await ModelPlanRabot.Plan.update(
-      { avto: auto, id_gn: gn, comment: req.body.data.comment, driver: driver },
+      {
+        avto: auto,
+        id_gn: gn,
+        comment: req.body.data.comment,
+        // utv_avto: req.body.data.utv_avto,
+        driver: driver,
+      },
       { where: { id: req.body.data.id } }
     ).then((result) => console.log("updated"));
     res.status(200).send(plan);

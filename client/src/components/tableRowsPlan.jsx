@@ -156,15 +156,21 @@ const TableRowsPlan = ({
           );
         }
 
-        //console.log();
+        // console.log("gn", gn);
         return (
-          <ApproveCar
-            utvAvto={row["utv_avto"]}
-            driver={driver}
-            avto={avtoNumber}
-            id={row.id}
-            id_sl={id_sl}
-          />
+          <>
+            {row["avto"] !== 1 ? (
+              <ApproveCar
+                utvAvto={row["utv_avto"]}
+                driver={driver}
+                avto={avtoNumber}
+                id={row.id}
+                id_sl={id_sl}
+              />
+            ) : (
+              ""
+            )}
+          </>
           // <>
           //   {row["utv_avto"] === 1 ? (
           //     <>

@@ -451,8 +451,8 @@ const WorkPlan = () => {
       filteredPlan.driver === null
         ? ""
         : {
-            label: filteredDriver.fio,
-            value: filteredDriver.id,
+            label: filteredDriver?.fio,
+            value: filteredDriver?.id,
           };
     // const dateOfWork =
     //   method === "copy" ? filteredPlan.data_rabot : getTommorow();

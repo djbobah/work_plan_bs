@@ -48,13 +48,17 @@ const ApproveCar = ({ utvAvto, driver, avto, id, id_sl }) => {
   } else {
     return (
       <>
-        <button
-          className="btn btn-sm btn-danger mt-2"
-          onClick={() => handleApproveCarClick(id)}
-        >
-          Отменить
-        </button>
-        <br />
+        {id_sl === "16-а00135" && (
+          <>
+            <button
+              className="btn btn-sm btn-danger mt-2"
+              onClick={() => handleApproveCarClick(id)}
+            >
+              Отменить
+            </button>
+            <br />
+          </>
+        )}
         {avto[0].marka} <br />
         {avto[0].nomer}
         {driver ? (

@@ -342,6 +342,21 @@ router.patch("/approveCar", async (req, res) => {
       .json({ message: "На сервере произошла ошибкаю Попробуйте позже..." });
   }
 });
+router.patch("/changeComment", async (req, res) => {
+  try {
+    console.log(chalk.green("id", req.body.id));
+    console.log(chalk.green("new COMMENT", req.body.newCommentStr));
+    const gn = await ModelPlanRabot.Plan.update(
+      { comment: req.body.newCommentStr },
+      { where: { id: req.body.id } }
+    ).then((result) => console.log("updated"));
+    res.status(200).send(gn);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "На сервере произошла ошибкаю Попробуйте позже..." });
+  }
+});
 
 router.patch("/auto", async (req, res) => {
   try {

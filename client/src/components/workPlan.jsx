@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from "react";
 import ControlPanel from "./ControlPanel";
 import Table from "./Table";
-import { getToday, getTommorow } from "../utils/DateTimeFunctions";
+import {
+  getToday,
+  convertDate,
+  getTime,
+  getTommorow,
+} from "../utils/DateTimeFunctions";
+
 // import api from "../api";
 import axios from "axios";
 import styles from "./workPlan.module.css";
@@ -9,6 +15,7 @@ import { columnsPlans } from "../utils/columnsPlans";
 import { validator } from "../utils/validator";
 import ModalAddAuto from "./modalPlan/modalAddAuto";
 import config from "../config.json";
+import ModalEditComment from "./modalPlan/modalEditComment";
 
 const initialData = {
   dateOfWork: getTommorow(),
@@ -46,9 +53,12 @@ const WorkPlan = () => {
   const [showModalAdd, setShowModalAdd] = useState(false);
   const [showModalAddAuto, setShowModalAddAuto] = useState(false);
   const [showModalPrintPlan, setShowModalPrintPlan] = useState(false);
+  const [showModalCommentEdit, setShowModalCommentEdit] = useState(false);
 
   const [edit, setEdit] = useState(0);
   const [changeTypeAuto, setChangeTypeAuto] = useState(false);
+  const [newComment, setNewComment] = useState("");
+
   // const [copy, setCopy] = useState(0);
   // const [approveDangerWork, setApproveDangerWork] = useState(true);
   const [checkButtons, setCheckButtons] = useState([
@@ -167,6 +177,7 @@ const WorkPlan = () => {
     checkButtons,
     showModalAddAuto,
     id_sl,
+    newComment,
   ]);
 
   useEffect(() => {
@@ -497,6 +508,91 @@ const WorkPlan = () => {
         console.log(e);
       });
   };
+  const handleChangeComment = ({ target }) => {
+    setNewComment(target.value);
+  };
+  const handleClickEditComment = (id) => {
+    console.log("id", id);
+    // console.log("showModalCommentEdit", showModalCommentEdit);
+    const filteredPlan = plans.filter((plan) => plan.id === id)[0];
+
+    let dataBrigada = [];
+    if (filteredPlan.Brigada !== "") {
+      const arrBrigada = filteredPlan.Brigada.split(";");
+      // console.log("arrBrigada", arrBrigada);
+      arrBrigada.map((item) => {
+        const filteredItem = brigada.filter(
+          (member) => Number(member.id) === Number(item)
+        )[0];
+        if (filteredItem) {
+          dataBrigada.push({
+            label: filteredItem.fio,
+            value: filteredItem.id,
+          });
+        }
+      });
+    }
+    const filteredBrigadier = brigada.filter(
+      (item) => item.id === Number(filteredPlan.st_brigadi)
+    )[0];
+    const dataBrigadier =
+      filteredPlan.st_brigadi === ""
+        ? ""
+        : {
+            label: filteredBrigadier.fio,
+            value: filteredBrigadier.id,
+          };
+
+    const filteredDriver = brigada.filter(
+      (item) => item.id === Number(filteredPlan.driver)
+    )[0];
+    const dataDriver =
+      filteredPlan.driver === null
+        ? ""
+        : {
+            label: filteredDriver?.fio,
+            value: filteredDriver?.id,
+          };
+    console.log("filteredPlan", filteredPlan);
+
+    setShowModalCommentEdit(true);
+    setData({
+      // id: filteredPlan.id,
+      ...filteredPlan,
+      brigada: dataBrigada,
+      brigadier: dataBrigadier,
+      driver: dataDriver,
+      // brigadier:
+      methodOfWork: { name: filteredPlan.sposob, checked: true },
+      // comment: filteredPlan.comment,
+    });
+  };
+  const handleEditCommentSubmit = (e) => {
+    e.preventDefault();
+    // console.log();
+    // console.log(
+    //   data.id,
+    //   convertDate(getToday()),
+    //   getTime(),
+    //   newComment,
+    //   data.comment
+    // );
+    const id = data.id;
+    const newCommentStr = `${newComment} (${convertDate(
+      getToday()
+    )} ${getTime()})\n ${data.comment} `;
+    axios
+      .patch(config.apiEndpoint + "plan/changeComment", { id, newCommentStr })
+      .then((plan) => {
+        // console.log("post------------", plan.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+    setShowModalCommentEdit(false);
+    setNewComment("");
+    setData(initialData);
+  };
   const handleCloseModalAddAuto = () => {
     setShowModalAddAuto(false);
     setChangeTypeAuto(false);
@@ -701,6 +797,7 @@ const WorkPlan = () => {
             onEdit={handleChangeEdit}
             onEditAuto={handleClickEditAuto}
             onApproveAuto={handleClickApproveAuto}
+            onEditComment={handleClickEditComment}
             // optionsAuto={optionsAuto}
             // onCopy={handleCopy}
             checkButtons={checkButtons}
@@ -730,6 +827,18 @@ const WorkPlan = () => {
             // contractingOrganization={contractingOrganization}
             brigada={brigada}
             onSubmit={handleSubmitAddAuto}
+          />
+        )}
+        {data && plans && (
+          <ModalEditComment
+            show={showModalCommentEdit}
+            onClose={() => setShowModalCommentEdit(false)}
+            data={data}
+            setData={setData}
+            // plans={plans}
+            newComment={newComment}
+            onSubmit={handleEditCommentSubmit}
+            onChange={handleChangeComment}
           />
         )}
       </div>
